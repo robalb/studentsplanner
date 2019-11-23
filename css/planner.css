@@ -1,0 +1,144 @@
+
+@charset "UTF-8";
+
+body{
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  position:absolute;
+
+  margin:0;
+  background-color: #FCFCFC;
+  background-image: url("../resources/noise1.png");
+  font-family: "Roboto", sans-serif;
+  color: black;
+  /* #06162f */
+}
+html{
+  scroll-behavior: smooth;
+}
+
+header{
+  width:100%;
+  height: 64px;
+  /* border-bottom: 2px solid #EEE; */
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content:space-between;
+}
+
+header .logo{
+  height:100%;
+  max-width: 100px;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  margin: 0 20px 0 20px;
+  flex-shrink: 2;
+
+}
+header .logo .temporary-swg{
+  width: 40px;
+  height: 40px;
+  box-shadow: 5px 5px  #F7DBD7;
+  background-color: #9CC0E7;
+}
+
+header .class-info{
+  height:100%;
+  font-family: "Julius Sans One";
+  flex-shrink: 3;
+  margin-right: 5px;
+  /* display: flex; */
+  /* align-items:center; */
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+header .user{
+  height:100%;
+  display: flex;
+  align-items:center;
+  cursor: pointer;
+  flex-shrink: 1;
+}
+header .user p.name{
+  margin-right: 3px;
+  max-width: 100px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+header .user p.status-badge{
+  margin: 5px;
+  margin-left: 0;
+  padding: 3px;
+  border-radius: 3px;
+  background-color: #9CC0E7;
+  color: #FCFCFC;
+  display: flex;
+  align-items:center;
+  flex-basis:auto;
+}
+header .user i{
+  margin: 6px;
+  margin-right: 20px;
+}
+
+.menu-hidden-container{
+  width:0;
+  height:0;
+  overflow:hidden;
+}
+
+.menu-hidden-container .app-menu, .menu-hidden-container .user-menu{
+  position:absolute;
+  margin:0;
+  padding:0;
+  top: 0;
+  left:0;
+  background-color: #fcfcfc;
+  width:100%;
+  height:auto;
+  text-align:center;
+  list-style-type:none;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
+  padding: 10px;
+
+  display: none;
+}
+.menu-hidden-container .app-menu li, .menu-hidden-container .user-menu li{
+  padding: 10px 0 10px 0;
+  cursor:pointer;
+}
+
+/* @media (min-width: 420px){ */
+@media (min-width: 0){
+  .menu-hidden-container .app-menu, .menu-hidden-container .user-menu{
+    position:absolute;
+    top: 64px;
+    width:auto;
+    min-width: 150px;
+    height:auto;
+    text-align: initial;
+    padding: 10px 0 10px 0;
+  }
+  .menu-hidden-container .app-menu li, .menu-hidden-container .user-menu li{
+    padding:10px;
+  }
+  .menu-hidden-container .app-menu li:hover, .menu-hidden-container .user-menu li:hover{
+    background-color: #9CC0E7;
+  }
+  .menu-hidden-container .app-menu{
+    left: 20px;
+  }
+  .menu-hidden-container .user-menu{
+    right:20px;
+    left: initial;
+  }
+}
+
+.events-list{
+}
+
