@@ -215,12 +215,13 @@ header .user i{
   /* display: flex; */
   /* flex-direction:column; */
   column-count: 2;
+  column-gap: 0;
   white-space: pre-line;
 }
 .students-list .students-container div{
   /* white-space: nowrap; */
   display: inline-block;
-  max-width: 70%;
+  /* max-width: 70%; */
   overflow:hidden;
   margin: 5px;
   width: auto;
