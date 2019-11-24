@@ -26,6 +26,8 @@ header{
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
   display: flex;
   justify-content:space-between;
+  /* background-color: rgba(255, 82, 82,0.3); */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 header .logo{
@@ -43,11 +45,12 @@ header .logo .temporary-swg{
   height: 40px;
   box-shadow: 5px 5px  #F7DBD7;
   background-color: #9CC0E7;
+  background-color: #ff5252;
 }
 
 header .class-info{
   height:100%;
-  font-family: "Julius Sans One";
+  font-family: Roboto;
   flex-shrink: 3;
   margin-right: 5px;
   /* display: flex; */
@@ -75,6 +78,7 @@ header .user p.status-badge{
   padding: 3px;
   border-radius: 3px;
   background-color: #9CC0E7;
+  background-color: #ff5252;
   color: #FCFCFC;
   display: flex;
   align-items:center;
@@ -139,6 +143,101 @@ header .user i{
   }
 }
 
-.events-list{
+
+
+
+.card{
+  /* width:100%; */
+  /* height:auto; */
+  margin: 10px;
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.card .top-bar{
+  height: 60px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px 0 5px;
+  overflow:hidden;
+}
+.card .top-bar h2{
+  margin-left: 10px;
+  font-family: Roboto;
+  /* font-weight: 300; */
+}
+.card .top-bar i{
+  cursor:pointer;
+}
+.card .top-bar div{
+  flex-shrink: 0;
+}
+.card .top-bar div i{
+  margin-left: 10px;
 }
 
+
+
+.events-list .event-badges-container{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+
+}
+.events-list .event-badges-container .event-badge{
+  padding: 10px;
+  margin: 10px;
+  min-width: 90px;
+  text-align:center;
+  /* background-color: gold; */
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+
+.students-list .students-container{
+  /* display: flex; */
+  /* flex-direction:column; */
+  column-count: 2;
+  white-space: pre-line;
+}
+.students-list .students-container div{
+  display: inline-block;
+  margin: 5px;
+  width: auto;
+  margin-left: 10px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.c1{
+  background-color: #84817a;
+  background-color: #d1ccc0;
+}
+.c2{
+  background-color: #40407a;
+  background-color: gold;
+}
+.c3{
+  background-color: #706fd3;
+}
+.c4{
+  background-color: #34ace0;
+}
+.c5{
+  background-color: #33d9b2;
+}
+.c6{
+  background-color: #ff5252;
+}
+.c7{
+  background-color: #ff793f;
+}
+.c8{
+  background-color: #ffb142;
+}
+.c9{
+  background-color: #218c74;
+}
