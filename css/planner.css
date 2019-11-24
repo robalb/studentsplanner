@@ -53,8 +53,8 @@ header .class-info{
   font-family: Roboto;
   flex-shrink: 3;
   margin-right: 5px;
-  /* display: flex; */
-  /* align-items:center; */
+  display: flex;
+  align-items:center;
   overflow:hidden;
   text-overflow:ellipsis;
 }
@@ -195,6 +195,20 @@ header .user i{
   border-radius: 3px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+.events-list .event-badges-container .event-badge-add{
+  padding: 0 10px 0 10px;
+  margin: 10px;
+  min-width: 90px;
+  /* border-radius: 3px; */
+  /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+.events-list .event-badges-container .event-badge-add i{
+  font-size: 32px;
+  line-height: 1;
+}
 
 
 .students-list .students-container{
@@ -204,7 +218,10 @@ header .user i{
   white-space: pre-line;
 }
 .students-list .students-container div{
+  /* white-space: nowrap; */
   display: inline-block;
+  max-width: 70%;
+  overflow:hidden;
   margin: 5px;
   width: auto;
   margin-left: 10px;
