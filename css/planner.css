@@ -212,16 +212,14 @@ header .user i{
 
 
 .students-list .students-container{
-  /* display: flex; */
-  /* flex-direction:column; */
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  /*fallback for display grid */
   column-count: 2;
   column-gap: 0;
-  white-space: pre-line;
 }
 .students-list .students-container div{
-  /* white-space: nowrap; */
-  display: inline-block;
-  /* max-width: 70%; */
   overflow:hidden;
   margin: 5px;
   width: auto;
