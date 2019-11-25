@@ -255,13 +255,19 @@ header .user i{
 .event .top-bar{
   cursor: move;
 }
+.event .calendar{
+}
 .event .calendar>div{
+  /*fallback for display grid */
   display: flex;
+
   border-bottom: 2px solid rgba(0,0,0,0.2);
 }
 .event .calendar .date{
-  min-height: 40px;
+  /* element data for display grid */
+
   /*fallback for the parent display grid */
+  flex-shrink: 0;
   width: 45px;
   overflow: hidden;
 
@@ -272,17 +278,14 @@ header .user i{
   border-right: 2px dashed rgba(0,0,0,0.2);
 }
 .event .calendar .participants{
-  min-height: 40px;
-  /*fallback for the parent display grid */
-  flex-grow: 1;
-
   padding: 10px;
 
   /*fallback for display grid */
   display: flex;
   flex-wrap: wrap;
 
-  display: grid;
+  /* commented in order to use the flexbox fallback: i thinks it looks better */
+  /* display: grid; */
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
@@ -299,12 +302,15 @@ header .user i{
   background-color: white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+.event .calendar .participants div i{
+  margin-left: 10px;
+}
 /*add participant box */
 .event .calendar .participants div:last-child{
   min-width: 45px;
-  /* justify-content: center; */
   background-color: transparent;
   box-shadow: none;
+  padding: 0;
 }
 .event .calendar .participants div:last-child i{
   cursor: pointer;
