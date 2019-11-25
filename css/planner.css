@@ -19,6 +19,9 @@ html{
   scroll-behavior: smooth;
 }
 
+/* --------------------------------- */
+/* ---------     HEADER    --------- */
+/* --------------------------------- */
 header{
   width:100%;
   height: 64px;
@@ -89,13 +92,8 @@ header .user i{
   margin-right: 20px;
 }
 
-.menu-hidden-container{
-  width:0;
-  height:0;
-  overflow:hidden;
-}
 
-.menu-hidden-container .app-menu, .menu-hidden-container .user-menu{
+header .app-menu, header .user-menu{
   position:absolute;
   margin:0;
   padding:0;
@@ -110,16 +108,16 @@ header .user i{
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
   padding: 10px;
 
-  display: none;
+  /* display: none; */
 }
-.menu-hidden-container .app-menu li, .menu-hidden-container .user-menu li{
+header .app-menu li, header .user-menu li{
   padding: 10px 0 10px 0;
   cursor:pointer;
 }
 
 /* @media (min-width: 420px){ */
 @media (min-width: 0){
-  .menu-hidden-container .app-menu, .menu-hidden-container .user-menu{
+  header .app-menu, header .user-menu{
     position:absolute;
     top: 64px;
     width:auto;
@@ -128,16 +126,16 @@ header .user i{
     text-align: initial;
     padding: 10px 0 10px 0;
   }
-  .menu-hidden-container .app-menu li, .menu-hidden-container .user-menu li{
+  header .app-menu li, header .user-menu li{
     padding:10px;
   }
-  .menu-hidden-container .app-menu li:hover, .menu-hidden-container .user-menu li:hover{
+  header .app-menu li:hover, header .user-menu li:hover{
     background-color: #9CC0E7;
   }
-  .menu-hidden-container .app-menu{
+  header .app-menu{
     left: 20px;
   }
-  .menu-hidden-container .user-menu{
+  header .user-menu{
     right:20px;
     left: initial;
   }
@@ -146,9 +144,10 @@ header .user i{
 
 
 
+/* --------------------------------- */
+/* ---------  CARD TEMPLATE   ------ */
+/* --------------------------------- */
 .card{
-  /* width:100%; */
-  /* height:auto; */
   margin: 10px;
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -179,7 +178,18 @@ header .user i{
 }
 
 
+/* other utils */
+/* TODO: move this, the generic header and all the generic templates to a separate file */
+.hidden-container{
+  width:0;
+  height:0;
+  overflow:hidden;
+}
 
+
+/* --------------------------------- */
+/* ---------   EVENTS LIST  -------- */
+/* --------------------------------- */
 .events-list .event-badges-container{
   padding: 10px;
   /*fallback for display grid */
@@ -203,6 +213,7 @@ header .user i{
 .events-list .event-badges-container .event-badge-add{
   /*part of the fallback for display grid */
   min-width: 90px;
+
   padding: 0 10px 0 10px;
   margin: 5px;
   display: flex;
@@ -215,6 +226,9 @@ header .user i{
 }
 
 
+/* --------------------------------- */
+/* --------  STUDENTS LIST  -------- */
+/* --------------------------------- */
 .students-list .students-container{
   display: grid;
   grid-template-columns: 1fr 1fr;
