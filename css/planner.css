@@ -255,18 +255,11 @@ header .user i{
 .event .top-bar{
   cursor: move;
 }
-.event .calendar{
-}
 .event .calendar>div{
-  /*fallback for display grid */
   display: flex;
-
   border-bottom: 2px solid rgba(0,0,0,0.2);
 }
 .event .calendar .date{
-  /* element data for display grid */
-
-  /*fallback for the parent display grid */
   flex-shrink: 0;
   width: 45px;
   overflow: hidden;
@@ -290,7 +283,7 @@ header .user i{
 }
 
 .event .calendar .participants div{
-  /*part of the fallback for display grid */
+  /*part of the fallback for the parent display grid */
   min-width: 90px;
 
   padding: 5px;
