@@ -228,22 +228,42 @@ header .user i{
 /* --------------------------------- */
 /* --------  STUDENTS LIST  -------- */
 /* --------------------------------- */
-.students-list .students-container{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+ /* make the card float on the left, on mobile */
+.students-list{
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #fcfcfc;
+  box-shadow: 0 6px 9px rgba(0,0,0,0.26), 0 3px 6px rgba(0,0,0,0.43);
 
-  /*fallback for display grid */
-  column-count: 2;
-  column-gap: 0;
+  display: none;
+}
+.students-list .students-container{
+  overflow-y: auto;
+  /* 100vh -(top bar height) -(safety margin) */
+  max-height: calc(100vh - 60px  - 20px);
 }
 .students-list .students-container div{
   overflow:hidden;
   margin: 5px;
   width: auto;
-  margin-left: 10px;
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+/* two columns layout, for devices where one column would show just a */
+/* couple of names at the time */
+@media (max-height: 460px){
+  .students-list .students-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    /*fallback for display grid */
+    column-count: 2;
+    column-gap: 0;
+  }
+}
+
+
 
 
 /* --------------------------------- */
