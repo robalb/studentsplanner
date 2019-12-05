@@ -3,6 +3,7 @@ import React from 'react';
 import Header from '../Header';
 //page specific imports
 import EventsList from './EventsList';
+import EventCard from './EventCard';
 import testData from './testData'
 import './planner.css';
 
@@ -17,9 +18,12 @@ class Planner extends React.Component{
 
   handleEventClick(e){
     //TODO: allow multiple events if not on mobile
-    this.setState({
-      currentEvent: e
-    });
+
+    if(this.state.currentEvent !== e){
+      this.setState({
+        currentEvent: e
+      });
+    }
   }
 
   handleEventCreated(e){
@@ -36,10 +40,14 @@ class Planner extends React.Component{
     //TODO:
     //instead of a currentevent prop, store a currentevents prop, and if on
     //desktop display all the events contained
-    let eventToDisplay;
-    let currentEvent = this.state.currentEvent
-    if(currentEvent>=0){
-      eventToDisplay = <p>current event: {this.state.events[currentEvent].name}</p>
+    let currentEvent = null;
+    let currentEventIndex = this.state.currentEvent
+    if(currentEventIndex>=0){
+      currentEvent = (
+        <EventCard
+          eventData={this.state.events[currentEventIndex]}
+        />
+      );
     }
 
     return (
@@ -50,8 +58,9 @@ class Planner extends React.Component{
             events={this.state.events}
             handleEventClick={e=>this.handleEventClick(e)}
             handleEventCreated={e=>this.handleEventCreated(e)}
-            />
-            {eventToDisplay}
+          />
+
+          {currentEvent}
         </div>
       </div>
     );

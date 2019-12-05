@@ -35,7 +35,7 @@ const testData = {
         {
           name: "int. inglese",
           repeatStudents: false,
-          baseColor: "#34ace0",
+          baseColor: "rgb(52, 172, 224)",
           dates: [
             {
               day: 10,
@@ -52,7 +52,7 @@ const testData = {
         {
           name: "storia",
           repeatStudents: false,
-          baseColor: "#ff5252",
+          baseColor: "rgb(255, 82, 82)",
           dates: [
             {
               day: 12,

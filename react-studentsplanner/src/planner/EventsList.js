@@ -1,5 +1,6 @@
 
 import React from 'react';
+import colors from '../utils/colors';
 
 function EventBadge(props){
   return(
@@ -21,10 +22,15 @@ class EventsList extends React.Component{
     //spawn a popup that allows the insertion of all the data.
     //on confirm, the popup will close, and call this callback
     //with data similar to this
+
+    //the real popup should do somethig similar to this, but:
+    //choose colors that arent used first, and when they finish create them by mixing existing basecolors
+    let randomColorIndex = Math.floor(Math.random()*colors.colorsList.length)
+    let randomColor = colors.colorsList[randomColorIndex]
     const testEvent = {
       name: "sample event"+Math.floor(Math.random()*999),
       repeatStudents: false,
-      baseColor: "#34ace0",
+      baseColor: randomColor,
       dates: [
         {
           day: 10,
@@ -38,6 +44,7 @@ class EventsList extends React.Component{
         }
       ]
     };
+
     this.props.handleEventCreated(testEvent)
   }
 
