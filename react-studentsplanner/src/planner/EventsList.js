@@ -46,7 +46,7 @@ class EventsList extends React.Component{
       return (
         <EventBadge 
           baseColor={ev.baseColor}
-          onClick={() => this.props.handleEventClick(ev.name)}
+          onClick={() => this.props.handleEventClick(step)}
           name={ev.name}
           key={step}
         />

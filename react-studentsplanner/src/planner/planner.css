@@ -58,6 +58,7 @@
   /*part of the fallback for display grid */
   min-width: 90px;
 
+  cursor: pointer;
   padding: 10px;
   margin: 5px;
   text-align:center;
@@ -68,6 +69,7 @@
   /*part of the fallback for display grid */
   min-width: 90px;
 
+  cursor: pointer;
   padding: 0 10px 0 10px;
   margin: 5px;
   display: flex;

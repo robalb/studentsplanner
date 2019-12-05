@@ -11,7 +11,7 @@ class Planner extends React.Component{
     super(props);
     this.state = {
       ...testData,
-      currentEvent: null
+      currentEvent: undefined
     };
   }
 
@@ -33,6 +33,15 @@ class Planner extends React.Component{
   }
 
   render() {
+    //TODO:
+    //instead of a currentevent prop, store a currentevents prop, and if on
+    //desktop display all the events contained
+    let eventToDisplay;
+    let currentEvent = this.state.currentEvent
+    if(currentEvent>=0){
+      eventToDisplay = <p>current event: {this.state.events[currentEvent].name}</p>
+    }
+
     return (
       <div>
         <Header classroomName="5M" name="alberto ventafridda" isAdmin={false} />
@@ -42,7 +51,7 @@ class Planner extends React.Component{
             handleEventClick={e=>this.handleEventClick(e)}
             handleEventCreated={e=>this.handleEventCreated(e)}
             />
-          <p>current event: {this.state.currentEvent}</p>
+            {eventToDisplay}
         </div>
       </div>
     );
