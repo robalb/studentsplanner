@@ -2,7 +2,7 @@ import React from 'react';
 //common imports
 import Header from '../Header';
 //page specific imports
-import EventsList from './EventsList';
+import EventsListCard from './EventsListCard/EventsListCard';
 import EventCard from './EventCard';
 import testData from './testData'
 import './planner.css';
@@ -54,7 +54,7 @@ class Planner extends React.Component{
       <div>
         <Header classroomName="5M" name="alberto ventafridda" isAdmin={false} />
         <div className="content">
-          <EventsList 
+          <EventsListCard 
             events={this.state.events}
             handleEventClick={e=>this.handleEventClick(e)}
             handleEventCreated={e=>this.handleEventCreated(e)}

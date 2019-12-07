@@ -29,6 +29,9 @@ const RGB = {
 }
 
 const colorsList = [
+  // http://www.flatcolorsui.com/
+  // https://materialuicolors.co/
+  'rgb(209, 204, 192)',
   'rgb(51, 217, 178)',
   'rgb(52, 172, 224)',
   'rgb(112, 111, 211)',
