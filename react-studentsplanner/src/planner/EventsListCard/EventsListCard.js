@@ -12,6 +12,7 @@ class EventsListCard extends React.Component{
     super(props);
     this.state={
       //list, calendar
+      //TODO: set the default as list
       viewMode: 'calendar',
       creationMenuOpen: true
     }

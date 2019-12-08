@@ -1,21 +1,41 @@
 
 // https://programmingwithmosh.com/react/build-a-react-calendar-component-from-scratch/
 import React from "react";
-import moment from "moment";
+// import moment from "moment";
+import moment from 'moment/min/moment-with-locales';
+import {getCountryIsoWeekDay} from '../utils/time.js';
 
 import './calendar.css';
 
 export default class Calendar extends React.Component {
+  constructor(props){
+    super(props);
+    var locale = 'it';
+    this.state = {
+      //the calendar language
+      locale: locale,
+      //useful for internationalizzation, wether the week starts on monday or not
+      isoWeekday: getCountryIsoWeekDay(locale)
+    }
+
+    //set the moment internationalizzation parameters
+    moment.locale(this.state.locale)
+  }
   render() {
-    let weekdayshort = moment.weekdaysShort();
-    //europena -italian calendars have monday as the first day of the week
+
+    //european -italian calendars have monday as the first day of the week
     //this should fix the problem
     //https://stackoverflow.com/questions/18875649/starting-the-week-on-monday-with-isoweekday
-    //this will return the first day of the month in the locale name format (not really relevant with the problem)
-    //new Date(2019,11,1).toLocaleDateString(undefined, { weekday: 'long' })
-    weekdayshort = [ 'lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom' ];
-
-    let weekdayshortname = weekdayshort.map(day => {
+    ////generate array with all the days in a week, in order
+    let weekDaysArray = [];
+    //any moment would work
+    let date = moment("2019-06-23T00:40:00");
+    let begin = moment(date).startOf('week').isoWeekday(this.state.isoWeekday);
+    for (let i=0; i<7; i++) {
+      weekDaysArray.push(begin.format('ddd'));
+      begin.add('d', 1);
+    }
+    let weekDays = weekDaysArray.map(day => {
       return (
         <div key={day} >
         {day}
@@ -32,7 +52,7 @@ export default class Calendar extends React.Component {
           <i className="material-icons"> arrow_right </i>
         </div>
         <div className="weeks-labels">
-          {weekdayshortname}
+          {weekDays}
         </div>
         <div className="calendar-grid">
           <div className="first-el-test">1</div>
