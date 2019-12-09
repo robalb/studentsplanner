@@ -3,7 +3,7 @@
   /* margin: 5px; */
 }
 
-.month-panel{
+.header{
   height: 40px;
   display: flex;
   flex-direction: row;
@@ -12,29 +12,29 @@
   border-bottom: 1px solid rgba(0,0,0,0.2);
   cursor:pointer;
 }
-.month-panel i{
+.header i{
   padding-left: 10px;
   padding-right: 10px;
 }
-.month-panel div{
+.header div{
   flex-basis: 100%;
   text-align:center;
 }
-.weeks-labels{
+.days{
   height: 40px;
   display: flex;
   flex-direction: row;
   color: white;
   background-color: #333333;
 }
-.weeks-labels div{
+.days div{
   flex-basis: 100%;
   text-align:center;
   line-height: 40px;
   overflow:hidden;
 }
 
-.calendar-grid{
+.cells{
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   width: 100%;
@@ -44,7 +44,7 @@
   background-color: #f2f2f2;
 }
 
-.calendar-grid > *{
+.cells > *{
   display: flex;
   align-items: center;
   justify-content: center;
