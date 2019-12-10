@@ -64,27 +64,51 @@ export default class Calendar extends React.Component {
         </div>
       );
     });
-    return <div className="days">{ weekDays }</div>;
+    return <div className="days" key={1}>{ weekDays }</div>;
   }
 
+
   renderCells(){
+    let getCellsRange = (from, to, optionalClass)=>{
+      let c = [];
+      for(let m = moment(from); m.isBefore(to); m.add(1, 'day')){
+        let key = m.format('D M Y')
+        let day = m.format('D')
+        let classes = "";
+        let isInPast = !moment().isBefore(m.clone().subtract(1, 'day'));
+        if(isInPast) classes += ' in-past';
+        if(optionalClass) classes += ` ${optionalClass}`;
+        c.push(
+          <div
+            key={key}
+            className={classes}
+          >{day}</div>
+        );
+      }
+      return c;
+    }
+    let currentMonthCells = ()=>{
+      let a = this.state.currentMonth.clone().startOf('month');
+      let b = this.state.currentMonth.clone().endOf('month');
+      return getCellsRange(a, b);
+    }
+    let previousCells = ()=>{
+      let b = this.state.currentMonth.clone().startOf('month');
+      let a = b.clone().startOf('isoWeek');
+      return getCellsRange(a, b, 'prev');
+    }
+    let nextCells = ()=>{
+      let a = this.state.currentMonth.clone().endOf('month');
+      let b = a.clone().endOf('isoWeek');
+      return getCellsRange(a, b, 'next');
+    }
+
+    // <div className="first-el-test">1</div>
     return(
-      <div className="cells">
-        <div className="first-el-test">1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>8</div>
-        <div>9</div>
-        <div>10</div>
-        <div>11</div>
-        <div>12</div>
-        <div>13</div>
-        <div>14</div>
-        <div>15</div>
+      <div className="cells" key={0}>
+        {previousCells()}
+        {currentMonthCells()}
+        {nextCells()}
       </div>
     );
   }

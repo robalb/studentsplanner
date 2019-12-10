@@ -64,19 +64,32 @@
   grid-template-columns: repeat(7, 1fr);
   width: 100%;
   grid-gap: 1px;
-  /* 5 rows of 4px height elements */
+  /* 5 rows of 40px height elements */
   min-height: 200px;
   background-color: #f2f2f2;
 }
 
-.cells > *{
+.cells div{
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: white;
-
+  color: black;
+}
+/* keep the aspect ratio of the cells to 1:1 */
+/* https://stackoverflow.com/a/54927248 */
+.cells div::before{
+  content: "";
+  padding-bottom: 100%;
+  display: inline-block;
+  vertical-align: top;
 }
 
-.first-el-test{
-  grid-column: 3 / auto;
+.cells .prev, .cells .next{
+  /* probably adds too much information to the calendar */
+  color: rgba(0,0,0,0.4);
+  /* background-color: transparent; */
+}
+.cells .in-past{
+  opacity: .3;
 }
