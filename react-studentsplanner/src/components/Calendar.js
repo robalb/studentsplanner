@@ -10,7 +10,7 @@ import './calendar.css';
 export default class Calendar extends React.Component {
   constructor(props){
     super(props);
-    var locale = 'it';
+    var locale = 'us';
     //set the moment internationalizzation parameters
     moment.locale(locale)
 
@@ -98,8 +98,8 @@ export default class Calendar extends React.Component {
       return getCellsRange(a, b, 'prev');
     }
     let nextCells = ()=>{
-      let a = this.state.currentMonth.clone().endOf('month');
-      let b = a.clone().endOf('isoWeek');
+      let a = this.state.currentMonth.clone().endOf('month').add(1, 'day');
+      let b = a.clone().endOf('isoWeek').add(1, 'day');
       return getCellsRange(a, b, 'next');
     }
 
