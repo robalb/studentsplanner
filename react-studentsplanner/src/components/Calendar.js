@@ -3,26 +3,28 @@
 import React from "react";
 // import moment from "moment";
 import moment from 'moment/min/moment-with-locales';
-import dateFns from "date-fns";
 
 import './calendar.css';
 
 export default class Calendar extends React.Component {
   constructor(props){
     super(props);
-    var locale = 'it';
+    //TODO: connect this to global app i18n
+    let locale = 'it';
     //set the moment internationalizzation parameters
     moment.locale(locale)
+
+    let currentMonth = props.currentMonth ? props.currentMonth : moment()
 
     this.state = {
       //the calendar language
       locale: locale,
       //TODO: optionally receive this as prop
-      currentMonth: moment(),
+      currentMonth: currentMonth,
       choosingMonth: false
     }
-
   }
+
 
   renderHeader(){
     let previousMonth = ()=>{
@@ -42,7 +44,6 @@ export default class Calendar extends React.Component {
         choosingMonth: !this.state.choosingMonth
       });
     }
-
     return(
       <div className="header">
         <i className="material-icons" onClick={previousMonth}> arrow_left </i>
@@ -52,10 +53,13 @@ export default class Calendar extends React.Component {
       </div>
     );
   }
+
+
   renderDays(){
     //european -italian calendars have monday as the first day of the week
     //in order to get the week days in the correct order - aka iso order, pass true
     //to the weekdays function
+    //the correct order is automatically taken into account by methods such as startOf(week)
     let weekDaysArray = moment.weekdaysShort(true);
     let weekDays = weekDaysArray.map(day => {
       return (
@@ -68,35 +72,39 @@ export default class Calendar extends React.Component {
   }
 
 
-  renderCells(){
-    let getCellsRange = (from, to, optionalClass)=>{
-      let c = [];
-      for(let m = moment(from); m.isBefore(to); m.add(1, 'day')){
-        let key = m.format('D M Y')
-        let day = m.format('D')
-        let classes = "";
-        let isInPast = !moment().isBefore(m.clone().subtract(1, 'day'));
-        if(isInPast) classes += ' in-past';
-        if(optionalClass) classes += ` ${optionalClass}`;
-        c.push(
-          <div
-            key={key}
-            className={classes}
-          >{day}</div>
-        );
-      }
-      return c;
+  getCellsRange(from, to, optionalClass){
+    let c = [];
+    for(let m = moment(from); m.isBefore(to); m.add(1, 'day')){
+      let key = m.format('D M Y')
+      let day = m.format('D')
+      let classes = "";
+      let isInPast = !moment().isBefore(m.clone().subtract(1, 'day'));
+      if(isInPast) classes += ' in-past';
+      if(optionalClass) classes += ` ${optionalClass}`;
+      c.push(
+        <div
+          key={key}
+          className={classes}
+        >
+          <div className="primary"> <p>{day}</p> </div>
+          {this.props.cell(m)}
+        </div>
+      );
     }
+    return c;
+  }
+
+
+  renderCells(){
     let currentMonthCells = ()=>{
-      //these are good
       let a = this.state.currentMonth.clone().startOf('month');
       let b = this.state.currentMonth.clone().endOf('month');
-      return getCellsRange(a, b);
+      return this.getCellsRange(a, b);
     }
     let previousCells = ()=>{
       let b = this.state.currentMonth.clone().startOf('month');
       let a = b.clone().startOf('week');
-      return getCellsRange(a, b, 'prev');
+      return this.getCellsRange(a, b, 'prev');
     }
     let nextCells = ()=>{
       let a = this.state.currentMonth.clone().endOf('month').add(1, 'day');
@@ -105,10 +113,8 @@ export default class Calendar extends React.Component {
       //since we iterate on a zero based system. but the dates are not, and therefore if there are 6 extra days, adding one
       //will overflow into the next week, causing getCellsRange to generate a full week)
       if (b.format('D') == 8) return;
-      return getCellsRange(a, b, 'next');
+      return this.getCellsRange(a, b, 'next');
     }
-
-    // <div className="first-el-test">1</div>
     return(
       <div className="cells" key={0}>
         {previousCells()}
@@ -117,6 +123,8 @@ export default class Calendar extends React.Component {
       </div>
     );
   }
+
+
   renderMonthSelection(){
     let monthsArray = moment.months(true);
     let monthClick = m=>{
@@ -137,6 +145,7 @@ export default class Calendar extends React.Component {
     });
     return <div className="month-selection">{ months }</div>;
   }
+
 
   render() {
     return (

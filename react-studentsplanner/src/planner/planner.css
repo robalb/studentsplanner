@@ -82,6 +82,11 @@
   font-size: 32px;
   line-height: 1;
 }
+/* calendar cell for the events calendar view */
+.calendar-view-cell{
+  background-color: salmon;
+}
+
 
 
 /* --------------------------------- */
@@ -196,32 +201,4 @@
 }
 
 
-.c1{
-  background-color: #84817a;
-  background-color: #d1ccc0;
-}
-.c2{
-  background-color: #40407a;
-  background-color: gold;
-}
-.c3{
-  background-color: #706fd3;
-}
-.c4{
-  background-color: #34ace0;
-}
-.c5{
-  background-color: #33d9b2;
-}
-.c6{
-  background-color: #ff5252;
-}
-.c7{
-  background-color: #ff793f;
-}
-.c8{
-  background-color: #ffb142;
-}
-.c9{
-  background-color: #218c74;
-}
+

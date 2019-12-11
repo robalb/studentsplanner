@@ -3,10 +3,17 @@ import React from 'react';
 import Calendar from '../../components/Calendar'
 
 function CalendarView(props){
-  // <CalendarP />
+  let cell = (date)=>{
+    return(
+      <div className="calendar-view-cell" >
+      </div>
+    );
+  }
   return(
     <div>
-      <Calendar />
+      <Calendar
+        cell={cell}
+      />
     </div>
   );
 }

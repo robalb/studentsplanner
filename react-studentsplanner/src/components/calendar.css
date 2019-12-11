@@ -69,27 +69,47 @@
   background-color: #f2f2f2;
 }
 
-.cells div{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.cells>div{
+  position: relative;
   background-color: white;
   color: black;
 }
 /* keep the aspect ratio of the cells to 1:1 */
 /* https://stackoverflow.com/a/54927248 */
-.cells div::before{
+.cells>div::before{
   content: "";
   padding-bottom: 100%;
   display: inline-block;
   vertical-align: top;
 }
-
-.cells .prev, .cells .next{
+.cells .prev>div, .cells .next>div{
   /* probably adds too much information to the calendar */
-  color: rgba(0,0,0,0.4);
+  /* color: rgba(0,0,0,0.3); */
+  opacity: .3;
   /* background-color: transparent; */
 }
 .cells .in-past{
-  opacity: .3;
+  /* opacity: .3; */
+  border-bottom: 4px solid black;
+}
+.cells div div{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+}
+.cells div div.primary{
+  background-color: transparent;
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cells div div.primary p{
+  /* background-color: white; */
+  /* padding: 2px; */
+  /* border-radius: 3px; */
 }
