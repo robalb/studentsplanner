@@ -78,7 +78,7 @@ export default class Calendar extends React.Component {
       let key = m.format('D M Y')
       let day = m.format('D')
       let classes = "";
-      let isInPast = !moment().isBefore(m.clone().subtract(1, 'day'));
+      let isInPast = !moment().isBefore(m.clone().add(1, 'day'));
       if(isInPast) classes += ' in-past';
       if(optionalClass) classes += ` ${optionalClass}`;
       c.push(

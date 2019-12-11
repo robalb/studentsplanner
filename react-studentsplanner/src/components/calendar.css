@@ -67,6 +67,7 @@
   /* 5 rows of 40px height elements */
   min-height: 200px;
   background-color: #f2f2f2;
+  background-color: rgba(0,0,0,0.07);
 }
 
 .cells>div{
@@ -83,15 +84,39 @@
   vertical-align: top;
 }
 .cells .prev>div, .cells .next>div{
-  /* probably adds too much information to the calendar */
-  /* color: rgba(0,0,0,0.3); */
   opacity: .3;
-  /* background-color: transparent; */
 }
-.cells .in-past{
-  /* opacity: .3; */
-  border-bottom: 4px solid black;
+/* striketrough effect */
+.cells div.in-past div:first-child::before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 50%;
+  right: 0;
+  border-top: 2px solid;
+  border-color: rgba(0,0,0,0.2);
+  -webkit-transform:rotate(-45deg);
+  -moz-transform:rotate(-45deg);
+  -ms-transform:rotate(-45deg);
+  -o-transform:rotate(-45deg);
+  transform:rotate(-45deg);
 }
+.cells div.in-past div:first-child::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 50%;
+  right: 0;
+  /* set to 2px to have a full cross on the cells */
+  border-top: 0px solid;
+  border-color: rgba(0,0,0,0.4);
+  -webkit-transform:rotate(45deg);
+  -moz-transform:rotate(45deg);
+  -ms-transform:rotate(45deg);
+  -o-transform:rotate(45deg);
+  transform:rotate(45deg);
+}
+
 .cells div div{
   width: 100%;
   height: 100%;
