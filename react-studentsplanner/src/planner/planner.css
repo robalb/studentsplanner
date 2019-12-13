@@ -32,6 +32,9 @@ button::-moz-focus-inner {
     padding: 0;
 }
 /* TODO: implement a way to avoid the focus effect while sing the mouse */
+/* https://stackoverflow.com/questions/31402576/enable-focus-only-on-keyboard-use-or-tab-press */
+/* this could be the solution */
+/* https://nelo.is/writing/styling-better-focus-states/ */
 button:focus {
   outline: 1px solid rgba(0,0,0,0.3);
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.3);

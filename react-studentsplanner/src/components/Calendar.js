@@ -51,7 +51,7 @@ export default class Calendar extends React.Component {
     return(
       <nav className="header">
         <button aria-label={"previous month"} onClick={previousMonth}>
-          <i className="material-icons" tabindex="-1"> arrow_left </i>
+          <i className="material-icons" > arrow_left </i>
         </button>
         <div > <p>{this.state.currentMonth.format("YYYY")}</p> </div>
         <Button aria-label={"select month"} onClick={toggleMonthSelection}> <p>{this.state.currentMonth.format("MMMM")}</p> </Button>
