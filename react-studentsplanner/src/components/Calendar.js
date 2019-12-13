@@ -4,6 +4,10 @@ import React from "react";
 // import moment from "moment";
 import moment from 'moment/min/moment-with-locales';
 
+// replaces divs that behave as button with this component
+// note: use this only where actual buttons are difficult to implement
+import Button from './Button.js';
+
 import './calendar.css';
 
 export default class Calendar extends React.Component {
@@ -45,12 +49,16 @@ export default class Calendar extends React.Component {
       });
     }
     return(
-      <div className="header">
-        <i className="material-icons" onClick={previousMonth}> arrow_left </i>
+      <nav className="header">
+        <button aria-label={"previous month"} onClick={previousMonth}>
+          <i className="material-icons" tabindex="-1"> arrow_left </i>
+        </button>
         <div > <p>{this.state.currentMonth.format("YYYY")}</p> </div>
-        <div onClick={toggleMonthSelection}> <p>{this.state.currentMonth.format("MMMM")}</p> </div>
-        <i className="material-icons" onClick={nextMonth}> arrow_right </i>
-      </div>
+        <Button aria-label={"select month"} onClick={toggleMonthSelection}> <p>{this.state.currentMonth.format("MMMM")}</p> </Button>
+        <button aria-label={"next month"} onClick={nextMonth}>
+          <i className="material-icons" > arrow_right </i>
+        </button>
+      </nav>
     );
   }
 
@@ -138,12 +146,12 @@ export default class Calendar extends React.Component {
       let current = (month == this.state.currentMonth.format('MMMM')) ?
         'current' : '';
       return (
-        <div className={current} onClick={()=>monthClick(month)} key={month} >
+        <button className={current} onClick={()=>monthClick(month)} key={month} >
         {month}
-        </div>
+        </button>
       );
     });
-    return <div className="month-selection">{ months }</div>;
+    return <nav className="month-selection">{ months }</nav>;
   }
 
 
@@ -155,7 +163,10 @@ export default class Calendar extends React.Component {
         {this.state.choosingMonth?
           this.renderMonthSelection()
           :
-          [ this.renderDays(), this.renderCells() ]
+          <>
+            { this.renderDays() }
+            { this.renderCells() }
+          </>
         }
       </div>
     );

@@ -1,20 +1,19 @@
 
 import React from 'react';
 import Calendar from '../../components/Calendar'
+import Button from '../../components/Button.js';
 
 function CalendarView(props){
   let cell = (date)=>{
     return(
-      <div className="calendar-view-cell" >
-      </div>
+      <Button className="calendar-view-cell" >
+      </Button>
     );
   }
   return(
-    <div>
-      <Calendar
-        cell={cell}
-      />
-    </div>
+    <Calendar
+    cell={cell}
+    />
   );
 }
 

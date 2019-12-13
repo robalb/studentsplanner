@@ -10,7 +10,9 @@
   align-items:center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(0,0,0,0.2);
-  cursor:pointer;
+}
+.header button{
+  height: 100%;
 }
 .header i{
   padding-left: 10px;
@@ -19,6 +21,10 @@
 .header div{
   flex-basis: 100%;
   text-align:center;
+}
+.header p{
+  margin: auto;
+  line-height: 40px;
 }
 .days{
   height: 40px;
@@ -42,18 +48,17 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
-.month-selection div{
+.month-selection button{
   /*part of the fallback for display grid */
   min-width: 90px;
 
-  cursor: pointer;
   padding: 10px;
   margin: 5px;
   text-align:center;
   /* border-radius: 3px; */
   /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
 }
-.month-selection div.current{
+.month-selection button.current{
   color: white;
   background-color: #333333;
 }
@@ -87,6 +92,7 @@
   opacity: .3;
 }
 /* striketrough effect */
+/* https://stackoverflow.com/questions/14593415/how-to-strike-through-obliquely-with-css/14593540 */
 .cells div.in-past div:first-child::before {
   position: absolute;
   content: "";
