@@ -157,7 +157,7 @@ export default class Calendar extends React.Component {
 
   render() {
     return (
-      <div className="calendar-container">
+      <div className="calendar-container" >
         {this.renderHeader()}
 
         {this.state.choosingMonth?

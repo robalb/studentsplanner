@@ -31,22 +31,29 @@ button::-moz-focus-inner {
     border: 0;
     padding: 0;
 }
-/* TODO: implement a way to avoid the focus effect while sing the mouse */
-/* https://stackoverflow.com/questions/31402576/enable-focus-only-on-keyboard-use-or-tab-press */
-/* this could be the solution */
-/* https://nelo.is/writing/styling-better-focus-states/ */
-button:focus {
-  outline: 1px solid rgba(0,0,0,0.3);
-  box-shadow: 0 8px 6px -6px rgba(0,0,0,0.3);
-}
+/* custom div button component */
 .div-button{
   cursor:pointer;
 }
-.div-button:focus{
+/* focus style, for users tabbing around the page. to deactivate this with mouse users: */
+/* https://stackoverflow.com/a/51093815 */
+:focus {
   outline: 1px solid rgba(0,0,0,0.3);
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.3);
 }
+body.using-mouse :focus {
+  outline: none;
+  box-shadow: none;
+}
+body.using-mouse .div-button:focus {
+  outline: none;
+}
 
+button:active, .div-button:active{
+  -webkit-tap-highlight-color: transparent;
+  outline: 1px solid rgba(0,0,0,0.1)!important;
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,0.3)!important;
+}
 
 /* --------------------------------- */
 /* ---------  CARD TEMPLATE   ------ */

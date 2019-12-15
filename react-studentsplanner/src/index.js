@@ -4,6 +4,8 @@ import './index.css';
 import Planner from './planner/Planner.js';
 import * as serviceWorker from './serviceWorker';
 
+import cssGlobal from './utils/cssFocusHelper';
+
 ReactDOM.render(<Planner />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
