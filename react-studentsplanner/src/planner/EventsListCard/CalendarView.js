@@ -6,7 +6,9 @@ import Button from '../../components/Button.js';
 function CalendarView(props){
   let cell = (date)=>{
     return(
-      <Button className="calendar-view-cell" >
+      <Button 
+      aria-label={date.format('D')}
+      className="calendar-view-cell" >
       </Button>
     );
   }

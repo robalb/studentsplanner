@@ -1,12 +1,15 @@
 import React from 'react';
 
+import Button from '../../components/Button.js';
+
 function EventBadge(props){
   return(
-    <div
+    <Button
     className="event-badge"
     style={{backgroundColor: props.baseColor}}
     onClick={props.onClick}
-    >{props.name}</div>
+    aria-label={`select event: ${props.name}`}
+    >{props.name}</Button>
   );
 }
 
@@ -24,7 +27,9 @@ function ListView(props){
   return(
     <div className="event-badges-container">
       {badges}
-      <div className="event-badge-add" onClick={()=>props.handleEventCreationBtn()}><i className="material-icons"> add_circle </i></div>
+      <Button
+      className="event-badge-add"
+      onClick={()=>props.handleEventCreationBtn()}><i className="material-icons"> add_circle </i></Button>
     </div>
   );
 }

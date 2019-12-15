@@ -80,9 +80,16 @@ class EventsListCard extends React.Component{
         <div className="top-bar">
           <h2>events</h2>
           <div>
-            <i className="material-icons"
-            onClick={()=>this.toggleViewMode()}> {toggleIcon} </i>
-            <i className="material-icons"> more_vert </i>
+            <button
+            aria-label={"toggle view mode"}
+            onClick={()=>this.toggleViewMode()}>
+             <i className="material-icons">{toggleIcon}</i>
+            </button>
+            <button
+            aria-label={"toggle view mode"}
+            >
+             <i className="material-icons">more_vert</i>
+            </button>
           </div>
         </div>
         {view}
