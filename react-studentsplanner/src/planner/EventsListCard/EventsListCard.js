@@ -1,10 +1,10 @@
 
 import React from 'react';
-import colors from '../../utils/colors';
+import colors from '../../utils/colors.js';
 
-import ListView from './ListView';
-import CalendarView from './CalendarView';
-import CreationMenu from './CreationMenu';
+import ListView from './ListView.js';
+import CalendarView from './CalendarView.js';
+import CreationMenu from './CreationMenu.js';
 
 
 class EventsListCard extends React.Component{
@@ -74,7 +74,6 @@ class EventsListCard extends React.Component{
         events={this.props.events}
         />
 
-    
     return (
       <div className="card events-list">
         <div className="top-bar">
@@ -82,11 +81,13 @@ class EventsListCard extends React.Component{
           <div>
             <button
             aria-label={"toggle view mode"}
+            title={"toggle view mode"}
             onClick={()=>this.toggleViewMode()}>
              <i className="material-icons">{toggleIcon}</i>
             </button>
             <button
-            aria-label={"toggle view mode"}
+            aria-label={"events options"}
+            title={"events options"}
             >
              <i className="material-icons">more_vert</i>
             </button>

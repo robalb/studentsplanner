@@ -9,6 +9,7 @@ function EventBadge(props){
     style={{backgroundColor: props.baseColor}}
     onClick={props.onClick}
     aria-label={`select event: ${props.name}`}
+    title={`select event: ${props.name}`}
     >{props.name}</Button>
   );
 }
@@ -28,7 +29,9 @@ function ListView(props){
     <div className="event-badges-container">
       {badges}
       <Button
-      className="event-badge-add"
+      aria-label={"create new event"}
+      title={"create new event"}
+      className={ "event-badge-add" }
       onClick={()=>props.handleEventCreationBtn()}><i className="material-icons"> add_circle </i></Button>
     </div>
   );

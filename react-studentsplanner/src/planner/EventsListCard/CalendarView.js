@@ -8,6 +8,7 @@ function CalendarView(props){
     return(
       <Button 
       aria-label={date.format('D')}
+      title={date.format('D')}
       className="calendar-view-cell" >
       </Button>
     );
