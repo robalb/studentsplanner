@@ -1,14 +1,7 @@
 import React from 'react';
 import logo from '../assets/logo.svg';
 import accountContext from '../contexts/accountContext.js';
-import ReactPlaceholder from 'react-placeholder';
-import "react-placeholder/lib/reactPlaceholder.css";
-
-//TODO: move to a HOC, in a separate folder
-import {TextRow} from 'react-placeholder/lib/placeholders';
-const awesomePlaceholder = (
-    <TextRow color='#E0E0E0' style={{margin: 0}}/>
-);
+import PlaceHolder from './PlaceHolder.js';
 
 function Header(props){
   // let account = React.useContext(accountContext);
@@ -24,15 +17,15 @@ function Header(props){
         </div>
       </div>
       <div className="class-info"> 
-        <ReactPlaceholder ready={!loading} type={"textRow"} customPlaceholder={awesomePlaceholder} firstLaunchOnly={true} showLoadingAnimation={true}>
+        <PlaceHolder ready={!loading}>
           <h2 className="name">{data.classroomName}</h2>
-       </ReactPlaceholder>
+       </PlaceHolder>
       </div>
       <div className="user">
-        <ReactPlaceholder ready={!loading} type={"textRow"} color='#E0E0E0' firstLaunchOnly={true} showLoadingAnimation={true}>
+        <PlaceHolder ready={!loading}>
           <p className="name">{!loading && data.user.uid}</p>
           {!loading && data.user.isAdmin? <p className="status-badge">admin</p> : ''}
-        </ReactPlaceholder>
+        </PlaceHolder>
         <i className="material-icons"> account_circle </i>
       </div>
     </header>
