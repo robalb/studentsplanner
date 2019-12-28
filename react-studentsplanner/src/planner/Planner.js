@@ -1,19 +1,48 @@
 import React from 'react';
 //common imports
-import Header from '../Header';
+import Header from '../components/Header.js';
 //page specific imports
 import EventsListCard from './EventsListCard/EventsListCard';
 import EventCard from './EventCard';
-import testData from './testData'
 import './planner.css';
+//context imports
+import accountContext from '../contexts/accountContext.js';
+import plannerContext from '../contexts/plannerContext.js';
+import {getApiData, updateData} from '../utils/apiResolver.js';
 
 class Planner extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      ...testData,
+      accountDataLoading: true,
+      accountData: {},
+      plannerDataLoading: true,
+      plannerData: {},
       currentEvent: undefined
     };
+  }
+
+  async loadAccountContextData(){
+    this.setState({accountDataLoading: true})
+    const newData = await getApiData('account')
+    this.setState({
+      accountDataLoading: false,
+      accountData: newData
+    })
+  }
+  async loadPlannerContextData(){
+    this.setState({plannerDataLoading: true})
+    const newData = await getApiData('planner')
+    this.setState({
+      plannerDataLoading: false,
+      plannerData: newData
+    })
+  }
+
+  componentDidMount(){
+    //TODO: make only one request
+    this.loadAccountContextData()
+    this.loadPlannerContextData()
   }
 
   handleEventClick(e){
@@ -51,20 +80,24 @@ class Planner extends React.Component{
     }
 
     return (
-      <div>
-        <Header classroomName="5M" name="alberto ventafridda" isAdmin={false} />
-        <div className="content">
-          <EventsListCard 
-            events={this.state.events}
-            handleEventClick={e=>this.handleEventClick(e)}
-            handleEventCreated={e=>this.handleEventCreated(e)}
-          />
-
-          {currentEvent}
-        </div>
-      </div>
+      <accountContext.Provider value={{data: this.state.accountData, loading: this.state.accountDataLoading}}>
+      <plannerContext.Provider>
+      <>
+        <Header/>
+      </>
+      </plannerContext.Provider>
+      </accountContext.Provider>
     );
   }
 }
 
+        // <div className="content">
+        //   <EventsListCard 
+        //     events={this.state.events}
+        //     handleEventClick={e=>this.handleEventClick(e)}
+        //     handleEventCreated={e=>this.handleEventCreated(e)}
+        //   />
+
+        //   {currentEvent}
+        // </div>
 export default Planner;

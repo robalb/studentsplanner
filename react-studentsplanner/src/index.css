@@ -166,6 +166,7 @@ header .class-info{
   flex-shrink: 3;
   margin-right: 5px;
   display: flex;
+  min-width: 100px;
   align-items:center;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -176,6 +177,7 @@ header .user{
   display: flex;
   align-items:center;
   cursor: pointer;
+  min-width: 100px;
   flex-shrink: 1;
 }
 header .user p.name{
