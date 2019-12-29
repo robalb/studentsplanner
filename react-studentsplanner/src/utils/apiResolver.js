@@ -2,7 +2,7 @@ export async function getApiData(type)
 {
   let response = await fetch(`https://my-json-server.typicode.com/robalb/tempApi/${type}`);
   let data = await response.json()
-  await sleep(2000)
+  await sleep(200)
   return data;
 }
 
