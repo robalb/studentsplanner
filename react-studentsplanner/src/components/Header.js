@@ -4,12 +4,8 @@ import accountContext from '../contexts/accountContext.js';
 import PlaceHolder from './PlaceHolder.js';
 
 function Header(props){
-  // let account = React.useContext(accountContext);
-  // let isAdmin = !account.loading && account.data.user.isAdmin;
-  // let adminTag = isAdmin? <p className="status-badge">admin</p> : '';
+  let {data, loading} = React.useContext(accountContext);
   return(
-    <accountContext.Consumer>
-    {({data, loading})=>(
     <header>
       <div className="logo">
         <div className="temporary-swg"> 
@@ -29,8 +25,6 @@ function Header(props){
         <i className="material-icons"> account_circle </i>
       </div>
     </header>
-    )}
-    </accountContext.Consumer>
   );
 }
 

@@ -45,12 +45,12 @@ class Planner extends React.Component{
     this.loadPlannerContextData()
   }
 
-  handleEventClick(e){
+  handleEventClick(selectedEvent){
     //TODO: allow multiple events if not on mobile
 
-    if(this.state.currentEvent !== e){
+    if(this.state.currentEvent !== selectedEvent){
       this.setState({
-        currentEvent: e
+        currentEvent: selectedEvent
       });
     }
   }
