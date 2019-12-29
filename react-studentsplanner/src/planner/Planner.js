@@ -18,6 +18,7 @@ class Planner extends React.Component{
       accountData: {},
       plannerDataLoading: true,
       plannerData: {},
+      //the index of the currently selected event. all the events are in an array in plannerData
       currentEvent: undefined
     };
   }
@@ -39,52 +40,57 @@ class Planner extends React.Component{
     })
   }
 
+  async updatePlannerData(newData, operation){
+    console.log("dataupdate");
+    //TODO:
+    //spawn a small, unintrusive loading bar on top of the page
+    //make api call to apiresolver>updateData
+    //on success, update state.plannerData (and therefore the connected plannerdata context)
+    //on fail, handle fail
+    //remove loading bar
+  }
+
+  updateCurrentEvent(newCurrentEventIndex){
+    //TODO: allow multiple events if not on mobile
+    if(this.state.currentEvent !== newCurrentEventIndex){
+      this.setState({
+        currentEvent: newCurrentEventIndex
+      });
+    }
+  }
+
   componentDidMount(){
     //TODO: make only one request
     this.loadAccountContextData()
     this.loadPlannerContextData()
   }
 
-  handleEventClick(selectedEvent){
-    //TODO: allow multiple events if not on mobile
-
-    if(this.state.currentEvent !== selectedEvent){
-      this.setState({
-        currentEvent: selectedEvent
-      });
-    }
-  }
-
-  handleEventCreated(e){
-    //TODO
-    //start data sync process
-
-    this.setState({
-      events: this.state.events.concat([e])
-    })
-
-  }
 
   render() {
     //TODO:
     //instead of a currentevent prop, store a currentevents prop, and if on
     //desktop display all the events contained
     let currentEvent = null;
-    let currentEventIndex = this.state.currentEvent
-    if(currentEventIndex>=0){
-      currentEvent = (
-        <EventCard
-          eventData={this.state.events[currentEventIndex]}
-        />
-      );
+    if(this.state.currentEvent>=0){
+      currentEvent = <EventCard eventIndex={this.state.currentEvent}/>;
     }
 
+    //TODO: check: is this good? is this way of creating a new obj also creating mem leaks?
+    let plannerContextValues = {
+      data: this.state.plannerData,
+      loading: this.state.plannerDataLoading,
+      update: this.updatePlannerData.bind(this),
+      current: this.state.currentEvent,
+      updateCurrent: this.updateCurrentEvent.bind(this)
+    }
     return (
       <accountContext.Provider value={{data: this.state.accountData, loading: this.state.accountDataLoading}}>
-      <plannerContext.Provider>
-      <>
+      <plannerContext.Provider value={plannerContextValues}>
         <Header/>
-      </>
+        <div className="content">
+          <EventsListCard/>
+          {currentEvent}
+        </div>
       </plannerContext.Provider>
       </accountContext.Provider>
     );

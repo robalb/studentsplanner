@@ -1,6 +1,7 @@
 import React from 'react';
-
 import Button from '../../components/Button.js';
+import PlaceHolder from '../../components/PlaceHolder.js';
+import plannerContext from '../../contexts/plannerContext.js';
 
 function EventBadge(props){
   return(
@@ -14,17 +15,26 @@ function EventBadge(props){
   );
 }
 
+
 function ListView(props){
-  const badges = props.events.map((ev, step)=>{
-    return (
-      <EventBadge 
-        baseColor={ev.baseColor}
-        onClick={() => props.handleEventClick(step)}
-        name={ev.name}
-        key={step}
-      />
-    )
-  })
+  const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext)
+
+  let badges = <>
+    <PlaceHolder ready={false} className={'event-badge preloader'}/>
+    <PlaceHolder ready={false} className={'event-badge preloader'}/>
+  </>
+  if(!loading && data.events){
+    badges = data.events.map((ev, step)=>{
+      return (
+        <EventBadge 
+          baseColor={ev.baseColor}
+          onClick={() => updateCurrent(step)}
+          name={ev.name}
+          key={step}
+        />
+      )
+    })
+  }
   return(
     <div className="event-badges-container">
       {badges}
@@ -32,7 +42,8 @@ function ListView(props){
       aria-label={"create new event"}
       title={"create new event"}
       className={ "event-badge-add" }
-      onClick={()=>props.handleEventCreationBtn()}><i className="material-icons"> add_circle </i></Button>
+      onClick={()=>props.setCreationMode(true)}
+      ><i className="material-icons"> add_circle </i></Button>
     </div>
   );
 }
