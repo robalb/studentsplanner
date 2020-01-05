@@ -1,6 +1,4 @@
 import React from 'react';
-import colors from '../../utils/colors.js';
-//components
 import ListView from './ListView.js';
 import CalendarView from './CalendarView.js';
 import CreationMenu from './CreationMenu.js';
