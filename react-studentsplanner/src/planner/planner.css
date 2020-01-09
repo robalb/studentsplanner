@@ -55,15 +55,33 @@
   /* background-color: salmon; */
 }
 /* event creation */
+.input-group{
+  margin-top: 35px!important;
+}
 h3{
   text-align: center;
 }
 /*color picker */
 .color-picker{
-
   width: 300px;
   margin: 0 auto;
   display: flex;
+  flex-wrap: wrap;
+  margin-bottom:35px;
+}
+.color-picker button{
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  border: 5px solid white;
+  background-color: red;
+  box-shadow: 0 2px 0px rgba(0,0,0,0.2);
+  transition: border 0.1s;
+}
+.color-picker button.selected{
+  box-shadow: 0 2px 0px rgba(0,0,0,0.2);
+  /* border: 5px solid rgba(0,0,0,0.2); */
+  border: 9px solid white;
 }
 
 
