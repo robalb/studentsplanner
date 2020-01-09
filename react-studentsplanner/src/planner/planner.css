@@ -54,6 +54,19 @@
 .calendar-view-cell{
   /* background-color: salmon; */
 }
+/* event creation */
+h3{
+  text-align: center;
+}
+/*color picker */
+.color-picker{
+
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+}
+
+
 
 
 

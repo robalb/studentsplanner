@@ -1,4 +1,5 @@
 
+import '../../index.css';
 //function handleEventCreationBtn(){
 //  //TODO
 //  //spawn a popup that allows the insertion of all the data.
@@ -30,7 +31,38 @@
 import React from 'react';
 
 function CreationMenu(){
-  return <p>creation menu</p>
+  return (
+    <>
+      
+      <br/>
+      <div class="input-group centered">
+        <input id="a11y-input1"type="text" required/>
+        <span class="bar"></span>
+        <label for="a11y-input1">Name</label>
+      </div>
+
+      <h3> select a color </h3>
+
+      <div class="color-picker">
+        <div class="wrapper">
+          <input name="a11y-issues" type="radio" value="1"/>
+        </div>
+
+        <div class="wrapper">
+          <input name="a11y-issues" type="radio" value="no-focus-styles"/>
+        </div>
+
+        <div class="wrapper">
+          <input name="a11y-issues" type="radio" value="html-markup"/>
+        </div>
+      </div>
+
+      <h3> select one or more dates </h3>
+
+      <br/>
+
+    </>
+  )
 }
 
 export default CreationMenu;
