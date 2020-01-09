@@ -252,3 +252,104 @@ header .user i{
   }
 }
 
+
+/* --------------------------------- */
+/* ----------  UI ELEMENTS  -------- */
+/* --------------------------------- */
+
+
+/* input box */ 
+/* https://codepen.io/chrisoncode/pen/IdGKH */
+.input-group {
+  position:relative;
+  width: 300px;
+  margin-bottom:45px;
+}
+.input-group.full-width{
+  width: 100%;
+}
+.input-group.centered{
+  margin: 0 auto;
+  margin-bottom:45px;
+}
+.input-group input {
+  font-size:18px;
+  box-shadow: 3px 3px 4px 2px rgba(0,0,0,0.1);
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:300px;
+  width: 100%;
+  border:none;
+  border-bottom:1px solid #757575;
+  box-sizing: border-box;
+}
+
+/* LABEL ======================================= */
+label {
+  color:#999; 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+.input-group input:focus ~ label, .input-group input:valid ~ label {
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+.bar  { 
+  position:relative;
+  display:block;
+  width: 100%;
+}
+.bar:before, .bar:after {
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:#5264AE; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%;
+}
+
+/* active state */
+.input-group input:focus ~ .bar:before, .input-group input:focus ~ .bar:after {
+  width:50%;
+}
+/* active state */
+.input-group input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}

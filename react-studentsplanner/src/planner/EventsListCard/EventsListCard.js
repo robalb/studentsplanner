@@ -6,7 +6,7 @@ import CreationMenu from './CreationMenu.js';
 
 function EventsListCard(){
   const [viewMode, setViewMode] = React.useState('list');
-  const [creationMode, setCreationMode] = React.useState(false);
+  const [creationMode, setCreationMode] = React.useState(true);
 
   function toggleViewMode(){
     if(creationMode){
@@ -22,7 +22,7 @@ function EventsListCard(){
   return (
     <div className="card events-list">
       <div className="top-bar">
-        <h2>events</h2>
+        <h2>{creationMode ? 'create event' : 'events' }</h2>
         <div>
           <button aria-label={"toggle view mode"}
           title={"toggle view mode"}
