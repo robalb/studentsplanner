@@ -41,8 +41,18 @@ function CreationMenu(){
   }
 
 
-  //TODO: remove from this list the colors already in use in data.events[x].baseColor
   let aviableColors = colors.colorsList.slice();
+  //removes from this list the colors already in use in data.events[x].baseColor
+  aviableColors = aviableColors.filter(color=>{
+    let foundMatch = false;
+    data.events.forEach(ev=>{
+      if(ev.baseColor == color){
+        foundMatch = true;
+      }
+    })
+    return !foundMatch;
+  })
+
 
   let colorOptions = aviableColors.map((color, step)=>{
     return(
