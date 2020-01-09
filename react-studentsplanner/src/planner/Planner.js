@@ -40,6 +40,7 @@ class Planner extends React.Component{
     })
   }
 
+  //in a functional component, this would have been a beautiful useReducer
   async updatePlannerData(newData, operation){
     console.log("dataupdate");
     //TODO:
@@ -60,7 +61,8 @@ class Planner extends React.Component{
   }
 
   componentDidMount(){
-    //TODO: make only one request
+    //TODO: make only one request, or even better, find a way to 
+    //have the account data already injected into the page
     this.loadAccountContextData()
     this.loadPlannerContextData()
   }

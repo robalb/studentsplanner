@@ -1,5 +1,7 @@
 
-import '../../index.css';
+import colors from '../../utils/colors.js';
+import plannerContext from '../../contexts/plannerContext.js';
+
 //function handleEventCreationBtn(){
 //  //TODO
 //  //spawn a popup that allows the insertion of all the data.
@@ -31,34 +33,44 @@ import '../../index.css';
 import React from 'react';
 
 function CreationMenu(){
+  const {data, loading, update} = React.useContext(plannerContext);
+  let [selectedColor, selectColor] = React.useState(0)
+
+  if(loading){
+    return (<><br/><p>...</p><br/><br/></>)
+  }
+
+
+  //TODO: remove from this list the colors already in use in data.events[x].baseColor
+  let aviableColors = colors.colorsList.slice();
+
+  let colorOptions = aviableColors.map((color, step)=>{
+    return(
+      <button
+        className={(selectedColor==step?'selected':'')}
+        onClick={()=>selectColor(step)}
+        aria-label={"select this theme color"}
+        title={"select this theme color"}
+        style={{backgroundColor:color}}
+        key={step}
+      />
+    );
+  })
+
   return (
     <>
       
-      <br/>
-      <div class="input-group centered">
-        <input id="a11y-input1"type="text" required/>
-        <span class="bar"></span>
-        <label for="a11y-input1">Name</label>
+      <div className="input-group centered">
+        <input id="a11y-input1" aria-labelledby="a11y-input1" type="text" required/>
+        <span className="bar"></span>
+        <label htmlFor="a11y-input1">Name</label>
       </div>
 
-      <h3> select a color </h3>
-
-      <div class="color-picker">
-        <div class="wrapper">
-          <input name="a11y-issues" type="radio" value="1"/>
-        </div>
-
-        <div class="wrapper">
-          <input name="a11y-issues" type="radio" value="no-focus-styles"/>
-        </div>
-
-        <div class="wrapper">
-          <input name="a11y-issues" type="radio" value="html-markup"/>
-        </div>
+      <div className="color-picker">
+        {colorOptions}
       </div>
 
-      <h3> select one or more dates </h3>
-
+      <h3> select one or more date</h3>
       <br/>
 
     </>

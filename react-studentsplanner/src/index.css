@@ -263,14 +263,14 @@ header .user i{
 .input-group {
   position:relative;
   width: 300px;
-  margin-bottom:45px;
+  margin-bottom:35px;
 }
 .input-group.full-width{
   width: 100%;
 }
 .input-group.centered{
   margin: 0 auto;
-  margin-bottom:45px;
+  margin-bottom:35px;
 }
 .input-group input {
   font-size:18px;
