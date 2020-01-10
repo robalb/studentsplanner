@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Calendar from '../../components/Calendar'
+import Calendar from '../../components/Calendar.js'
 import Button from '../../components/Button.js';
 
 function CalendarView(props){
