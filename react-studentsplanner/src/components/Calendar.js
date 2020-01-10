@@ -95,7 +95,7 @@ export default class Calendar extends React.Component {
           className={classes}
         >
           <div className="primary"> <p>{day}</p> </div>
-          {this.props.cell(m)}
+          {this.props.cell(m.clone())}
         </div>
       );
     }

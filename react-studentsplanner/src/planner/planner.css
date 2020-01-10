@@ -54,7 +54,10 @@
 .calendar-view-cell{
   /* background-color: salmon; */
 }
-/* event creation */
+
+/* --------------------------------- */
+/* -------   EVENT CREATION  ------- */
+/* --------------------------------- */
 .input-group{
   margin-top: 35px!important;
 }
@@ -82,6 +85,9 @@ h3{
   box-shadow: 0 2px 0px rgba(0,0,0,0.2);
   /* border: 5px solid rgba(0,0,0,0.2); */
   border: 9px solid white;
+}
+/* calendar cell */
+.creation-calendar-cell{
 }
 
 

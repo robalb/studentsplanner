@@ -1,6 +1,9 @@
 
+import React from 'react';
 import colors from '../../utils/colors.js';
 import plannerContext from '../../contexts/plannerContext.js';
+import Calendar from '../../components/Calendar'
+import Button from '../../components/Button.js';
 
 //function handleEventCreationBtn(){
 //  //TODO
@@ -30,16 +33,15 @@ import plannerContext from '../../contexts/plannerContext.js';
 //  };
 //}
 
-import React from 'react';
 
 function CreationMenu(){
   const {data, loading, update} = React.useContext(plannerContext);
   let [selectedColor, selectColor] = React.useState(0)
+  let [dates, setDates] = React.useState([])
 
   if(loading){
     return (<><br/><p>...</p><br/><br/></>)
   }
-
 
   let aviableColors = colors.colorsList.slice();
   //removes from this list the colors already in use in data.events[x].baseColor
@@ -52,8 +54,7 @@ function CreationMenu(){
     })
     return !foundMatch;
   })
-
-
+  //generate the buttons from the aviable colors list
   let colorOptions = aviableColors.map((color, step)=>{
     return(
       <button
@@ -66,6 +67,41 @@ function CreationMenu(){
       />
     );
   })
+
+
+  let toggleCellDate = cellDate=>{
+    //removes the cellDate from the dates array
+    let newDates = dates.filter(current=>{
+      return !(current.day == cellDate.date() && current.month == cellDate.month())
+    });
+    //if the previous operation didn't remove anything, add the date
+    if (newDates.length == dates.length){
+      newDates.push({
+        day: cellDate.date(),
+        month: cellDate.month(),
+        students: []
+      })
+    }
+    //update the dates array
+    setDates(newDates)
+  }
+
+  //the calendar cell component
+  let cell = (date)=>{
+    let cellIsSelected = dates.some(current=>{
+      return (current.day == date.date() && current.month == date.month())
+    })
+    let cellColor = cellIsSelected ? aviableColors[selectedColor] : 'transparent'
+    return(
+      <Button
+      aria-label={(cellIsSelected ? 'deselect' : 'select') + ' day ' + date.format('D')}
+      title={date.format('D')}
+      onClick={()=>toggleCellDate(date)}
+      style={{backgroundColor:cellColor}}
+      className="creation-calendar-cell" >
+      </Button>
+    );
+  }
 
   return (
     <>
@@ -81,6 +117,9 @@ function CreationMenu(){
       </div>
 
       <h3> select one or more date</h3>
+      <Calendar
+        cell={cell}
+      />
       <br/>
 
     </>
