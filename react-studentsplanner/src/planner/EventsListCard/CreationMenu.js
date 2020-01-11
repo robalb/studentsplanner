@@ -5,39 +5,11 @@ import plannerContext from '../../contexts/plannerContext.js';
 import Calendar from '../../components/Calendar'
 import Button from '../../components/Button.js';
 
-//function handleEventCreationBtn(){
-//  //TODO
-//  //spawn a popup that allows the insertion of all the data.
-//  //on confirm, the popup will close, and call plannerContext.update
-
-//  //the real popup should do somethig similar to this, but:
-//  //choose colors that arent used first, and when they finish create them by mixing existing basecolors
-//  let randomColorIndex = Math.floor(Math.random()*colors.colorsList.length)
-//  let randomColor = colors.colorsList[randomColorIndex]
-//  const testEvent = {
-//    name: "sample event"+Math.floor(Math.random()*999),
-//    repeatStudents: false,
-//    baseColor: randomColor,
-//    dates: [
-//      {
-//        day: 10,
-//        month: 11,
-//        students: []
-//      },
-//      {
-//        day: 13,
-//        month: 11,
-//        students: []
-//      }
-//    ]
-//  };
-//}
-
-
-function CreationMenu(){
+function CreationMenu(props){
   const {data, loading, update} = React.useContext(plannerContext);
   let [selectedColor, selectColor] = React.useState(0)
   let [dates, setDates] = React.useState([])
+  let [eventName, setEventName] = React.useState("")
 
   if(loading){
     return (<><br/><p>...</p><br/><br/></>)
@@ -69,16 +41,24 @@ function CreationMenu(){
   })
 
 
+  let dateObjMatches = (momentObj, day, month, year)=>{
+    return(
+      (momentObj.date() == day) &&
+      (momentObj.month() == month) &&
+      (momentObj.year() == year)
+    )
+  }
   let toggleCellDate = cellDate=>{
     //removes the cellDate from the dates array
     let newDates = dates.filter(current=>{
-      return !(current.day == cellDate.date() && current.month == cellDate.month())
+      return !dateObjMatches(cellDate, current.day, current.month, current.year)
     });
     //if the previous operation didn't remove anything, add the date
     if (newDates.length == dates.length){
       newDates.push({
         day: cellDate.date(),
         month: cellDate.month(),
+        year: cellDate.year(),
         students: []
       })
     }
@@ -87,27 +67,36 @@ function CreationMenu(){
   }
 
   //the calendar cell component
-  let cell = (date)=>{
+  let cell = cellDate =>{
     let cellIsSelected = dates.some(current=>{
-      return (current.day == date.date() && current.month == date.month())
+      return dateObjMatches(cellDate, current.day, current.month, current.year)
     })
     let cellColor = cellIsSelected ? aviableColors[selectedColor] : 'transparent'
     return(
       <Button
-      aria-label={(cellIsSelected ? 'deselect' : 'select') + ' day ' + date.format('D')}
-      title={date.format('D')}
-      onClick={()=>toggleCellDate(date)}
+      aria-label={(cellIsSelected ? 'deselect' : 'select') + ' day ' + cellDate.format('D')}
+      title={cellDate.format('D')}
+      onClick={()=>toggleCellDate(cellDate)}
       style={{backgroundColor:cellColor}}
       >
       </Button>
     );
   }
 
+  let handleCreation = ()=>{
+    //TODO: check if all values are ok, then call the context updatedata dispatch
+    props.setCreationMode(false)
+  }
+
   return (
     <>
-      
       <div className="input-group centered">
-        <input id="a11y-input1" aria-labelledby="#a11y-input1" type="text" required/>
+        <input id="a11y-input1"
+        aria-labelledby="#a11y-input1"
+        value={eventName}
+        onChange={e=>setEventName(e.target.value)}
+        type="text"
+        required/>
         <span className="bar"></span>
         <label htmlFor="a11y-input1">Name</label>
       </div>
@@ -117,9 +106,20 @@ function CreationMenu(){
       </div>
 
       <h3> select one or more date</h3>
+      <div className="calendar-shadow">
       <Calendar
         cell={cell}
       />
+      </div>
+      <div className="btns-container">
+        <button className="btn"
+        onClick={handleCreation}
+        aria-label={"create event"}
+        >create</button>
+        <button className="btn close"
+        onClick={()=>props.setCreationMode(false)}
+        aria-label={"undo event creation"}>close</button>
+      </div>
       <br/>
 
     </>
