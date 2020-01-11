@@ -31,14 +31,14 @@ const RGB = {
 const colorsList = [
   // http://www.flatcolorsui.com/
   // https://materialuicolors.co/
-  'rgb(209, 204, 192)',
   'rgb(51, 217, 178)',
   'rgb(52, 172, 224)',
   'rgb(112, 111, 211)',
   'rgb(255, 82, 82)',
   'rgb(255, 121, 63)',
   'rgb(255, 177, 66)',
-  'rgb(255, 215, 0)'
+  'rgb(255, 215, 0)',
+  // 'rgb(209, 204, 192)'
 ]
 
 export default {RGB, colorsList}
