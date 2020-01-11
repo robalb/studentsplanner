@@ -6,7 +6,7 @@ import CreationMenu from './CreationMenu.js';
 
 function EventsListCard(){
   const [viewMode, setViewMode] = React.useState('list');
-  const [creationMode, setCreationMode] = React.useState(true);
+  const [creationMode, setCreationMode] = React.useState(false);
 
   function toggleViewMode(){
     setViewMode(current => current == 'list' ? 'calendar' : 'list');

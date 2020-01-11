@@ -41,14 +41,25 @@ class Planner extends React.Component{
   }
 
   //in a functional component, this would have been a beautiful useReducer
-  async updatePlannerData(newData, operation){
-    console.log("dataupdate");
+  async updatePlannerData(operation, newData){
+    console.log("dataupdate", operation, newData);
     //TODO:
     //spawn a small, unintrusive loading bar on top of the page
     //make api call to apiresolver>updateData
     //on success, update state.plannerData (and therefore the connected plannerdata context)
     //on fail, handle fail
     //remove loading bar
+    switch(operation){
+      case 'newEvent':
+        //TODO
+        break;
+      case 'updateEventDates':
+        //TODO
+        break;
+      case 'updateDateStudents':
+        //TODO
+        break;
+    }
   }
 
   updateCurrentEvent(newCurrentEventIndex){

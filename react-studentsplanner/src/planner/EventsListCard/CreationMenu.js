@@ -83,9 +83,33 @@ function CreationMenu(props){
     );
   }
 
+  let eventExist = name=>{
+    let nameFound = false
+    data.events.forEach(ev=>{
+      if(name == ev.name) nameFound = true
+    })
+    return nameFound
+  }
+
   let handleCreation = ()=>{
-    //TODO: check if all values are ok, then call the context updatedata dispatch
-    props.setCreationMode(false)
+    if(dates.length < 1){
+      alert("select one or more dates")
+    }
+    else if(eventName.length < 1){
+      alert("enter a name for the event")
+    }
+    else if(eventExist(eventName)){
+      alert("this event already exist")
+    }
+    else{
+      update("newEvent", {
+        name: eventName,
+        repeatStudents: false,
+        baseColor: aviableColors[selectedColor],
+        dates: dates
+      })
+      props.setCreationMode(false)
+    }
   }
 
   return (
