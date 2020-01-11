@@ -60,7 +60,7 @@ function CreationMenu(){
       <button
         className={(selectedColor==step?'selected':'')}
         onClick={()=>selectColor(step)}
-        aria-label={"select this theme color"}
+        aria-label={(selectedColor==step? 'unselect' : 'select' ) + " this theme color"}
         title={"select this theme color"}
         style={{backgroundColor:color}}
         key={step}
@@ -98,7 +98,7 @@ function CreationMenu(){
       title={date.format('D')}
       onClick={()=>toggleCellDate(date)}
       style={{backgroundColor:cellColor}}
-      className="creation-calendar-cell" >
+      >
       </Button>
     );
   }
@@ -107,7 +107,7 @@ function CreationMenu(){
     <>
       
       <div className="input-group centered">
-        <input id="a11y-input1" aria-labelledby="a11y-input1" type="text" required/>
+        <input id="a11y-input1" aria-labelledby="#a11y-input1" type="text" required/>
         <span className="bar"></span>
         <label htmlFor="a11y-input1">Name</label>
       </div>
