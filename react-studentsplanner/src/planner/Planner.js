@@ -67,12 +67,14 @@ class Planner extends React.Component{
         this.setState({
            plannerDataUpdating: false
         })
-        //TODO
         break;
       case 'updateEventDates':
         //TODO
         break;
       case 'updateDateStudents':
+        //TODO
+        break;
+      case 'deleteEvent':
         //TODO
         break;
     }
