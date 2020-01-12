@@ -26,6 +26,8 @@ function CreationMenu(props){
     })
     return !foundMatch;
   })
+  //check if there are colors left
+  let limitReached = !aviableColors.length
   //generate the buttons from the aviable colors list
   let colorOptions = aviableColors.map((color, step)=>{
     return(
@@ -92,18 +94,19 @@ function CreationMenu(props){
   }
 
   let handleCreation = ()=>{
+    let trimmedEventName = eventName.trim().replace(/ +(?= )/g,'');
     if(dates.length < 1){
       alert("select one or more dates")
     }
-    else if(eventName.length < 1){
+    else if(trimmedEventName.length < 1){
       alert("enter a name for the event")
     }
-    else if(eventExist(eventName)){
+    else if(eventExist(trimmedEventName)){
       alert("this event already exist")
     }
     else{
       update("newEvent", {
-        name: eventName,
+        name: trimmedEventName,
         repeatStudents: false,
         baseColor: aviableColors[selectedColor],
         dates: dates
@@ -113,7 +116,17 @@ function CreationMenu(props){
   }
 
   return (
-    <>
+    limitReached ? 
+    (<>
+     <h3>you reached the limit of events for a demo account</h3>
+      <div className="btns-container">
+        <button className="btn "
+        onClick={()=>props.setCreationMode(false)}
+        aria-label={"undo event creation"}>ok</button>
+      </div>
+      <br/>
+     </>) :
+    (<>
       <div className="input-group centered">
         <input id="a11y-input1"
         aria-labelledby="#a11y-input1"
@@ -146,7 +159,7 @@ function CreationMenu(props){
       </div>
       <br/>
 
-    </>
+    </>)
   )
 }
 
