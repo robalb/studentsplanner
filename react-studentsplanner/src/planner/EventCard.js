@@ -2,11 +2,61 @@ import React from 'react';
 import colors from '../utils/colors';
 import plannerContext from '../contexts/plannerContext.js';
 
+
+function EventCardRow(props){
+  let participants = ""
+  return (
+    <div>
+      <div className="date"><h4>4/11</h4></div>
+      <div className="participants">
+        {participants}
+        <div>
+          giorgio vasari
+          <i className="material-icons"> close </i>
+        </div>
+        <div>
+          mario vasari
+          <i className="material-icons"> close </i>
+        </div>
+        <div><i className="material-icons"> add_circle</i></div>
+      </div>
+    </div>
+  );
+}
+
 function EventCard(props){
-  const {data, loading, update} = React.useContext(plannerContext);
+  const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext);
   const eventData = data.events[props.eventIndex]
   const solidBaseColor = eventData.baseColor;
   const lightBaseColor = colors.RGB.linearShade(0.6, solidBaseColor)
+
+  let generateRow = (data, index)=>{
+    //TODO: make this international
+    let date = data.day +"/"+ (data.month + 1)
+    //generate participants tag list
+    let participants = ""
+    if(data.students.length > 0){
+      participants = data.students.map(student=>(
+        <div key={student} >
+        {student}
+        <i className="material-icons"> close </i>
+        </div>
+      ))
+    }
+    return (
+      <div key={index}>
+        <div className="date"><h4>
+        {date}
+        </h4></div>
+        <div className="participants">
+          {participants}
+          <div><i className="material-icons"> add_circle</i></div>
+        </div>
+      </div>
+    );
+  }
+
+  let dates = eventData.dates.map( generateRow )
   return(
       <div className="card event"
         style={{backgroundColor: lightBaseColor}}
@@ -15,112 +65,19 @@ function EventCard(props){
           style={{backgroundColor: solidBaseColor}}
         >
           <h2>{ eventData.name }</h2>
-          <div>
-            <i className="material-icons"> more_vert </i>
-            <i className="material-icons"> close </i>
-          </div>
+          <button aria-label={"close event card"}
+          title={"close event card"}
+          onClick={()=>updateCurrent(undefined)}
+          ><i className="material-icons">close</i></button>
         </div>
         <div className="calendar">
-
-          <div>
-            <div className="date"><h4>4/11</h4></div>
-            <div className="participants">
-              <div>
-                giorgio vasari
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                mario vasari
-                <i className="material-icons"> close </i>
-              </div>
-              <div><i className="material-icons"> add_circle</i></div>
-            </div>
-          </div>
-
-          <div>
-            <div className="date"><h4>5/11</h4></div>
-            <div className="participants">
-              <div>
-                giorgio
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                mario
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                mario vasari
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                mario
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                mario 
-                <i className="material-icons"> close </i>
-              </div>
-              <div><i className="material-icons"> add_circle</i></div>
-
-            </div>
-          </div>
-
-          <div>
-            <div className="date"><h4>10/11</h4></div>
-            <div className="participants">
-              <div>
-                giorgio vasari
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                francesco ferdinado
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                mario vasari
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                genitore1 genitore2
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                mario vasari
-                <i className="material-icons"> close </i>
-              </div>
-              <div><i className="material-icons"> add_circle</i></div>
-
-            </div>
-          </div>
-
-          <div>
-            <div className="date"><h4>10/1</h4></div>
-            <div className="participants">
-              <div><i className="material-icons"> add_circle</i></div>
-            </div>
-          </div>
-
-
-          <div>
-            <div className="date"><h4>120/11</h4></div>
-            <div className="participants">
-              <div>
-                giorgio vasari
-                <i className="material-icons"> close </i>
-              </div>
-              <div>
-                mario vasari
-                <i className="material-icons"> close </i>
-              </div>
-              <div><i className="material-icons"> add_circle</i></div>
-            </div>
-          </div>
-
+          {dates}
           <div>
             <div className="date">
               <i className="material-icons"> add_circle </i>
             </div>
           </div>
+
         </div>
       </div>
   );
