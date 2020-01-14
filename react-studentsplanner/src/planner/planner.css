@@ -211,8 +211,14 @@ h3{
   color: white;
 }
 /*add date box */
-.event .calendar>div:last-child i{
-  font-size: 32px;
+/* .event .calendar>div:last-child i{ */
+/*   font-size: 32px; */
+/* } */
+/* edit card white container */
+.event .edit-card-container{
+  padding-top: 15px;
+  height: 100%;
+  background-color: white;
 }
 
 
