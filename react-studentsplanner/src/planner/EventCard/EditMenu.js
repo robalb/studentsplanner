@@ -69,7 +69,7 @@ function EditMenu(props){
   console.log(eventData.dates[0])
 
   return (
-    <div class="edit-card-container">
+    <div className="edit-card-container">
     <h3>edit dates</h3>
     <div className="calendar-shadow">
       <Calendar currentMonth={dates[0].month} cell={cell}/>
