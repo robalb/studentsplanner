@@ -45,6 +45,17 @@ class Planner extends React.Component{
     })
   }
 
+  sortDatesArray(objA, objB){
+    let params = ['year','month','day']
+    for(let param of params){
+      let a = objA[param]
+      let b = objB[param]
+      if (a > b) return 1;
+      if (b > a) return -1;
+    }
+    return 0;
+  }
+
   //in a functional component, this would have been a beautiful useReducer
   async updatePlannerData(operation, newData){
     console.log("dataupdate", operation, newData);
@@ -56,6 +67,7 @@ class Planner extends React.Component{
     //remove loading bar
     switch(operation){
       case 'newEvent':
+        newData.dates.sort(this.sortDatesArray)
         this.setState({
            plannerDataUpdating: true,
           plannerData: {
@@ -63,13 +75,26 @@ class Planner extends React.Component{
             events: [...this.state.plannerData.events, newData]
           }
         })
-        const response = await getApiData('simulateOk')
+        const response1 = await getApiData('simulateOk')
         this.setState({
            plannerDataUpdating: false
         })
         break;
+
       case 'updateEventDates':
-        //TODO
+        let newEvents = this.state.plannerData.events;
+        newEvents[newData.eventIndex].dates = newData.dates.sort(this.sortDatesArray)
+        this.setState({
+           plannerDataUpdating: true,
+          plannerData: {
+            ...this.state.plannerData,
+            events: newEvents
+          }
+        })
+        const response2 = await getApiData('simulateOk')
+        this.setState({
+           plannerDataUpdating: false
+        })
         break;
       case 'updateDateStudents':
         //TODO
