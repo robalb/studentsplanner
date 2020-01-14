@@ -2,7 +2,7 @@
 import React from 'react';
 import colors from '../../utils/colors.js';
 import plannerContext from '../../contexts/plannerContext.js';
-import Calendar from '../../components/Calendar'
+import Calendar from '../../components/Calendar.js'
 import Button from '../../components/Button.js';
 
 function CreationMenu(props){

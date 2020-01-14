@@ -4,7 +4,7 @@ import Header from '../components/Header.js';
 import LoadingBar from '../components/LoadingBar.js'
 //page specific imports
 import EventsListCard from './EventsListCard/EventsListCard';
-import EventCard from './EventCard';
+import EventCard from './EventCard/EventCard.js';
 import './planner.css';
 //context imports
 import accountContext from '../contexts/accountContext.js';

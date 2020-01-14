@@ -18,7 +18,10 @@ export default class Calendar extends React.Component {
     //set the moment internationalizzation parameters
     moment.locale(locale)
 
-    let currentMonth = props.currentMonth ? props.currentMonth : moment()
+    let currentMonth = moment()
+    if(props.currentMonth && currentMonth >= 0 && props.currentMonth < 13){
+      currentMonth.month(props.currentMonth)
+    }
 
     this.state = {
       //the calendar language
