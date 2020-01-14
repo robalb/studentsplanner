@@ -74,12 +74,12 @@ function EditMenu(props){
     </div>
     <div className="btns-container">
       <button className="btn"
-      aria-label={"create event"}
+      aria-label={"save changes"}
       onClick={handleCreation}
       >save</button>
       <button className="btn close"
       onClick={()=>props.setEditMode(false)}
-      aria-label={"undo event creation"}>close</button>
+      aria-label={"undo changes"}>close</button>
     </div>
     <br/>
     </div>
