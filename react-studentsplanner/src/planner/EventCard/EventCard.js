@@ -31,9 +31,9 @@ function EventCard(props){
       students: data.students.filter(current=>current != student)
     })
   }
-  let handleAddStudent = dataIndex=>{
+  let handleAddStudent = dateIndex=>{
     setSelectMode({
-      dataIndex: dataIndex,
+      dateIndex: dateIndex,
       eventIndex: props.eventIndex
     })
 
