@@ -1,6 +1,7 @@
 import React from 'react';
 import plannerContext from '../../contexts/plannerContext.js';
 import accountContext from '../../contexts/accountContext.js';
+import Button from '../../components/Button.js';
 
 function StudentsList(props){
   const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext);
@@ -38,6 +39,12 @@ function StudentsList(props){
           </div>
         </div>
         <h3>student for {pickerTitle}</h3>
+        <div className="badges-container">
+          <Button>roberto</Button>
+          <Button>roberto</Button>
+          <Button>roberto</Button>
+          <Button>roberto</Button>
+        </div>
     </div>
       
   )
