@@ -45,6 +45,7 @@ class Planner extends React.Component{
     })
   }
 
+  //look at this. Isn't it beautiful?
   sortDatesArray(objA, objB){
     let params = ['year','month','day']
     for(let param of params){
@@ -59,12 +60,10 @@ class Planner extends React.Component{
   //in a functional component, this would have been a beautiful useReducer
   async updatePlannerData(operation, newData){
     console.log("dataupdate", operation, newData);
-    //TODO:
-    //spawn a small, unintrusive loading bar on top of the page
-    //make api call to apiresolver>updateData
-    //on success, update state.plannerData (and therefore the connected plannerdata context)
-    //on fail, handle fail
-    //remove loading bar
+    //TODO: setState is asyncronous. check if setting a new state based on the old state like this
+    //is a good idea cause it looks like a good source for hidden racing conditons
+    //TODO: handle connection errors. this should probably be done in the getApidata script
+    //TODO: optimize this code: put the switch only in the logic behind the newEvents varaible. the rest is the same in every switch case
     switch(operation){
       case 'newEvent':
         newData.dates.sort(this.sortDatesArray)
@@ -82,7 +81,7 @@ class Planner extends React.Component{
         break;
 
       case 'updateEventDates':
-        let newEvents = this.state.plannerData.events;
+        let newEvents = this.state.plannerData.events.slice();
         newEvents[newData.eventIndex].dates = newData.dates.sort(this.sortDatesArray)
         this.setState({
            plannerDataUpdating: true,
@@ -97,7 +96,19 @@ class Planner extends React.Component{
         })
         break;
       case 'updateDateStudents':
-        //TODO
+        let newEvents2 = this.state.plannerData.events.slice(0);
+        newEvents2[newData.eventIndex].dates[newData.dateIndex].students = newData.students
+        this.setState({
+           plannerDataUpdating: true,
+          plannerData: {
+            ...this.state.plannerData,
+            events: newEvents2
+          }
+        })
+        const response3 = await getApiData('simulateOk')
+        this.setState({
+           plannerDataUpdating: false
+        })
         break;
       case 'deleteEvent':
         //TODO
@@ -106,7 +117,7 @@ class Planner extends React.Component{
   }
 
   updateCurrentEvent(newCurrentEventIndex){
-    //TODO: allow multiple events if not on mobile
+    //TODO: allow multiple events if not on mobile [same as the issue described in line 123]
     if(this.state.currentEvent !== newCurrentEventIndex){
       this.setState({
         currentEvent: newCurrentEventIndex
@@ -125,7 +136,7 @@ class Planner extends React.Component{
   render() {
     //TODO:
     //instead of a currentevent prop, store a currentevents prop, and if on
-    //desktop display all the events contained
+    //desktop display all the events contained [same issue as the one described on line 106]
     let currentEvent = null;
     if(this.state.currentEvent>=0){
       currentEvent = <EventCard eventIndex={this.state.currentEvent}/>;

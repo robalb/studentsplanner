@@ -195,8 +195,16 @@ h3{
   background-color: white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
-.event .calendar .participants div i{
+.event .calendar .participants button{
+  height: auto;
+  display: flex;
+}
+.event .calendar .participants button:hover i{
+  transform: scale(0.8, 0.8);
+}
+.event .calendar .participants button i{
   margin-left: 10px;
+  transition: all 0.1s;
 }
 /*add participant box */
 .event .calendar .participants div:last-child{
@@ -205,11 +213,18 @@ h3{
   box-shadow: none;
   padding: 0;
 }
+.event .calendar .participants div:last-child:active{
+  box-shadow:none!important;
+  outline: none!important;
+}
 .event .calendar .participants div:last-child i{
   cursor: pointer;
   font-size: 32px;
   text-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   color: white;
+}
+.event .calendar .participants div:last-child:active i{
+  text-shadow: 0 4px 2px rgba(0,0,0,0.3);
 }
 /*add date box */
 /* .event .calendar>div:last-child i{ */
