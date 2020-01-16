@@ -17,6 +17,7 @@
   /*part of the fallback for display grid */
   min-width: 90px;
 
+  overflow: hidden;
   cursor: pointer;
   padding: 10px;
   margin: 5px;
@@ -153,7 +154,7 @@ h3{
   background-color: #fff099;
 }
 .event .top-bar{
-  cursor: move;
+  /* cursor: move; */
 }
 .event .calendar>div{
   display: flex;
@@ -238,4 +239,22 @@ h3{
 }
 
 
-
+/* --------------------------------- */
+/* ---------   EVENTS LIST  -------- */
+/* --------------------------------- */
+.students-picker-container{
+  background-color: white;
+  margin: 0;
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  box-shadow: 0 4px 13px rgba(0,0,0,0.42), 0 1px 2px rgba(0,0,0,0.34);
+  transform: translateX(250px);
+  transition: transform 0.4s;
+  z-index: 420;
+}
+.students-picker-container.visible{
+  transform: translateX(0);
+}

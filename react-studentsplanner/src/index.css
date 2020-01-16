@@ -402,7 +402,7 @@ label {
   overflow: hidden;
   transition: height 0.5s;
   /* for a good time */
-  z-index: 3259762342;
+  z-index: 3279762342;
 }
 .loading-bar.active{
   height: 5px;
