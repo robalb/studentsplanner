@@ -28,7 +28,7 @@ function StudentsList(props){
     //the students that are not already in this date
     let studentsThatCanBePicked = allStudents.filter( student=> presentStudents.indexOf(student) < 0)
 
-    //TODO: implement this
+    //TODO: make this configurable
     let idoneityFilteredStudents = idoneityFilterAlgorithm(studentsThatCanBePicked, eventIndex, dateIndex, data.events)
     
     studentBadges = idoneityFilteredStudents.map(student=>{
