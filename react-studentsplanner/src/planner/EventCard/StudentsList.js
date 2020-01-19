@@ -2,25 +2,54 @@ import React from 'react';
 import plannerContext from '../../contexts/plannerContext.js';
 import accountContext from '../../contexts/accountContext.js';
 import Button from '../../components/Button.js';
+import colors from '../../utils/colors.js';
+import idoneityFilterAlgorithm from '../../utils/idoneityFilterAlgorithm.js';
 
 function StudentsList(props){
   const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext);
-  //TODO:
-  //show only if props.targetSelection is not false,
-  //add close button that  calls props.setSelectMode(false)
-  //add styles in planner.css
-  // <i className="material-icons"> gps_fixed </i>
+  const accountData = React.useContext(accountContext)
 
   let visible = props.targetSelection ? "visible" : ""
   let classes = `card students-picker-container ${visible}`
 
-  let pickerTitle="", eventData = undefined, eventDates
-  if(visible){
-    eventData = data.events[props.targetSelection.eventIndex]
-    eventDates = eventData.dates[props.targetSelection.dateIndex]
-    pickerTitle = eventDates.day +"/" + eventDates.month
+  const handleStudentClick = updateData=>{
+    update("updateDateStudents", updateData)
+    props.setSelectMode(false)
   }
-  let date = visible? props.targetSelection.dataIndex : ""
+
+  let studentBadges = []
+  if(visible){
+    let eventIndex = props.targetSelection.eventIndex
+    let dateIndex = props.targetSelection.dateIndex
+    //the students already in this date
+    let presentStudents = data.events[eventIndex].dates[dateIndex].students.slice()
+    //all the students in the current classroom
+    let allStudents = accountData.data.students.map( student=> student.uid)
+    //the students that are not already in this date
+    let studentsThatCanBePicked = allStudents.filter( student=> presentStudents.indexOf(student) < 0)
+
+    //TODO: implement this
+    let idoneityFilteredStudents = idoneityFilterAlgorithm(studentsThatCanBePicked, eventIndex, dateIndex, data.events)
+    
+    studentBadges = idoneityFilteredStudents.map(student=>{
+      let updateData = {
+        eventIndex: eventIndex,
+        dateIndex: dateIndex,
+        students: [...presentStudents, student.uid]
+      }
+      return(
+        <Button
+        label={'select '+student.uid}
+        aria-label={'select '+student.uid}
+        key={student.uid}
+        style={{backgroundColor: student.color}}
+        onClick={()=>handleStudentClick(updateData)}
+        >{student.uid}</Button>
+      )
+    })
+
+    if(studentBadges.length < 1) studentBadges = <p>there are no students aviable for this date</p>
+  }
   return (
     <div className={classes} >
         <div className="top-bar">
@@ -38,12 +67,8 @@ function StudentsList(props){
             </button>
           </div>
         </div>
-        <h3>student for {pickerTitle}</h3>
         <div className="badges-container">
-          <Button>roberto</Button>
-          <Button>roberto</Button>
-          <Button>roberto</Button>
-          <Button>roberto</Button>
+          {studentBadges}
         </div>
     </div>
       
