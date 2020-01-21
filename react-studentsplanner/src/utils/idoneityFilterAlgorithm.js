@@ -30,7 +30,7 @@ function idoneityFilterAlgorithm(students, eventIndex, dateIndex, events){
     //priority: bad
     if(priority==0) return color
     //priority: medium
-    if( priority < 2) return colors.RGB.linearShade(0.6, color)
+    if( priority <= 2) return colors.RGB.linearShade(0.6, color)
     //priority: good
     return 'rgb(255,255,255)'
   }
@@ -75,7 +75,9 @@ function idoneityFilterAlgorithm(students, eventIndex, dateIndex, events){
 
   console.log("priorities:")
   students.forEach(s=>console.log(s.uid, s.closestDateInterval))
-  return students.map(student=> ({uid: student.uid,color:student.closestDateColor}))
+  return students.map(student=> ({uid: student.uid,
+                                 color:student.closestDateColor,
+                                priority: student.closestDateInterval}))
 }
 
 export default idoneityFilterAlgorithm
