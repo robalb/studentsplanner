@@ -115,6 +115,10 @@ button:active, .div-button:active{
   height: 60px;
   padding-right: 10px;
 }
+.card .top-bar button:disabled,
+.card .top-bar button[disabled]{
+  opacity: .1;
+}
 .card .top-bar button i{
   margin-left: 10px;
   margin-right: 5px;

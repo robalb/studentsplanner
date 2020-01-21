@@ -9,6 +9,12 @@ function StudentsList(props){
   const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext);
   const accountData = React.useContext(accountContext)
 
+  let [pulsingIndex, setPulsingIndex] = React.useState(-1);
+  //when the window is closed, clear the varaible containing the extracted student
+  React.useEffect(()=>{
+    setPulsingIndex(-1)
+  }, [ props.targetSelection ])
+
   let visible = props.targetSelection ? "visible" : ""
   let classes = `card students-picker-container ${visible}`
 
@@ -17,30 +23,59 @@ function StudentsList(props){
     props.setSelectMode(false)
   }
 
+  let diceEnabled = false
+  let handleDiceClick = ()=>{
+    //just initializing..
+  }
+
   let studentBadges = []
   if(visible){
     let eventIndex = props.targetSelection.eventIndex
     let dateIndex = props.targetSelection.dateIndex
     //the students already in this date
-    let presentStudents = data.events[eventIndex].dates[dateIndex].students.slice()
+    let presentDateStudents = data.events[eventIndex].dates[dateIndex].students.slice()
+    //the students already in this event.
+    //TODO: make this configurable - in case someone wants to insert a student multiple times in the same event
+    let presentEventStudents = presentDateStudents
+    if(true){
+      presentEventStudents =  data.events[eventIndex].dates.slice().reduce((a,c)=>a.concat(c.students),[])
+    }
     //all the students in the current classroom
     let allStudents = accountData.data.students.map( student=> student.uid)
     //the students that are not already in this date
-    let studentsThatCanBePicked = allStudents.filter( student=> presentStudents.indexOf(student) < 0)
+    let studentsThatCanBePicked = allStudents.filter( student=> presentEventStudents.indexOf(student) < 0)
 
     //TODO: make this configurable
     let idoneityFilteredStudents = idoneityFilterAlgorithm(studentsThatCanBePicked, eventIndex, dateIndex, data.events)
+
+    //magic dice section
+    let ballotStudents = idoneityFilteredStudents.filter( (student, i, a)=>(
+      student.priority == a[0].priority
+    ))
+    diceEnabled = ballotStudents.length > 1
+
+    handleDiceClick = ()=>{
+      setPulsingIndex(Math.floor(Math.random()* ballotStudents.length))
+    }
+
+    console.log({diceEnabled, pulsingIndex})
     
-    studentBadges = idoneityFilteredStudents.map(student=>{
+    //badges generation
+    studentBadges = idoneityFilteredStudents.map((student, i)=>{
       let updateData = {
         eventIndex: eventIndex,
         dateIndex: dateIndex,
-        students: [...presentStudents, student.uid]
+        students: [...presentDateStudents, student.uid]
       }
+      let pulsing = ''
+      if(diceEnabled && pulsingIndex == i) pulsing = 'pulsing';
+      if(!diceEnabled && i == 0) pulsing = 'pulsing'
+
       return(
         <Button
-        label={'select '+student.uid}
+        className={pulsing}
         aria-label={'select '+student.uid}
+        label={`select ${student.uid} (${student.priority})`}
         key={student.uid}
         style={{backgroundColor: student.color}}
         onClick={()=>handleStudentClick(updateData)}
@@ -48,7 +83,8 @@ function StudentsList(props){
       )
     })
 
-    if(studentBadges.length < 1) studentBadges = <p>there are no students aviable for this date</p>
+    if(studentBadges.length < 1) studentBadges = <p>there are no students aviable for this date</p>;
+
   }
   return (
     <div className={classes} >
@@ -59,7 +95,10 @@ function StudentsList(props){
           > <i className="material-icons"> close </i>
           </button>
           <div>
-            <button>
+            <button
+            onClick={handleDiceClick}
+            disabled={!diceEnabled}
+            >
             <i className="material-icons"> casino </i>
             </button>
             <button>
