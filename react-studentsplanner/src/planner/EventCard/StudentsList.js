@@ -96,6 +96,8 @@ function StudentsList(props){
           </button>
           <div>
             <button
+            aria-label={"select random student"}
+            title={"select random student"}
             onClick={handleDiceClick}
             disabled={!diceEnabled}
             >
