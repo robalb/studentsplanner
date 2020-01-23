@@ -58,8 +58,6 @@ function StudentsList(props){
       setPulsingIndex(Math.floor(Math.random()* ballotStudents.length))
     }
 
-    console.log({diceEnabled, pulsingIndex})
-    
     //badges generation
     studentBadges = idoneityFilteredStudents.map((student, i)=>{
       let updateData = {
@@ -75,7 +73,7 @@ function StudentsList(props){
         <Button
         className={pulsing}
         aria-label={'select '+student.uid}
-        label={`select ${student.uid} (${student.priority})`}
+        title={`select ${student.uid} (${student.priority})`}
         key={student.uid}
         style={{backgroundColor: student.color}}
         onClick={()=>handleStudentClick(updateData)}
