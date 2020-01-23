@@ -5,8 +5,9 @@ function idoneityFilterAlgorithm(students, eventIndex, dateIndex, events){
   let currentDate = events[eventIndex].dates[dateIndex]
   students = students.map(student=> ( {
     uid: student,
-    //Ok, this is kinda dirty. But so is your mother, and no one complains.
-    closestDateInterval: 99,
+    //TODO: make this configurable. the initial value is the max value this parameter can assume.
+    //default: 3 weeks (21days)
+    closestDateInterval: 21,
     closestDateColor: 'transparent',
     currentMonth: currentDate.month,
     currentDay: currentDate.day,
