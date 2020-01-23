@@ -2,13 +2,10 @@ import moment from 'moment'
 import colors from './colors.js';
 
 function idoneityFilterAlgorithm(students, eventIndex, dateIndex, events){
-  //TODO:
-  //transfor students array in object array with attributes: closestDate, currentDate
-  //iterate events, and for every date in curent event:
-  //for every student: if is in the students list, check if the current date is closer than the current one, nad update the list
   let currentDate = events[eventIndex].dates[dateIndex]
   students = students.map(student=> ( {
     uid: student,
+    //Ok, this is kinda dirty. But so is your mother, and no one complains.
     closestDateInterval: 99,
     closestDateColor: 'transparent',
     currentMonth: currentDate.month,
