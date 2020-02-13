@@ -1,0 +1,328 @@
+
+
+/* --------------------------------- */
+/* ---------   EVENTS LIST  -------- */
+/* --------------------------------- */
+.events-list .event-badges-container{
+  padding: 10px;
+  /*fallback for display grid */
+  display: flex;
+  flex-wrap: wrap;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+
+}
+.events-list .event-badges-container .event-badge{
+  /*part of the fallback for display grid */
+  min-width: 90px;
+
+  overflow: hidden;
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+  text-align:center;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.events-list .event-badges-container .event-badge.preloader{
+  margin: 5px!important;
+  width: auto!important;
+}
+.events-list .event-badges-container .event-badge-add{
+  /*part of the fallback for display grid */
+  min-width: 90px;
+
+  cursor: pointer;
+  padding: 0 10px 0 10px;
+  margin: 5px;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+.events-list .event-badges-container .event-badge-add:active{
+  box-shadow:none!important;
+  outline: none!important;
+}
+.events-list .event-badges-container .event-badge-add:active i{
+  text-shadow: 0 4px 2px rgba(0,0,0,0.3);
+}
+.events-list .event-badges-container .event-badge-add i{
+  font-size: 32px;
+  line-height: 1;
+}
+/* calendar cell for the events calendar view */
+.calendar-view-cell{
+  /* background-color: salmon; */
+}
+
+/* --------------------------------- */
+/* -------   EVENT CREATION  ------- */
+/* --------------------------------- */
+.input-group{
+  margin-top: 35px!important;
+}
+h3{
+  text-align: center;
+}
+.calendar-shadow{
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24) ,0 -1px 6px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.10);
+}
+/*color picker */
+.color-picker{
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom:35px;
+}
+.color-picker button{
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  border: 5px solid white;
+  background-color: red;
+  box-shadow: 0 2px 0px rgba(0,0,0,0.2);
+  transition: border 0.1s;
+}
+.color-picker button.selected{
+  box-shadow: 0 2px 0px rgba(0,0,0,0.2);
+  /* border: 5px solid rgba(0,0,0,0.2); */
+  border: 9px solid white;
+}
+/*buttons*/
+.btns-container{
+  margin: 30px 0 30px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btns-container .close{
+  /* background-color: rgba(225, 23,0,0.2); */
+  box-shadow: 2px 2px 8px rgba(255, 32, 0, 0.4);
+}
+
+
+
+
+
+/* --------------------------------- */
+/* --------  STUDENTS LIST  -------- */
+/* --------------------------------- */
+ /* make the card float on the left, on mobile */
+.students-list{
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #fcfcfc;
+  box-shadow: 0 6px 9px rgba(0,0,0,0.26), 0 3px 6px rgba(0,0,0,0.43);
+
+  display: none;
+}
+.students-list .students-container{
+  overflow-y: auto;
+  /* 100vh -(top bar height) -(safety margin) */
+  max-height: calc(100vh - 60px  - 20px);
+}
+.students-list .students-container div{
+  overflow:hidden;
+  margin: 5px;
+  width: auto;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+/* two columns layout, for devices where one column would show just a */
+/* couple of names at the time */
+@media (max-height: 460px){
+  .students-list .students-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    /*fallback for display grid */
+    column-count: 2;
+    column-gap: 0;
+  }
+}
+
+
+
+
+/* --------------------------------- */
+/* -------------  EVENT ------------ */
+/* --------------------------------- */
+.event{
+  background-color: #fff099;
+}
+.event .top-bar{
+  /* cursor: move; */
+}
+.event .calendar>div{
+  display: flex;
+  border-bottom: 2px solid rgba(0,0,0,0.2);
+}
+.event .calendar .date{
+  flex-shrink: 0;
+  width: 45px;
+  overflow: hidden;
+
+  padding-left: 15px;
+  padding: 5px 15px 5px 15px;
+  display: flex;
+  align-items: center;
+  border-right: 2px dashed rgba(0,0,0,0.2);
+}
+.event .calendar .participants{
+  padding: 10px;
+
+  /*fallback for display grid */
+  display: flex;
+  flex-wrap: wrap;
+
+  /* commented in order to use the flexbox fallback: i thinks it looks better */
+  /* display: grid; */
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.event .calendar .participants div{
+  /*part of the fallback for the parent display grid */
+  min-width: 90px;
+
+  padding: 5px;
+  margin: 5px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.event .calendar .participants button{
+  height: auto;
+  display: flex;
+}
+.event .calendar .participants button:hover i{
+  transform: scale(0.8, 0.8);
+}
+.event .calendar .participants button i{
+  margin-left: 10px;
+  transition: all 0.1s;
+}
+/*add participant box */
+.event .calendar .participants div:last-child{
+  min-width: 45px;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+.event .calendar .participants div:last-child:active{
+  box-shadow:none!important;
+  outline: none!important;
+}
+.event .calendar .participants div:last-child i{
+  cursor: pointer;
+  font-size: 32px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  color: white;
+}
+.event .calendar .participants div:last-child:active i{
+  text-shadow: 0 4px 2px rgba(0,0,0,0.3);
+}
+/*add date box */
+/* .event .calendar>div:last-child i{ */
+/*   font-size: 32px; */
+/* } */
+/* edit card white container */
+.event .edit-card-container{
+  padding-top: 15px;
+  height: 100%;
+  background-color: white;
+}
+
+
+/* --------------------------------- */
+/* ------   STUDENTS PICKER  ------- */
+/* --------------------------------- */
+.students-picker-container{
+  background-color: white;
+  margin: 0;
+  position: fixed;
+  /*TODO: find the best size on all device sizes */
+  width: 200px;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  box-shadow: 0 4px 13px rgba(0,0,0,0.42), 0 1px 2px rgba(0,0,0,0.34);
+  transform: translateX(250px);
+  transition: transform 0.4s;
+  z-index: 420;
+}
+.students-picker-container.visible{
+  transform: translateX(0);
+}
+
+.students-picker-container .badges-container{
+  width:100%;
+  max-height: calc(100vh - 120px);
+  overflow: hidden;
+  overflow-y: auto;
+
+
+  padding: 10px;
+  box-sizing: border-box;
+  /*fallback for display grid */
+  display: flex;
+  flex-wrap: wrap;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+
+}
+.students-picker-container .badges-container div{
+  /*part of the fallback for display grid */
+  min-width: 90px;
+
+  overflow: hidden;
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+  text-align:center;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+/* pulsing tag */
+/* https://codepen.io/seansean11/pen/dhwzj */
+.pulsing{
+  animation: pulse 2.5s infinite, appear 1.5s;
+}
+@keyframes pulse {
+  0% {
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  70% {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+@keyframes appear {
+  0% {
+    box-shadow: 0 0 0 0 rgba(90, 153, 212, 0.5),0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
+  }
+  70%{
+    box-shadow: 0 0 0 50px rgba(90, 153, 212, 0),0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
+  }
+  100%{
+    box-shadow: 0 0 0 0 rgba(90, 153, 212, 0),0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
+  }
+}

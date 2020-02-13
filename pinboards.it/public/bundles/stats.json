@@ -1,0 +1,42 @@
+{
+  "errors": [],
+  "warnings": [],
+  "entrypoints": {
+    "about": {
+      "chunks": [
+        0,
+        1
+      ],
+      "assets": [
+        "runtime.375940863d83f82addf1.bundle.js",
+        "about.9236f48f4344a8561322.bundle.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "hello": {
+      "chunks": [
+        0,
+        2
+      ],
+      "assets": [
+        "runtime.375940863d83f82addf1.bundle.js",
+        "hello.0c1ba522a0b4e8d41f62.bundle.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "index": {
+      "chunks": [
+        0,
+        3
+      ],
+      "assets": [
+        "runtime.375940863d83f82addf1.bundle.js",
+        "index.1b86d907cec55075d373.bundle.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  }
+}
