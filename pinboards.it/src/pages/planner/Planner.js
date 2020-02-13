@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../components/Header.js';
 import LoadingBar from '../components/LoadingBar.js'
 //page specific imports
-import EventsListCard from './EventsListCard/EventsListCard';
+import EventsListCard from './EventsListCard/EventsListCard.js';
 import EventCard from './EventCard/EventCard.js';
 import './planner.css';
 //context imports

@@ -1,6 +1,6 @@
 <?php
-require_once './core/classes/BundlesManager.php';
-$bundlesManager = new BundlesManager('planner', './bundles/');
+require_once '../core/classes/BundlesManager.php';
+$bundlesManager = new BundlesManager('planner', '../bundles/');
 ?>
 <!doctype html>
 <html>
@@ -8,6 +8,7 @@ $bundlesManager = new BundlesManager('planner', './bundles/');
     <title>planner</title>
   </head>
   <body>
+   <div id="root"></div> 
     <?php $bundlesManager->bodyOutput();?>
   </body>
 </html>

@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{LRW6:function(n,c,o){"use strict";c.a=function(){console.log("MAGIC!")}},c4u3:function(n,c,o){"use strict";o.r(c);o("LRW6")}},[["c4u3",0]]]);

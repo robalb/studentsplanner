@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Planner from './planner/Planner.js';
-import * as serviceWorker from './serviceWorker';
+import '../../styles/index.css';
 
-import cssGlobal from './utils/cssFocusHelper';
+function Planner(){
+  return <h1>hello</h1>;
+}
+// import Planner from './Planner.js';
 
-ReactDOM.render(<Planner />, document.getElementById('root'));
+import cssGlobal from '../../utils/cssFocusHelper.js';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// ReactDOM.render(<Planner />, document.getElementById('root'));
 
-// https://stackoverflow.com/questions/31933359/using-react-in-a-multi-page-app
