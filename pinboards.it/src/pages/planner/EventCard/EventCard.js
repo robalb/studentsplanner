@@ -1,9 +1,9 @@
 import React from 'react';
-import colors from '../../utils/colors';
-import plannerContext from '../../contexts/plannerContext.js';
+import colors from '../../../utils/colors.js';
+import plannerContext from '../../../contexts/plannerContext.js';
 
 import EditMenu from './EditMenu.js';
-import Button from '../../components/Button.js';
+import Button from '../../../components/Button.js';
 import StudentsList from './StudentsList.js';
 
 

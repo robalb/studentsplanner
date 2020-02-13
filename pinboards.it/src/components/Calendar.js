@@ -1,8 +1,8 @@
 
 // https://programmingwithmosh.com/react/build-a-react-calendar-component-from-scratch/
 import React from "react";
-// import moment from "moment";
-import moment from 'moment/min/moment-with-locales';
+// import moment from 'moment/min/moment-with-locales';
+import moment from "moment";
 
 // replaces divs that behave as button with this component
 // note: use this only where actual buttons are difficult to implement

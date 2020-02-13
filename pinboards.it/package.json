@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --env prod",
+    "build": "webpack --env prod ",
     "watch": "webpack --watch --env dev",
-    "start": "webpack-dev-server --env dev"
+    "start": "webpack-dev-server --env dev "
   },
   "keywords": [],
   "author": "",

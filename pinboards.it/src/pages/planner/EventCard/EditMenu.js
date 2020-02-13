@@ -1,7 +1,7 @@
 import React from 'react';
-import Calendar from '../../components/Calendar.js'
-import plannerContext from '../../contexts/plannerContext.js';
-import Button from '../../components/Button.js';
+import Calendar from '../../../components/Calendar.js'
+import plannerContext from '../../../contexts/plannerContext.js';
+import Button from '../../../components/Button.js';
 
 function EditMenu(props){
   const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext);

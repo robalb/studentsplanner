@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../../styles/index.css';
+import '../../styles/sharedStyles.css';
 
-function Planner(){
-  return <h1>hello</h1>;
-}
-// import Planner from './Planner.js';
+import Planner from './Planner.js';
 
 import cssGlobal from '../../utils/cssFocusHelper.js';
 
