@@ -9,5 +9,5 @@ function Planner(){
 
 import cssGlobal from '../../utils/cssFocusHelper.js';
 
-// ReactDOM.render(<Planner />, document.getElementById('root'));
+ReactDOM.render(<Planner />, document.getElementById('root'));
 
