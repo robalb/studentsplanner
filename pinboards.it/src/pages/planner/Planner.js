@@ -1,15 +1,15 @@
 import React from 'react';
 //common imports
-import Header from '../components/Header.js';
-import LoadingBar from '../components/LoadingBar.js'
+import Header from '../../components/Header.js';
+import LoadingBar from '../../components/LoadingBar.js'
 //page specific imports
 import EventsListCard from './EventsListCard/EventsListCard.js';
 import EventCard from './EventCard/EventCard.js';
 import './planner.css';
 //context imports
-import accountContext from '../contexts/accountContext.js';
-import plannerContext from '../contexts/plannerContext.js';
-import {getApiData, updateData} from '../utils/apiResolver.js';
+import accountContext from '../../contexts/accountContext.js';
+import plannerContext from '../../contexts/plannerContext.js';
+import {getApiData, updateData} from '../../utils/apiResolver.js';
 
 class Planner extends React.Component{
   constructor(props){

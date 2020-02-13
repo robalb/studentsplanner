@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '../../components/Button.js';
-import PlaceHolder from '../../components/PlaceHolder.js';
-import plannerContext from '../../contexts/plannerContext.js';
+import Button from '../../../components/Button.js';
+import PlaceHolder from '../../../components/PlaceHolder.js';
+import plannerContext from '../../../contexts/plannerContext.js';
 
 function EventBadge(props){
   return(

@@ -2,13 +2,23 @@
   "errors": [],
   "warnings": [],
   "entrypoints": {
+    "index": {
+      "chunks": [
+        "index"
+      ],
+      "assets": [
+        "index.bundle.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
     "planner": {
       "chunks": [
         "planner"
       ],
       "assets": [
         "planner.bundle.js",
-        "planner.6da4e6f38135786a6f38.hot-update.js"
+        "planner.d2c6f61741178f299a3e.hot-update.js"
       ],
       "children": {},
       "childAssets": {}

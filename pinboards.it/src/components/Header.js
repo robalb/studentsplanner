@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from '../assets/logo.svg';
+// TODO: implement svg loaders
+// import logo from '../assets/logo.svg';
 import accountContext from '../contexts/accountContext.js';
 import PlaceHolder from './PlaceHolder.js';
 
@@ -9,7 +10,7 @@ function Header(props){
     <header>
       <div className="logo">
         <div className="temporary-swg"> 
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={""} className="App-logo" alt="logo" />
         </div>
       </div>
       <div className="class-info"> 
