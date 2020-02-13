@@ -1,39 +1,16 @@
 {
-  "errors": [],
+  "errors": [
+    "./src/pages/planner/index.js 6:9\nModule parse failed: Unexpected token (6:9)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| \n| function Planner(){\n>   return <h1>hello</h1>;\n| }\n| // import Planner from './Planner.js';"
+  ],
   "warnings": [],
   "entrypoints": {
-    "about": {
+    "planner": {
       "chunks": [
-        0,
-        1
+        "planner"
       ],
       "assets": [
-        "runtime.375940863d83f82addf1.bundle.js",
-        "about.9236f48f4344a8561322.bundle.js"
-      ],
-      "children": {},
-      "childAssets": {}
-    },
-    "hello": {
-      "chunks": [
-        0,
-        2
-      ],
-      "assets": [
-        "runtime.375940863d83f82addf1.bundle.js",
-        "hello.0c1ba522a0b4e8d41f62.bundle.js"
-      ],
-      "children": {},
-      "childAssets": {}
-    },
-    "index": {
-      "chunks": [
-        0,
-        3
-      ],
-      "assets": [
-        "runtime.375940863d83f82addf1.bundle.js",
-        "index.1b86d907cec55075d373.bundle.js"
+        "planner.bundle.js",
+        "planner.253a6b64547f556423e1.hot-update.js"
       ],
       "children": {},
       "childAssets": {}

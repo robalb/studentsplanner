@@ -5,15 +5,10 @@ $bundlesManager = new BundlesManager('index', './bundles/');
 <!doctype html>
 <html>
   <head>
-    <title>Getting Started</title>
+    <title>index</title>
   </head>
   <body>
-    <?php echo "PHP IS WORKING"; ?>
-    <p>
-      css is probably working
-    </p>
-    <a href="./about">about</a>
-    <a href="./hello">hello</a>
+   <div id="root"></div> 
     <?php $bundlesManager->bodyOutput();?>
   </body>
 </html>
