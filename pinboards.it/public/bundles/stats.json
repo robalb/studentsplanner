@@ -17,8 +17,7 @@
         "planner"
       ],
       "assets": [
-        "planner.bundle.js",
-        "planner.d2c6f61741178f299a3e.hot-update.js"
+        "planner.bundle.js"
       ],
       "children": {},
       "childAssets": {}
