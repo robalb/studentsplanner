@@ -2,15 +2,19 @@ const react = require('@neutrinojs/react');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
+const path = require('path');
+const glob = require('glob');
 
 module.exports = {
   options: {
     root: __dirname,
     source: 'src',
     output: 'www/bundles',
-    mains: {
-      index: 'index',
-    }
+    mains: glob.sync(__dirname + '/src/pages/**/index.js').reduce(function(obj, el){
+      let parentDirName = path.basename(path.dirname(el))
+      obj[parentDirName] = el;
+      return obj
+    },{}),
   },
   use: [
 
@@ -59,7 +63,6 @@ module.exports = {
       neutrino.config
         .when(process.env.NODE_ENV === 'production',
           //PRODUCTION
-          //fix bundles output path
           config => config.output.filename('[name].[contenthash:8].js'),
           //DEVELOPMENT
           config => config
@@ -69,20 +72,11 @@ module.exports = {
             .plugin('clean')
               .use(CleanWebpackPlugin)
               .end()
-            .plugin('error-overlay')
-              .use(ErrorOverlayPlugin)
-              .end()
+            // .plugin('error-overlay')
+            //   .use(ErrorOverlayPlugin)
+            //   .end()
             .devtool('inline-source-map')
         );
-      //neutrino.config
-      //  .when(process.env.NODE_ENV === 'development',
-      //    //fix bundles output path
-      //    //clean plugin also in development mode
-      //    config => config.plugin('clean').use(CleanWebpackPlugin),
-      //    //devtools
-      //    config => config.devtool('eval-source-map'),
-      //  );
-
     },
 
   ],
