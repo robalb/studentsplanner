@@ -1,3 +1,6 @@
+# bundles
+www/bundles/*
+
 # Logs
 logs
 *.log

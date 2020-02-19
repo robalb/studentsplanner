@@ -17,8 +17,8 @@ module.exports = {
       publicPath: '',
       html: false,
       devServer: {
-        port: 5002,
-        // open: false,
+        port: 5000,
+        open: false,
         writeToDisk: true,
         hot: true,
         // Redirect 404s to index.html, so that apps that use the HTML 5 History API work.
@@ -32,6 +32,7 @@ module.exports = {
 
 
     (neutrino) => {
+      //add stats-plugin
       neutrino.config
         .plugin('stats')
         .use(StatsWriterPlugin, [{
@@ -40,6 +41,14 @@ module.exports = {
             entrypoints: true,
           }
         }]);
+      //fix bundles output path
+      neutrino.config.output.filename('[name].js');
+      neutrino.config
+        .when(process.env.NODE_ENV === 'production', config => {
+          config.output
+          .filename('[name].[contenthash:8].js');
+        });
+
     },
 
   ],
