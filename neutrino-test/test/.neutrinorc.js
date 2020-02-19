@@ -21,6 +21,7 @@ module.exports = {
         open: false,
         writeToDisk: true,
         hot: true,
+        // liveReload: false,
         // Redirect 404s to index.html, so that apps that use the HTML 5 History API work.
         historyApiFallback: false,
         overlay:{
@@ -41,13 +42,18 @@ module.exports = {
             entrypoints: true,
           }
         }]);
-      //fix bundles output path
-      neutrino.config.output.filename('[name].js');
       neutrino.config
-        .when(process.env.NODE_ENV === 'production', config => {
-          config.output
-          .filename('[name].[contenthash:8].js');
-        });
+        .when(process.env.NODE_ENV === 'production',
+          //fix bundles output path
+          config => config.output.filename('[name].[contenthash:8].js'),
+        );
+      neutrino.config
+        .when(process.env.NODE_ENV === 'development',
+          //fix bundles output path
+          config => config.output.filename('[name].js'),
+          //devtools
+          config => config.devtool('eval-source-map'),
+        );
 
     },
 
