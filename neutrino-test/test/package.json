@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@neutrinojs/react": "^9.1.0",
+    "error-overlay-webpack-plugin": "^0.4.1",
     "neutrino": "^9.1.0",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
