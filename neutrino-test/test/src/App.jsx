@@ -1,5 +1,5 @@
 import React from 'react';
-// import './App.css';
+import './App.css';
 
 const message = 'Welcome to test 1';
 const App = () => (
