@@ -1,4 +1,5 @@
 const react = require('@neutrinojs/react');
+// i actually like the default one
 // const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
@@ -20,7 +21,9 @@ module.exports = {
 
     react({
       //https://neutrinojs.org/packages/web/#deployment-path
-      //TODO: work on this, for deployment
+      //this is the public path on the current work environment
+      //the publicPath for the production environment is set in the
+      //middleware function at the bottom of this config
       publicPath: '/studentsplanner/pinboards.it/www/bundles/',
       html: false,
       style: false,
@@ -77,7 +80,11 @@ module.exports = {
       neutrino.config
         .when(process.env.NODE_ENV === 'production',
           //PRODUCTION
-          config => config.output.filename('[name].[contenthash:8].js'),
+          config => config
+            .output
+              .filename('[name].[contenthash:8].js')
+              .publicPath('/bundles/'),
+
           //DEVELOPMENT
           config => config
             .output
@@ -86,12 +93,8 @@ module.exports = {
             .plugin('clean')
               .use(CleanWebpackPlugin)
               .end()
-            // .plugin('error-overlay')
-            //   .use(ErrorOverlayPlugin)
-            //   .end()
             .devtool('inline-source-map')
         );
     },
-
   ],
 };
