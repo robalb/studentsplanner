@@ -1,5 +1,5 @@
 const react = require('@neutrinojs/react');
-const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
+// const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
 const path = require('path');
@@ -20,9 +20,23 @@ module.exports = {
 
     react({
       //https://neutrinojs.org/packages/web/#deployment-path
-      publicPath: '',
+      //TODO: work on this, for deployment
+      publicPath: '/studentsplanner/pinboards.it/www/bundles/',
       html: false,
       style: false,
+      font: {
+        name:
+          process.env.NODE_ENV === 'production'
+            ? '[name].[hash:8].[ext]'
+            : '[name].[ext]',
+      },
+      image: {
+        limit: 4192,
+        name:
+          process.env.NODE_ENV === 'production'
+            ? '[name].[hash:8].[ext]'
+            : '[name].[ext]',
+      },
       clean: true,
       devServer: {
         port: 5000,
