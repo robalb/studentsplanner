@@ -1,10 +1,10 @@
 <?php
-require_once './core/classes/BundlesManager.php';
-require_once './core/classes/SessionManager.php';
-require_once './core/classes/SecurityHeaders.php';
-require_once './core/classes/ConnectDb.php';
+require_once '../core/classes/BundlesManager.php';
+require_once '../core/classes/SessionManager.php';
+require_once '../core/classes/SecurityHeaders.php';
+require_once '../core/classes/ConnectDb.php';
 
-$bundlesManager = new BundlesManager('planner', './bundles/');
+$bundlesManager = new BundlesManager('planner', '../bundles/');
 $nonce = SecurityHeaders::getNonce();
 $session = new SessionManager();
 $isLogged = $session->isValid();
