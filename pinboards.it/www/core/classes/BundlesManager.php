@@ -1,6 +1,7 @@
 <?php
 
 class BundlesManager{
+  private $scripts;
   private $bundles;
   private $bundlesPath;
   private $stats;
@@ -11,6 +12,8 @@ class BundlesManager{
       'HEAD' => [],
       'BODY' => []
     ];
+    //init scripts array
+    $this->scripts = [];
     //validate parameters
     if(!$entryName){
       throw new \Exception('Invalid bundle entryName');
@@ -57,19 +60,41 @@ class BundlesManager{
     $this->bundles[$position] = $this->stats['entrypoints'][$entryName]['assets'];
   }
 
-  public function headOutput(){
+  public function addScript(string $code, string $nonce = ''){
+    $this->scripts[] = [
+      'code' => $code,
+      'nonce' => $nonce
+    ];
   }
 
-  public function bodyOutput(){
-    $bodyBundles = $this->bundles['BODY'];
+  private function printBundles($location){
+    $locationSpecificBundles = $this->bundles[$location];
     //generate import html tags for the bundles
     $bundlesImportTags = "";
-    foreach($bodyBundles as $bundleName){
+    foreach($locationSpecificBundles as $bundleName){
       $bundlePath = $this->bundlesPath . $bundleName;
       $bundlesImportTags .= "<script src=\"$bundlePath\"></script>";
     }
-
     echo($bundlesImportTags);
+  }
 
+  public function headOutput(){
+    $this->printBundles('HEAD');
+
+    $ScriptTags = "";
+    foreach($this->scripts as $script){
+      if ( strlen($script['code']) > 1 ){
+        $nonceAttribute = "";
+        if( strlen($script['nonce']) > 1) {
+          $nonceAttribute = 'nonce="'. $script['nonce'] .'"';
+        }
+        $ScriptTags .= "<script $nonceAttribute >{$script['code']}</script>";
+      }
+    }
+    echo $ScriptTags;
+  }
+
+  public function bodyOutput(){
+    $this->printBundles('BODY');
   }
 }

@@ -1,6 +1,31 @@
 <?php
 require_once './core/classes/BundlesManager.php';
+require_once './core/classes/SessionManager.php';
+require_once './core/classes/SecurityHeaders.php';
+require_once './core/classes/ConnectDb.php';
+
 $bundlesManager = new BundlesManager('index', './bundles/');
+$nonce = SecurityHeaders::getNonce();
+$session = new SessionManager();
+$isLogged = $session->isValid();
+
+//js variables that will be injected into the page
+$JSisLogged = $isLogged ? 'true': 'false';
+$JSuserData = '{}';
+
+
+if($isLogged){
+  //get user data
+}
+
+//injection of the global js variables, using bundlesManager
+$jsGlobalVariables = <<<ES6
+;var PHP_GLOBALS = {
+  logged: $JSisLogged,
+  userdata: $JSuserData,
+};
+ES6;
+$bundlesManager->addScript($jsGlobalVariables, $nonce);
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -41,3 +41,41 @@ CREATE TABLE IF NOT EXISTS `planner_states` (
   `timestamp` int(11),
   INDEX (`classID`)
 ) DEFAULT CHARSET = utf8mb4;
+
+
+/* test data */
+INSERT INTO class (ID, name, currentPlannerState) VALUES (1, 'TEST', '7e57abcd');
+
+INSERT INTO planner_states (classID, stateHash, parentStateHash) VALUES 
+(1, '7e57abcd', '00000000');
+
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'andre asurname', 'asurname');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'giorgio asurname', 'asurname g');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'qwe bsurname', 'bsurname');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'qweqwe eqwewqe csur', 'csur');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'csurname', 'csurname');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'cqwe cqwe', 'cqwe');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'andre dellos', 'dellos');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'sogni gorgoro', 'gorgoro');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'sogni forbici', 'forbici');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'fwer lorilli', 'lorilli');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'qweqwe vernini', 'vernini');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'giorgio vasari', 'vasari');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'gargari zulli', 'zulli');
+INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
+(1, 'student1@mail.com', '', 'gije zanti', 'zanti');
+
+
