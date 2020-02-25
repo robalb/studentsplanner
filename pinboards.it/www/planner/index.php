@@ -11,7 +11,7 @@ $isLogged = $session->isValid();
 
 //js variables that will be injected into the page
 $JSisLogged = $isLogged ? 'true': 'false';
-$JSuserData = '{}';
+$JSaccountData = '{}';
 $JSplannerData = '{}';
 
 if($isLogged){
@@ -23,7 +23,7 @@ if($isLogged){
 $jsGlobalVariables = <<<ES6
 ;var PHP_GLOBALS = {
   logged: $JSisLogged,
-  userdata: $JSuserData,
+  accountData: $JSaccountData,
   plannerData: $JSplannerData
 };
 ES6;

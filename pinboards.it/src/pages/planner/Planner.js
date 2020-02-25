@@ -2,6 +2,7 @@ import React from 'react';
 //common imports
 import Header from '../../components/Header.js';
 import LoadingBar from '../../components/LoadingBar.js'
+import AuthModal from '../../components/AuthModal.js'
 //page specific imports
 import EventsListCard from './EventsListCard/EventsListCard.js';
 import EventCard from './EventCard/EventCard.js';
@@ -15,6 +16,7 @@ class Planner extends React.Component{
   constructor(props){
     super(props);
     this.state = {
+      logged: false,
       accountDataLoading: true,
       accountData: {},
       //if true, the app stays on hold, avoiding any logic involving plannerData, 
@@ -126,10 +128,16 @@ class Planner extends React.Component{
   }
 
   componentDidMount(){
-    //TODO: make only one request, or even better, find a way to 
-    //have the account data already injected into the page
-    this.loadAccountContextData()
-    this.loadPlannerContextData()
+    let logged = PHP_GLOBALS.logged;
+    this.setState({
+      logged: logged,
+      accountDataLoading: !logged,
+      accountData: PHP_GLOBALS.accountData,
+      plannerDataLoading: !logged,
+      plannerData: PHP_GLOBALS.plannerData
+    })
+    // this.loadAccountContextData()
+    // this.loadPlannerContextData()
   }
 
 
@@ -159,19 +167,11 @@ class Planner extends React.Component{
           <EventsListCard/>
           {currentEvent}
         </div>
+        { this.state.logged? '' : <AuthModal/> }
       </plannerContext.Provider>
       </accountContext.Provider>
     );
   }
 }
 
-        // <div className="content">
-        //   <EventsListCard 
-        //     events={this.state.events}
-        //     handleEventClick={e=>this.handleEventClick(e)}
-        //     handleEventCreated={e=>this.handleEventCreated(e)}
-        //   />
-
-        //   {currentEvent}
-        // </div>
 export default Planner;
