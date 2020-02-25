@@ -1,5 +1,4 @@
 import React from 'react';
-import './authModal.css';
 
 function AuthModal(props){
   return(
