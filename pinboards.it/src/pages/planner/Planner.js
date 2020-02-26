@@ -136,10 +136,20 @@ class Planner extends React.Component{
       plannerDataLoading: !logged,
       plannerData: PHP_GLOBALS.plannerData
     })
+
+    //TODO: if logged, start short polling timer, something that calls:
     // this.loadAccountContextData()
     // this.loadPlannerContextData()
   }
 
+  handleAuthModal(mail, password){
+    //TODO:
+    //make api call to login,also requesting data: account, planner
+    //on fail: find a way to remove spinner from auth modal, and display the error
+    //on success: set state.logged to true, set accountdataloading, accountdata, plannerdataloading, plannerdata
+
+    //start short polling timer
+  }
 
   render() {
     //TODO:
@@ -167,7 +177,7 @@ class Planner extends React.Component{
           <EventsListCard/>
           {currentEvent}
         </div>
-        { this.state.logged? '' : <AuthModal/> }
+        { this.state.logged? '' : <AuthModal auth={this.handleAuthModal}/> }
       </plannerContext.Provider>
       </accountContext.Provider>
     );

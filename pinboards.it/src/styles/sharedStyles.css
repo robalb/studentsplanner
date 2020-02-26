@@ -531,3 +531,67 @@ to {left:3%;}
     transform: translateY(0);
   }
 }
+
+.error-message{
+  background-color: rgba(200,0,0,0.1);
+  background-color: #dd4b39;
+  background-color: salmon;
+  color: white;
+  border-radius: 3px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  animation: 2s ease-out decollapse;
+
+}
+.error-message p{
+  margin: 8px;
+  margin-left: 16px;
+}
+
+@keyframes decollapse{
+  0%{
+    max-height: 0;
+  }
+  100%{
+    max-height: 200px;
+  }
+}
+
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #5264ae transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
