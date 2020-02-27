@@ -10,7 +10,7 @@ import './planner.css';
 //context imports
 import accountContext from '../../contexts/accountContext.js';
 import plannerContext from '../../contexts/plannerContext.js';
-import {getApiData, updateData} from '../../utils/apiResolver.js';
+import {login, getApiData, updateData} from '../../utils/apiResolver.js';
 
 class Planner extends React.Component{
   constructor(props){
@@ -142,13 +142,14 @@ class Planner extends React.Component{
     // this.loadPlannerContextData()
   }
 
-  handleAuthModal(mail, password){
+  async handleAuthModal(response){
     //TODO:
-    //make api call to login,also requesting data: account, planner
-    //on fail: find a way to remove spinner from auth modal, and display the error
-    //on success: set state.logged to true, set accountdataloading, accountdata, plannerdataloading, plannerdata
-
+    //set accountdataloading, accountdata, plannerdataloading, plannerdata
     //start short polling timer
+    this.setState({
+      logged: true
+    });
+    console.log(response)
   }
 
   render() {
@@ -177,7 +178,7 @@ class Planner extends React.Component{
           <EventsListCard/>
           {currentEvent}
         </div>
-        { this.state.logged? '' : <AuthModal auth={this.handleAuthModal}/> }
+        { this.state.logged? '' : <AuthModal reqireData={['account','planner']} auth={this.handleAuthModal.bind(this)}/> }
       </plannerContext.Provider>
       </accountContext.Provider>
     );

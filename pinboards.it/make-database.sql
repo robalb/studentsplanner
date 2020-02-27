@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS `students` (
   `registrationTimestamp` int(11),
   `lastLoginTimestamp` int(11),
   `lastLoginIp` varchar(255),
-  INDEX (`classID`)
+  INDEX (`classID`),
+  INDEX `mail` (`mail`)
 ) DEFAULT CHARSET = utf8mb4;
 
 
@@ -52,30 +53,30 @@ INSERT INTO planner_states (classID, stateHash, parentStateHash) VALUES
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
 (1, 'student1@mail.com', '', 'andre asurname', 'asurname');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'giorgio asurname', 'asurname g');
+(1, 'student2@mail.com', '', 'giorgio asurname', 'asurname g');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'qwe bsurname', 'bsurname');
+(1, 'student3@mail.com', '', 'qwe bsurname', 'bsurname');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'qweqwe eqwewqe csur', 'csur');
+(1, 'student4@mail.com', '', 'qweqwe eqwewqe csur', 'csur');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'csurname', 'csurname');
+(1, 'student5@mail.com', '', 'csurname', 'csurname');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'cqwe cqwe', 'cqwe');
+(1, 'student6@mail.com', '', 'cqwe cqwe', 'cqwe');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'andre dellos', 'dellos');
+(1, 'student7@mail.com', '', 'andre dellos', 'dellos');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'sogni gorgoro', 'gorgoro');
+(1, 'student8@mail.com', '', 'sogni gorgoro', 'gorgoro');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'sogni forbici', 'forbici');
+(1, 'student9@mail.com', '', 'sogni forbici', 'forbici');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'fwer lorilli', 'lorilli');
+(1, 'student10@mail.com', '', 'fwer lorilli', 'lorilli');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'qweqwe vernini', 'vernini');
+(1, 'student11@mail.com', '', 'qweqwe vernini', 'vernini');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'giorgio vasari', 'vasari');
+(1, 'student12@mail.com', '$2y$12$LAzPfA.oeIiKBtwEqWHxPOOc8HrsKqNdxLHLISTCWf5n/Y4bSmgm2', 'giorgio vasari', 'vasari');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'gargari zulli', 'zulli');
+(1, 'student13@mail.com', '', 'gargari zulli', 'zulli');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'gije zanti', 'zanti');
+(1, 'student14@mail.com', '', 'gije zanti', 'zanti');
 
 
