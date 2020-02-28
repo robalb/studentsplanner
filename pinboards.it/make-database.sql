@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `students` (
   `registrationTimestamp` int(11),
   `lastLoginTimestamp` int(11),
   `lastLoginIp` varchar(255),
+  `trustScore` int(11),
   INDEX (`classID`),
   INDEX `mail` (`mail`)
 ) DEFAULT CHARSET = utf8mb4;
@@ -73,7 +74,7 @@ INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
 (1, 'student11@mail.com', '', 'qweqwe vernini', 'vernini');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student12@mail.com', '$2y$12$LAzPfA.oeIiKBtwEqWHxPOOc8HrsKqNdxLHLISTCWf5n/Y4bSmgm2', 'giorgio vasari', 'vasari');
+(1, '12@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'giorgio vasari', 'vasari');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
 (1, 'student13@mail.com', '', 'gargari zulli', 'zulli');
 INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES

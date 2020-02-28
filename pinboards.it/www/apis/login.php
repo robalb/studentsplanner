@@ -20,7 +20,7 @@ try{
 //check mail existance and max length
 $error += !(isset($request['mail']) && strlen($request['mail']) < 150 );
 //check password existence and max length
-$error += !(isset($request['password']) && strlen($request['password']) < 60 );
+$error += !(isset($request['password']) && strlen($request['password']) < 66 );
 //check that getData is a populated array if its set
 $error += (isset($request['getData']) && !( is_array($request['getData']) && count($request['getData']) > 0 ) );
 if($error !== 0){
@@ -51,14 +51,15 @@ if(!$session->isValid()){
   }
 
   //create sesion
-  /* $_SESSION = array_merge($_SESSION, [ */
-  /*   'classID' => $classID, */
-  /*   'className' => $name, */
-  /*   'mail' => $mail, */
-  /*   'fullName' => $fullName, */
-  /*   'uniqueName' => $uniqueName */
-  /* ]); */
-  /* $session->setValid(); */
+  $_SESSION = array_merge($_SESSION, [
+    //TODO
+    'classID' => $row['classID'],
+    'className' => $row['name'],
+    'mail' => $mail,
+    'fullName' => $row['fullName'],
+    'uniqueName' => $row['uniqueName']
+  ]);
+  $session->setValid();
 
   
 }
@@ -66,5 +67,7 @@ if(!$session->isValid()){
 
 //add here additional requested data
 echo json_encode(['success'=>true]);
+
+/* debug */
 /* echo var_dump($body); */
 /* echo var_dump($request); */
