@@ -3,8 +3,13 @@ const react = require('@neutrinojs/react');
 // const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
+const {DefinePlugin} = require("webpack");
 const path = require('path');
 const glob = require('glob');
+
+//configure here the basepath for different development environments
+//in production this variable is not used, as the basePath is always '/'
+var ENV_BASE_PATH = '/studentsplanner/pinboards.it/www';
 
 module.exports = {
   options: {
@@ -22,9 +27,9 @@ module.exports = {
     react({
       //https://neutrinojs.org/packages/web/#deployment-path
       //this is the public path on the current work environment
-      //the publicPath for the production environment is set in the
+      //the value of this property is not set here, but in the
       //middleware function at the bottom of this config
-      publicPath: '/studentsplanner/pinboards.it/www/bundles/',
+      publicPath: '',
       html: false,
       style: false,
       font: {
@@ -83,15 +88,27 @@ module.exports = {
           config => config
             .output
               .filename('[name].[contenthash:8].js')
-              .publicPath('/bundles/'),
+              .publicPath('/bundles/')
+              .end()
+            .plugin('injection')
+              .use(DefinePlugin, [{
+                __ENV_BASE_PATH__ : false
+              }]),
 
           //DEVELOPMENT
           config => config
             .output
               .filename('[name].js')
+              .publicPath(ENV_BASE_PATH + '/bundles/')
               .end()
             .plugin('clean')
               .use(CleanWebpackPlugin)
+              .end()
+            .plugin('injection')
+              .use(DefinePlugin, [{
+                //strings are not passed as such, this is a hacky fix
+                __ENV_BASE_PATH__ : `'${ENV_BASE_PATH}'`
+              }])
               .end()
             .devtool('inline-source-map')
         );

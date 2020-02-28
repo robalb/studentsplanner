@@ -40,7 +40,6 @@ if(!$session->isValid()){
   $match = false;
   if($stmt->rowCount() > 0){
     $row = $stmt->fetch();
-    /* echo var_dump($row); */
     //check password
     $match = password_verify($password, $row['password']);
   }

@@ -1,3 +1,8 @@
+
+//received from the webpack-neutrino configuration
+let envBasePath = __ENV_BASE_PATH__;
+const API_PATH = (envBasePath || '') + '/apis/';
+
 export async function getApiData(type)
 {
   let response = await fetch(`https://my-json-server.typicode.com/robalb/tempApi/${type}`);
@@ -16,9 +21,7 @@ export async function getBulkApiData(types){
 
 
 export async function login(mail, password, getData){
-  //TODO: make this relative to the webpack publicPath
-  let basePath = '/studentsplanner/pinboards.it/www/bundles/../apis/';
-  let response = await fetch(`${basePath}login.php`, {
+  let response = await fetch(`${API_PATH}login.php`, {
     headers: { "Content-Type": "application/json; charset=utf-8" },
     method: 'POST',
     body: JSON.stringify({
