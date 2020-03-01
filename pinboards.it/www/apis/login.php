@@ -4,6 +4,7 @@
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/ConnectDb.php';
+require_once '../core/classes/GetApplicationData.php';
 
 $session = new SessionManager();
 
@@ -60,13 +61,23 @@ if(!$session->isValid()){
     'uniqueName' => $row['uniqueName']
   ]);
   $session->setValid();
-
-  
 }
 
+//create response array, that will be turned into json and echoed
+$response = [
+  "success" => true
+];
+
+//get required data
+if(isset($request['getData'])){
+  $getAppData = new GetApplicationData($_SESSION);
+  $data = $getAppData->getData($request['getData']);
+  //what in the world is this? - oh, just the php equivalent of $response["data"] = $data;
+  $response += ["data" => $data];
+}
 
 //add here additional requested data
-echo json_encode(['success'=>true]);
+echo json_encode($response);
 
 /* debug */
 /* echo var_dump($body); */
