@@ -51,6 +51,11 @@ if(!$session->isValid()){
     die;
   }
 
+  //TODO: handle this data: either add it to the datbase data
+  //in the students table or find a way to calculate it
+  $locale = "it";
+  $isAdmin = true;
+
   //create sesion
   $_SESSION = array_merge($_SESSION, [
     //TODO
@@ -58,7 +63,9 @@ if(!$session->isValid()){
     'className' => $row['name'],
     'mail' => $mail,
     'fullName' => $row['fullName'],
-    'uniqueName' => $row['uniqueName']
+    'uniqueName' => $row['uniqueName'],
+    'locale' => $locale,
+    'isAdmin' => $isAdmin
   ]);
   $session->setValid();
 }
