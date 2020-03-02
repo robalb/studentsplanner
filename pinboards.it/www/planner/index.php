@@ -3,29 +3,28 @@ require_once '../core/classes/BundlesManager.php';
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/ConnectDb.php';
+require_once '../core/classes/GetApplicationData.php';
 
 $bundlesManager = new BundlesManager('planner', '../bundles/');
 $nonce = SecurityHeaders::getNonce();
 $session = new SessionManager();
 $isLogged = $session->isValid();
 
-//js variables that will be injected into the page
-$JSisLogged = $isLogged ? 'true': 'false';
-$JSaccountData = '{}';
-$JSplannerData = '{}';
+//array that will be json encoded and injected into the page as a js global varaible
+$JSdata = [ "logged" => $isLogged];
 
 if($isLogged){
   //get user data
   //get planner data
+  $getAppData = new GetApplicationData($_SESSION);
+  $data = $getAppData->getData(["account", "planner"]);
+  $JSdata += ["data" => $data];
 }
 
 //injection of the global js variables, using bundlesManager
+$JSencodedData = json_encode($JSdata);
 $jsGlobalVariables = <<<ES6
-;var PHP_GLOBALS = {
-  logged: $JSisLogged,
-  accountData: $JSaccountData,
-  plannerData: $JSplannerData
-};
+;var PHP_GLOBALS = $JSencodedData;
 ES6;
 $bundlesManager->addScript($jsGlobalVariables, $nonce);
 ?>

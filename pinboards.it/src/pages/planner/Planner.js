@@ -132,9 +132,9 @@ class Planner extends React.Component{
     this.setState({
       logged: logged,
       accountDataLoading: !logged,
-      accountData: PHP_GLOBALS.accountData,
+      accountData: !logged || PHP_GLOBALS.data.account,
       plannerDataLoading: !logged,
-      plannerData: PHP_GLOBALS.plannerData
+      plannerData: !logged || PHP_GLOBALS.data.planner
     })
 
     //TODO: if logged, start short polling timer, something that calls:
@@ -143,11 +143,13 @@ class Planner extends React.Component{
   }
 
   async handleAuthModal(response){
-    //TODO:
-    //set accountdataloading, accountdata, plannerdataloading, plannerdata
-    //start short polling timer
+    //TODO: start short polling timer
     this.setState({
-      logged: true
+      logged: true,
+      accountDataLoading: false,
+      accountData: response.data.account,
+      plannerDataLoading: false,
+      plannerData: response.data.planner
     });
     console.log(response)
   }

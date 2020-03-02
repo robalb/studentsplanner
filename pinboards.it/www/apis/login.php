@@ -36,12 +36,16 @@ $password = $request['password'];
 $instance = ConnectDb::getInstance();
 $pdo = $instance->getConnection();
 if(!$session->isValid()){
-  $stmt = $pdo->prepare('SELECT s.classID, s.password, s.fullName, s.uniqueName, c.name FROM students s, class c WHERE s.mail = ? AND s.classID = c.ID');
+  $stmt = $pdo->prepare('SELECT s.classID, s.password, s.fullName, s.uniqueName, s.admin, s.locale, c.name FROM students s, class c WHERE s.mail = ? AND s.classID = c.ID');
   $stmt->execute([$mail]);
   $match = false;
   if($stmt->rowCount() > 0){
     $row = $stmt->fetch();
     //check password
+    //handle the case where the client couldn't send a hashed password
+    if(isset($request["isHash"]) && $request["isHash"] == false){
+      $password = hash("sha256", $password);
+    }
     $match = password_verify($password, $row['password']);
   }
   //handle wrong username or password
@@ -51,10 +55,8 @@ if(!$session->isValid()){
     die;
   }
 
-  //TODO: handle this data: either add it to the datbase data
-  //in the students table or find a way to calculate it
-  $locale = "it";
-  $isAdmin = true;
+  $locale = $row["locale"] ? $locale : "en";
+  $isAdmin = (bool) $row["admin"];
 
   //create sesion
   $_SESSION = array_merge($_SESSION, [

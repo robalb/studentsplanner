@@ -20,13 +20,14 @@ export async function getBulkApiData(types){
 }
 
 
-export async function login(mail, password, getData){
+export async function login(mail, password, isHash, getData){
   let response = await fetch(`${API_PATH}login.php`, {
     headers: { "Content-Type": "application/json; charset=utf-8" },
     method: 'POST',
     body: JSON.stringify({
       mail: mail,
       password: password,
+      isHash: isHash,
       getData: getData
     })
   });

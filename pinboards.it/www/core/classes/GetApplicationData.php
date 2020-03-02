@@ -4,9 +4,20 @@ require_once 'ConnectDb.php';
 class GetApplicationData{
   private $allowedDataNames;
   private $session;
+  private $defaults;
   public function __construct(array $sessionData){
+    //-- configuration --
+
+    //configure here the allowed data elements
     $this->allowedDataNames = [
       'account', 'planner'
+    ];
+    //configure here the default values for all the 
+    //data elements that might be stored as null in the database
+    $this->defaults = [
+      "planner" => [
+        "events" => []
+      ]
     ];
 
     $this->session = $sessionData;
@@ -14,34 +25,20 @@ class GetApplicationData{
 
   private function account(){
     //get required database data
-    //TODO remove this placeholder
-    $studentsArray = [
-      [
-        "uid" => "antonio",
-        "fullName" => "antonio grasqwi",
-        "isAdmin" => true
-      ],
-      [
-        "uid" => "roberto",
-        "fullName" => "roberto grasqwi",
-        "isAdmin" => true
-      ],
-      [
-        "uid" => "zobrofio",
-        "fullName" => "zobrofio worqui",
-        "isAdmin" => true
-      ],
-      [
-        "uid" => "tresbito",
-        "fullName" => "tresbito grasqwi",
-        "isAdmin" => true
-      ],
-      [
-        "uid" => "giorgio",
-        "fullName" => "giorgio vasari",
-        "isAdmin" => true
-      ]
-    ];
+    $studentsArray = [];
+    $instance = ConnectDb::getInstance();
+    $pdo = $instance->getConnection();
+    $stmt = $pdo->prepare('SELECT uniqueName, fullName, admin FROM students WHERE classID = ? LIMIT 100');
+    $stmt->execute([ $this->session['classID'] ]);
+    if($stmt->rowCount() > 0){
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $studentsArray[] = [
+          "uid" => $row["uniqueName"],
+          "fullName" => $row["fullName"],
+          "isAdmin" => (bool) $row["admin"],
+        ];
+      }
+    }
 
     //generate data array
     $data = [];
@@ -57,9 +54,25 @@ class GetApplicationData{
   }
 
   private function planner(){
-    //TODO
-    //json_decode($databasereceivedstuff, true, 5);
-    return "{planner-data}";
+    $returnData = $this->defaults["planner"];
+    $instance = ConnectDb::getInstance();
+    $pdo = $instance->getConnection();
+    $stmt = $pdo->prepare('SELECT p.stateHash, p.plannerData FROM planner_states p, class c WHERE p.classID = c.ID AND p.stateHash = c.currentPlannerState AND c.ID = ? ');
+    $stmt->execute([ $this->session['classID'] ]);
+    if($stmt->rowCount() > 0){
+      $row = $stmt->fetch();
+      $plannerData = $row["plannerData"];
+      //if plannerData is not empty
+      if($plannerData && (int) $row["stateHash"] != 0){
+        try{
+          $returnData = json_decode($plannerData, true, 5);
+        }catch(Exception $e){
+          echo var_dump($e);
+          die;
+        }
+      }
+    }
+    return $returnData;
   }
 
   public function getData(array $requiredData){

@@ -62,10 +62,17 @@ function AuthModal(props){
     //   [0] https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851
     //   [1] https://security.stackexchange.com/questions/151297/using-sha-256-to-preprocess-password-before-bcrypt/151299
     //   [2] https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2011/august/javascript-cryptography-considered-harmful/
-    let hashedPassword = await sha256(password);
+    let isHash = true;
+    let hashedPassword = password;
+    try{
+      hashedPassword = await sha256(password);
+    } catch(e){
+      console.log(e)
+      isHash = false
+    }
     let response = false;
     try{
-      response = await login(mail, hashedPassword,["account","planner"])
+      response = await login(mail, hashedPassword, isHash, ["account","planner"])
     } catch(e){
       console.log(e);
       error('connection error');
