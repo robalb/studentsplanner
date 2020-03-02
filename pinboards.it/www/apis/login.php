@@ -6,9 +6,10 @@ require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/ConnectDb.php';
 require_once '../core/classes/GetApplicationData.php';
 
-$session = new SessionManager();
 
+$session = new SessionManager();
 $body = file_get_contents('php://input');
+
 //validates received data, and returns an error if something is not right
 $error = 0;
 $error += (strlen($body) > 250) || (strlen($body) < 5);
@@ -33,20 +34,27 @@ if($error !== 0){
 //attempt login if not logged
 $mail = filter_var($request['mail'], FILTER_SANITIZE_EMAIL);
 $password = $request['password'];
+//handle the case where the client couldn't send a hashed password
+if(isset($request["isHash"]) && $request["isHash"] == false){
+  $password = hash("sha256", $password);
+}
 $instance = ConnectDb::getInstance();
 $pdo = $instance->getConnection();
 if(!$session->isValid()){
   $stmt = $pdo->prepare('SELECT s.classID, s.password, s.fullName, s.uniqueName, s.admin, s.locale, c.name FROM students s, class c WHERE s.mail = ? AND s.classID = c.ID');
   $stmt->execute([$mail]);
   $match = false;
+  //if the user is found
   if($stmt->rowCount() > 0){
     $row = $stmt->fetch();
-    //check password
-    //handle the case where the client couldn't send a hashed password
-    if(isset($request["isHash"]) && $request["isHash"] == false){
-      $password = hash("sha256", $password);
-    }
     $match = password_verify($password, $row['password']);
+  }else{
+    //useless call to password verify, to prevent clients enumeration via timing attacks
+    $randomPassword = (string) rand(1000000, 99999999);
+    //TODO: read the cost configured in config.php
+    $cost = 13;
+    $randomBcrypt = '$2y$'.$cost.'$xLUuCq2oZDNpRtjQLNBeYO3Ey04Bm3/48ctufqU2NUgnC29uPa3eq';
+    password_verify($randomPassword, $randomBcrypt);
   }
   //handle wrong username or password
   if(!$match){
@@ -85,7 +93,6 @@ if(isset($request['getData'])){
   $response += ["data" => $data];
 }
 
-//add here additional requested data
 echo json_encode($response);
 
 /* debug */

@@ -12,7 +12,7 @@
 
 
 $options = [
-      'cost' => 14,
+      'cost' => 13,
     ];
 echo password_hash(hash("sha256", "password"), PASSWORD_BCRYPT, $options);
 

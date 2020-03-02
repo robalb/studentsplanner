@@ -14,6 +14,8 @@ return array(
   'dbName' => 'pinboards_0',
   'dbUsername' => 'root',
   'dbPassword' => '',
+  //SECURITY
+  'bcryptCost' => 13,
   //MAIL CONFIGURATION
   'smtpHost' => '',
   'smtpUsername' => '',
