@@ -3,11 +3,14 @@ import {login} from '../utils/apiResolver.js';
 
 
 function ErrorMessageDiv(props){
-  return (
+  return props.msg ? (
     <div className="error-message">
     <i className="material-icons">error</i>
     <p>{props.msg}</p>
     </div>
+  ) : (
+    <div className="error-message disappearing-placeholder">
+    <p>loading</p></div>
   );
 }
 
@@ -83,7 +86,6 @@ function AuthModal(props){
       error(response.error=='wrong_mail_or_password'?'incorrect username or password' : response.error);
       setLoading(false);
     }else if(response.success){
-      error("")
       setLoading(false);
       props.auth(response);
     }
