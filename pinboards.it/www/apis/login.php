@@ -1,6 +1,4 @@
 <?php
-
-
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/ConnectDb.php';

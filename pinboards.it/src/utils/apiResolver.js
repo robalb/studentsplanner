@@ -11,8 +11,23 @@ export async function getApiData(type)
   return data;
 }
 
-export async function updateData(type, data){
-  //TODO
+export async function updatePlannerData(data){
+  //TODO: attempt push, receive feedback, eventually merge data
+  let response = await fetch(`${API_PATH}planner.php`, {
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'push',
+      data: data,
+    })
+  });
+  let returnedData = true;
+  try{
+    returnedData = await response.json();
+  }catch(e){
+
+  }
+  return returnedData;
 }
 
 export async function getBulkApiData(types){

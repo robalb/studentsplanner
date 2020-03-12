@@ -10,7 +10,7 @@ import './planner.css';
 //context imports
 import accountContext from '../../contexts/accountContext.js';
 import plannerContext from '../../contexts/plannerContext.js';
-import {login, getApiData, updateData} from '../../utils/apiResolver.js';
+import {login, getApiData, updatePlannerData} from '../../utils/apiResolver.js';
 
 class Planner extends React.Component{
   constructor(props){
@@ -76,7 +76,7 @@ class Planner extends React.Component{
             events: [...this.state.plannerData.events, newData]
           }
         })
-        const response1 = await getApiData('simulateOk')
+        const response1 = await updatePlannerData(this.state.plannerData)
         this.setState({
            plannerDataUpdating: false
         })
@@ -92,7 +92,7 @@ class Planner extends React.Component{
             events: newEvents
           }
         })
-        const response2 = await getApiData('simulateOk')
+        const response2 = await updatePlannerData(this.state.plannerData)
         this.setState({
            plannerDataUpdating: false
         })
@@ -107,7 +107,7 @@ class Planner extends React.Component{
             events: newEvents2
           }
         })
-        const response3 = await getApiData('simulateOk')
+        const response3 = await updatePlannerData(this.state.plannerData)
         this.setState({
            plannerDataUpdating: false
         })
