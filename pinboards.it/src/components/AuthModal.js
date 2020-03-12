@@ -43,7 +43,7 @@ function AuthModal(props){
     }
     else{
       setLoading(true)
-      error("");
+      if(errorMessage) error("");
       tryAuth();
     }
   }
