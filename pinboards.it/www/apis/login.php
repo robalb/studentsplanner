@@ -49,8 +49,8 @@ if(!$session->isValid()){
   }else{
     //useless call to password verify, to prevent clients enumeration via timing attacks
     $randomPassword = (string) rand(1000000, 99999999);
-    //TODO: read the cost configured in config.php
-    $cost = 13;
+    $config = require dirname(__FILE__).'/../core/config/config.php';
+    $cost = $config['bcryptCost'];
     $randomBcrypt = '$2y$'.$cost.'$xLUuCq2oZDNpRtjQLNBeYO3Ey04Bm3/48ctufqU2NUgnC29uPa3eq';
     password_verify($randomPassword, $randomBcrypt);
   }
@@ -66,7 +66,6 @@ if(!$session->isValid()){
 
   //create sesion
   $_SESSION = array_merge($_SESSION, [
-    //TODO
     'classID' => $row['classID'],
     'className' => $row['name'],
     'mail' => $mail,
