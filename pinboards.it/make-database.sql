@@ -47,6 +47,16 @@ CREATE TABLE IF NOT EXISTS `planner_states` (
 ) DEFAULT CHARSET = utf8mb4;
 
 
+
+CREATE TABLE IF NOT EXISTS `invite_codes` (
+  `code` char(11) NOT NULL,
+  `classID` int(11) NOT NULL,
+  `invitedBy` varchar(60) NOT NULL,
+  `creationDate` int(11) NOT NULL
+  INDEX(`code`)
+) DEFAULT CHARSET = utf8mb4;
+
+
 /* test data */
 INSERT INTO class (ID, name, currentPlannerState) VALUES (1, 'TEST', '7e57abcd');
 

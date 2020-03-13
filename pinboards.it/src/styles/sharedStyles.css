@@ -223,7 +223,7 @@ header .user i{
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
   padding: 10px;
 
-  display: none;
+  /* display: none; */
 }
 .hidden-container .app-menu li, .hidden-container .user-menu li{
   padding: 10px 0 10px 0;

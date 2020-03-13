@@ -1,18 +1,7 @@
 import React from 'react';
 import {login} from '../utils/apiResolver.js';
+import FormErrorMessage from './FormErrorMessage.js';
 
-
-function ErrorMessageDiv(props){
-  return props.msg ? (
-    <div className="error-message">
-    <i className="material-icons">error</i>
-    <p>{props.msg}</p>
-    </div>
-  ) : (
-    <div className="error-message disappearing-placeholder">
-    <p>loading</p></div>
-  );
-}
 
 // https://stackoverflow.com/a/48161723
 async function sha256(message) {
@@ -49,7 +38,7 @@ function AuthModal(props){
   }
 
   function error(message){
-    setErrorMessage( <ErrorMessageDiv msg={message}/> )
+    setErrorMessage( <FormErrorMessage msg={message}/> )
   }
   
   async function tryAuth(){
