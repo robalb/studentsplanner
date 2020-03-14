@@ -61,17 +61,16 @@ if(!$session->isValid()){
     die;
   }
 
-  $locale = $row["locale"] ? $locale : "en";
-  $isAdmin = (bool) $row["admin"];
 
   //create sesion
+  $isAdmin = (bool) $row["admin"];
   $_SESSION = array_merge($_SESSION, [
     'classID' => $row['classID'],
     'className' => $row['name'],
     'mail' => $mail,
     'fullName' => $row['fullName'],
     'uniqueName' => $row['uniqueName'],
-    'locale' => $locale,
+    'locale' => $row['locale'],
     'isAdmin' => $isAdmin
   ]);
   $session->setValid();
