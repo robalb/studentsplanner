@@ -1,6 +1,8 @@
 import React from 'react';
+import t from '../utils/i18n.js';
 import {login} from '../utils/apiResolver.js';
 import FormErrorMessage from './FormErrorMessage.js';
+import FormInput from './FormInput.js';
 
 
 // https://stackoverflow.com/a/48161723
@@ -25,10 +27,10 @@ function AuthModal(props){
   let validateForm = ()=>{
     let mailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
     if(! (mail.length > 3 && mailRe.test(mail))){
-      error("invalid mail");
+      error(t("invalid mail"));
     }
     else if(password.length < 6){
-      error("invalid password");
+      error(t( "invalid password" ));
     }
     else{
       setLoading(true)
@@ -67,12 +69,11 @@ function AuthModal(props){
       response = await login(mail, hashedPassword, isHash, ["account","planner"])
     } catch(e){
       console.log(e);
-      error('connection error');
+      error(t('connection error'));
       setLoading(false);
     }
     if(response.error){
-      //TODO: integrate this with i18y
-      error(response.error=='wrong_mail_or_password'?'incorrect username or password' : response.error);
+      error(response.error=='wrong_mail_or_password'?t('incorrect username or password') : response.error);
       setLoading(false);
     }else if(response.success){
       setLoading(false);
@@ -87,37 +88,27 @@ function AuthModal(props){
     <button className="btn"
     onClick={validateForm}
     tabIndex="3"
-    aria-label={"sign in"}
-    >sign in</button>
+    aria-label={t("sign in")}
+    >{t("sign in")}</button>
   )
   return(
     <div className="auth-modal-wrapper">
       <div className="auth-modal">
-      <h2>please sign in to continue</h2>
+      <h2>{t("login greeting")}</h2>
 
       {errorMessage}
 
-      <div className="input-group centered">
-        <input id="a11y-input3"
-        aria-labelledby="#a11y-input3"
-        tabIndex="1"
-        type="mail"
-        onChange = {e=>setMail(e.target.value)}
-        required/>
-        <span className="bar"></span>
-        <label htmlFor="a11y-input3">Mail</label>
-      </div>
+      <FormInput 
+      onChange = {e=>setMail(e.target.value)}
+      label={t("mail")}
+      type={"mail"}
+      />
 
-      <div className="input-group centered">
-        <input id="a11y-input2"
-        aria-labelledby="#a11y-input2"
-        tabIndex="2"
-        type="password"
-        onChange = {e=>setPassword(e.target.value)}
-        required/>
-        <span className="bar"></span>
-        <label htmlFor="a11y-input2">Password</label>
-      </div>
+      <FormInput 
+      onChange = {e=>setPassword(e.target.value)}
+      label={t("password")}
+      type={"password"}
+      />
 
       {button}
       

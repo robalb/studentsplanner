@@ -17,14 +17,13 @@ if($isLogged){
 }
 
 //get user locale, and language file
-$languageManager = new LanguageManager("false");
+$languageManager = new LanguageManager();
 $locale = $languageManager->getNegotiatedUserLocale();
-$languageManager->updateLocale($locale);
 
 
 //variables that will be injected into the page as a js global varaible
 //json containing all the webpage strings
-$JSlanguageJson = $languageManager->getUserLanguageJson();
+$JSlanguageJson = $languageManager->getUserLanguageJson($locale);
 //an array containing other variables, that will be json encoded
 $JSdata = ["invited" => false];
 

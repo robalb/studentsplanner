@@ -1,16 +1,18 @@
 {
-  "test message": "messaggio di test",
-  "test message 2": "messaggio di test 2",
-
-  "register invite notice": "{{name}} ti ha invitato nella classe {{classroom}}",
-  "login link text": "hai già un account? ",
-  "login button": "login",
   "full name": "nome e cognome",
+  "login button": "login",
+  "login link text": "hai già un account? ",
   "mail": "mail",
   "password": "password",
+  "confirm password": "conferma password",
+  "register invite notice": "{{name}} ti ha invitato nella classe {{classroom}}",
   "register title": "registrazione",
-  "qw": "qw",
-  "qw": "qw",
-  "qw": "qw",
-  "qw": "qw",
+  "registration next": "avanti",
+  "login greeting": "effettua il login",
+  "sign in": "login",
+  "incorrect username or password": "username o password errati",
+  "invalid mail": "indirizzo email non valido",
+  "invalid password": "password non valida",
+  "connection error": "errore di connessione",
+  "test message": "messaggio di test"
 }

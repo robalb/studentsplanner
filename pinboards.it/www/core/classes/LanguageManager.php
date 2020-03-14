@@ -1,25 +1,14 @@
 <?php
 
 class LanguageManager{
-  //the user locale, value set in the constructor.
-  //if this value is set to false, methods that require the locale
-  //will not work
-  private $locale;
   //the path to the json file containing all the languages
   private $languagesJsonPath;
   //the path to the folder containing all the translations
   private $languagesFolderPath;
 
-  public function __construct(string $currentLocale){
-    if($currentLocale === "false") $currentLocale = false;
-    $this->locale = $currentLocale;
-
+  public function __construct(){
     $this->languagesJsonPath = dirname(__FILE__) . "/../i18n/languages.json";
     $this->languagesFolderPath = dirname(__FILE__) . "/../i18n/languages/";
-  }
-
-  public function updateLocale(string $locale){
-    $this->locale = $locale;
   }
 
   /* https://stackoverflow.com/questions/3770513/detect-browser-language-in-php */
@@ -121,11 +110,7 @@ class LanguageManager{
     return reset($matches)[0];
   }
 
-  public function getUserLanguageJson(){
-    if(!$this->locale){
-      throw new \Exception('locale not defined');
-    }
-    $locale = $this->locale;
+  public function getUserLanguageJson(string $locale){
     $filePath = $this->languagesFolderPath . "$locale.json";
     $stringJson = file_get_contents($filePath);
     if(strlen($stringJson) < 2){

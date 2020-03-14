@@ -49,6 +49,16 @@ function Register(props){
       type={"password"}
       />
 
+      <FormInput 
+      onChange={e=>console.log(e.target.value)} 
+      label={t("confirm password")}
+      type={"password"}
+      />
+
+      <button className="btn"
+      aria-label={t("registration next")}
+      >{t("registration next")}</button>
+
     </div>
   </>
   );

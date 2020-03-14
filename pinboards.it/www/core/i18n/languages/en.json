@@ -1,5 +1,13 @@
 {
-  "test message": "messaggio di test",
-  "test message 2": "messaggio di test 2"
+  "full name": "full name",
+  "login button": "login",
+  "login link text": "already have an account?",
+  "mail": "mail",
+  "password": "password",
+  "register invite notice": "{{name}} invited you to the classroom {{classroom}}",
+  "register title": "register",
+  "login greeting": "please sign in to continue",
+  "sign in": "sign in",
+  "invalid password": "invalid password",
+  "test message": "messaggio di test"
 }
-

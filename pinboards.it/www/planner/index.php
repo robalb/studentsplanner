@@ -3,9 +3,11 @@ require_once '../core/classes/BundlesManager.php';
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/GetApplicationData.php';
+require_once '../core/classes/LanguageManager.php';
 
 $bundlesManager = new BundlesManager('planner', '../bundles/');
 $nonce = SecurityHeaders::getNonce();
+$languageManager = new LanguageManager();
 $session = new SessionManager();
 $isLogged = $session->isValid();
 
@@ -18,12 +20,20 @@ if($isLogged){
   $getAppData = new GetApplicationData($_SESSION);
   $data = $getAppData->getData(["account", "planner"]);
   $JSdata += ["data" => $data];
+  //get locale from session variable
+  $locale = $_SESSION['locale'];
+}else{
+  //get locale from useragent
+  $locale = $languageManager->getNegotiatedUserLocale();
 }
 
+
 //injection of the global js variables, using bundlesManager
+$JSlanguageJson = $languageManager->getUserLanguageJson($locale);
 $JSencodedData = json_encode($JSdata);
 $jsGlobalVariables = <<<ES6
-;var PHP_GLOBALS = $JSencodedData;
+;var LANGUAGE = $JSlanguageJson;
+var PHP_GLOBALS = $JSencodedData;
 ES6;
 $bundlesManager->addScript($jsGlobalVariables, $nonce);
 ?>
