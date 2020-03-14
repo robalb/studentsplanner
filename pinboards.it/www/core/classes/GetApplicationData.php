@@ -13,7 +13,7 @@ class GetApplicationData{
       'account', 'planner'
     ];
     //configure here the default values for all the 
-    //data elements that might be stored as null in the database
+    //data elements that might be stored as null in the database. These values will be converted in json format
     $this->defaults = [
       "planner" => [
         "events" => []

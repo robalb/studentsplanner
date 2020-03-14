@@ -1,0 +1,16 @@
+{
+  "test message": "messaggio di test",
+  "test message 2": "messaggio di test 2",
+
+  "register invite notice": "{{name}} ti ha invitato nella classe {{classroom}}",
+  "login link text": "hai già un account? ",
+  "login button": "login",
+  "full name": "nome e cognome",
+  "mail": "mail",
+  "password": "password",
+  "register title": "registrazione",
+  "qw": "qw",
+  "qw": "qw",
+  "qw": "qw",
+  "qw": "qw",
+}

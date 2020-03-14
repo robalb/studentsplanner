@@ -1,0 +1,8 @@
+{
+  "default": "en",
+  "supportedLanguages":[
+    "en",
+    "it",
+    "debug"
+  ]
+}

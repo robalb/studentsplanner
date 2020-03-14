@@ -2,6 +2,8 @@
 require_once '../core/classes/BundlesManager.php';
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
+require_once '../core/classes/LanguageManager.php';
+
 
 $bundlesManager = new BundlesManager('register', '../bundles/');
 $nonce = SecurityHeaders::getNonce();
@@ -14,7 +16,16 @@ if($isLogged){
   die();
 }
 
-//array that will be json encoded and injected into the page as a js global varaible
+//get user locale, and language file
+$languageManager = new LanguageManager("false");
+$locale = $languageManager->getNegotiatedUserLocale();
+$languageManager->updateLocale($locale);
+
+
+//variables that will be injected into the page as a js global varaible
+//json containing all the webpage strings
+$JSlanguageJson = $languageManager->getUserLanguageJson();
+//an array containing other variables, that will be json encoded
 $JSdata = ["invited" => false];
 
 
@@ -34,7 +45,8 @@ $JSdata = [
 //injection of the global js variables, using bundlesManager
 $JSencodedData = json_encode($JSdata);
 $jsGlobalVariables = <<<ES6
-;var PHP_GLOBALS = $JSencodedData;
+;var LANGUAGE = $JSlanguageJson;
+var PHP_GLOBALS = $JSencodedData;
 ES6;
 $bundlesManager->addScript($jsGlobalVariables, $nonce);
 ?>

@@ -1,44 +1,56 @@
 import React from 'react';
+import t from '../../utils/i18n.js';
 import FormErrorMessage from '../../components/FormErrorMessage.js';
+import FormInput from '../../components/FormInput.js';
 //page specific imports
 import './register.css';
 
 
 function Register(props){
+  //todo: get this data from global variables
+  let [invited, setInvited] = React.useState(false);
+  let [inviteData, setInvitedata] = React.useState({});
+
+  React.useEffect( ()=>{
+    let invited = PHP_GLOBALS.invited;
+    if(invited){
+      setInvited(invited);
+      setInvitedata(PHP_GLOBALS.inviteData);
+    }
+  })
+
+
+  let pageTitle = invited ?
+    ( <h2>{t("register invite notice", {name:inviteData.invitedBy,classroom: inviteData.className})}</h2>) :
+    ( <h2>{t("register title")}</h2>);
+
   return(
-    <>
+  <>
     <header></header>
     <div className="register-container">
-    <h2> register </h2>
-    <h3>username invited you to class_name</h3>
-    <p> already have an account? <a href="../account/">login</a> </p>
+      {pageTitle}
+      <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
 
 
-      <div className="input-group centered">
-        <input id="a11y-input2"
-        aria-labelledby="#a11y-input2"
-        tabIndex="2"
-        type="password"
-        onChange = {e=>setPassword(e.target.value)}
-        required/>
-        <span className="bar"></span>
-        <label htmlFor="a11y-input2">Password</label>
-      </div>
+      <FormInput 
+      onChange={e=>console.log(e.target.value)} 
+      label={t("full name")}
+      />
 
-      <div className="input-group centered">
-        <input id="a11y-input2"
-        aria-labelledby="#a11y-input2"
-        tabIndex="2"
-        type="password"
-        onChange = {e=>setPassword(e.target.value)}
-        required/>
-        <span className="bar"></span>
-        <label htmlFor="a11y-input2">Password</label>
-      </div>
+      <FormInput 
+      onChange={e=>console.log(e.target.value)} 
+      label={t("mail")}
+      type={"mail"}
+      />
 
+      <FormInput 
+      onChange={e=>console.log(e.target.value)} 
+      label={t("password")}
+      type={"password"}
+      />
 
     </div>
-    </>
+  </>
   );
 }
 
