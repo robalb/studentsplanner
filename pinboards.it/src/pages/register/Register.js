@@ -7,29 +7,42 @@ import './register.css';
 
 
 function Register(props){
-  //todo: get this data from global variables
-  let [invited, setInvited] = React.useState(false);
-  let [inviteData, setInvitedata] = React.useState({});
+  let phpData = {};
+  if(PHP_GLOBALS){
+    phpData = PHP_GLOBALS;
+  }
 
-  React.useEffect( ()=>{
-    let invited = PHP_GLOBALS.invited;
-    if(invited){
-      setInvited(invited);
-      setInvitedata(PHP_GLOBALS.inviteData);
+  if(phpData.invited && phpData.error){
+    let error = phpData.error;
+    if(["invalid_code", "expired_code"].includes(error)){
+      error = t(error)
+    }else{
+      error = t("generic invite code error", {error: error})
     }
-  })
+    return(
+    <>
+      <header></header>
+      <div className="register-container error">
+        <h3>{error}</h3>
+        <p><a href="../">{t("home")}</a></p>
+        <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
+      </div>
+    </>
+    );
+  }
 
-
-  let pageTitle = invited ?
-    ( <h2>{t("register invite notice", {name:inviteData.invitedBy,classroom: inviteData.className})}</h2>) :
+  let pageTitle = phpData.invited ?
+    ( <h2>{t("register invite notice", {name:phpData.inviteData.invitedBy,classroom: phpData.inviteData.className})}</h2>) :
     ( <h2>{t("register title")}</h2>);
 
   return(
   <>
     <header></header>
     <div className="register-container">
+    <div className="top-header">
       {pageTitle}
       <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
+    </div>
 
 
       <FormInput 

@@ -49,10 +49,11 @@ CREATE TABLE IF NOT EXISTS `planner_states` (
 
 
 CREATE TABLE IF NOT EXISTS `invite_codes` (
-  `code` char(11) NOT NULL,
+  `code` char(16) NOT NULL,
   `classID` int(11) NOT NULL,
   `invitedBy` varchar(60) NOT NULL,
-  `creationDate` int(11) NOT NULL
+  `creationDate` int(11) NOT NULL,
+  `lifespan` int(11) NOT NULL,
   INDEX(`code`)
 ) DEFAULT CHARSET = utf8mb4;
 
