@@ -14,7 +14,7 @@ function Register(props){
 
   if(phpData.invited && phpData.error){
     let error = phpData.error;
-    if(["invalid_code", "expired_code"].includes(error)){
+    if(["invalid_code", "expired_code", "invalid_code_get"].includes(error)){
       error = t(error)
     }else{
       error = t("generic invite code error", {error: error})

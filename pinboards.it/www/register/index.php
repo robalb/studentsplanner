@@ -39,7 +39,7 @@ if(isset($_GET['invite']) &&
   if($stmt->rowCount() > 0){
     $row = $stmt->fetch();
     //check if the invite has not expired
-    if(time() - $row['creationDate'] > $row['lifespan']){
+    if(time() - $row['creationDate'] < $row['lifespan']){
       //the invite is good.
       //assign session variables that will be required in the register api endpoint
       $_SESSION['registration_fromInvite'] = true;
