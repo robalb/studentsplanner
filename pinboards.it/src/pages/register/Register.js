@@ -1,9 +1,9 @@
 import React from 'react';
 import t from '../../utils/i18n.js';
-import FormErrorMessage from '../../components/FormErrorMessage.js';
-import FormInput from '../../components/FormInput.js';
 //page specific imports
 import './register.css';
+import InvitedRegistration from './InvitedRegistration.js';
+import ClassRegistration from './ClassRegistration.js';
 
 
 function Register(props){
@@ -31,50 +31,9 @@ function Register(props){
     );
   }
 
-  let pageTitle = phpData.invited ?
-    ( <h2>{t("register invite notice", {name:phpData.inviteData.invitedBy,classroom: phpData.inviteData.className})}</h2>) :
-    ( <h2>{t("register title")}</h2>);
-
-  return(
-  <>
-    <header></header>
-    <div className="register-container">
-    <div className="top-header">
-      {pageTitle}
-      <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
-    </div>
-
-
-      <FormInput 
-      onChange={e=>console.log(e.target.value)} 
-      label={t("full name")}
-      />
-
-      <FormInput 
-      onChange={e=>console.log(e.target.value)} 
-      label={t("mail")}
-      type={"mail"}
-      />
-
-      <FormInput 
-      onChange={e=>console.log(e.target.value)} 
-      label={t("password")}
-      type={"password"}
-      />
-
-      <FormInput 
-      onChange={e=>console.log(e.target.value)} 
-      label={t("confirm password")}
-      type={"password"}
-      />
-
-      <button className="btn"
-      aria-label={t("registration next")}
-      >{t("registration next")}</button>
-
-    </div>
-  </>
-  );
+  return phpData.invited ? 
+    <InvitedRegistration inviteData={phpData.inviteData} /> :
+    <ClassRegistration inviteData={phpData.inviteData} /> ;
 }
 
 export default Register;
