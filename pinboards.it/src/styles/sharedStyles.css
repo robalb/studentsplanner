@@ -269,6 +269,10 @@ header .user i{
   width: 300px;
   margin-bottom:35px;
 }
+.scalable .input-group{
+  width: auto;
+  max-width: 300px;
+}
 .input-group.full-width{
   width: 100%;
 }

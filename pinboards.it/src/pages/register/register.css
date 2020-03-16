@@ -8,9 +8,39 @@
 }
 .register-container .top-header{
   padding: 10px;
-  margin-bottom: 20px;
 }
 .register-container.error{
   margin-top: 20px;
   padding: 20px 5px 20px 5px;
 }
+.input-group{
+  margin-top: 35px!important;
+}
+.error-message{
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.password-state-container{
+  background-color: rgba(0,0,200, 0.1);
+  max-width: 300px;
+  margin: 0 auto;
+}
+.password-state-container p{
+  margin: 10px;
+}
+.password-state-container .div-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.password-state-container .collapsible{
+  max-height: 300px;
+  transition: all 1s;
+  overflow: hidden;
+}
+.password-state-container .collapsible.collapsed{
+  max-height: 0;
+}
+
+

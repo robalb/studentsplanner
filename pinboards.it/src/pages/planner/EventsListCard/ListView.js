@@ -20,8 +20,8 @@ function ListView(props){
   const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext)
 
   let badges = <>
-    <PlaceHolder ready={false} className={'event-badge preloader'}/>
-    <PlaceHolder ready={false} className={'event-badge preloader'}/>
+    <PlaceHolder ready={false} className={'event-badge preloader'}><></></PlaceHolder>
+    <PlaceHolder ready={false} className={'event-badge preloader'}><></></PlaceHolder>
   </>
   if(!loading && data.events){
     badges = data.events.map((ev, step)=>{

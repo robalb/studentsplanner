@@ -18,8 +18,9 @@ require_once '../core/classes/ConnectDb.php';
     1,//classID
     'giorgio vasari',//invitedBy
     time(),//creationDate
-    (60*60*1) //lifespan
+    (60*60*24) //lifespan
   ]);
+
 
 
 

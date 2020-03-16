@@ -29,7 +29,7 @@ function AuthModal(props){
     if(! (mail.length > 3 && mailRe.test(mail))){
       error(t("invalid mail"));
     }
-    else if(password.length < 6){
+    else if(password.length < 6 || password.length > 200){
       error(t( "invalid password" ));
     }
     else{
@@ -107,6 +107,7 @@ function AuthModal(props){
       <FormInput 
       onChange = {e=>setPassword(e.target.value)}
       label={t("password")}
+      onEnter={loading?()=>{}:validateForm}
       type={"password"}
       />
 

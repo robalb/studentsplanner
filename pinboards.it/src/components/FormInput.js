@@ -1,5 +1,10 @@
 import React from 'react';
 
+const buildHandleEnterKeyPress = (onClick) => ({ key }) => {
+  if (key === 'Enter') { 
+    if(onClick) onClick(); 
+  }
+};
 // props:
 //   onChange
 //   type - default text
@@ -14,6 +19,7 @@ function FormInput(props){
       aria-labelledby={"#"+rndID}
       type={props.type || "text"}
       onChange = {e=>props.onChange(e)}
+      onKeyPress={ buildHandleEnterKeyPress(props.onEnter) }
       required/>
       <span className="bar"></span>
       <label htmlFor={rndID}>{props.label || props.type || ""}</label>

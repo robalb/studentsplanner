@@ -20,7 +20,7 @@ try{
 //check mail existance and max length
 $error += !(isset($request['mail']) && strlen($request['mail']) < 150 );
 //check password existence and max length
-$error += !(isset($request['password']) && strlen($request['password']) < 66 );
+$error += !(isset($request['password']) && strlen($request['password']) < 200 );
 //check that getData is a populated array if its set
 $error += (isset($request['getData']) && !( is_array($request['getData']) && count($request['getData']) > 0 ) );
 if($error !== 0){
