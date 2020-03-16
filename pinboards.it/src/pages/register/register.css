@@ -28,6 +28,7 @@
 }
 .password-state-container p{
   margin: 10px;
+  margin-top: 15px;
 }
 .password-state-container .div-button{
   display: flex;
@@ -35,9 +36,10 @@
   align-items: center;
 }
 .password-state-container .collapsible{
-  max-height: 300px;
-  transition: all 1s;
+  max-height: 200px;
+  transition: all 0.5s;
   overflow: hidden;
+  white-space: pre-line;
 }
 .password-state-container .collapsible.collapsed{
   max-height: 0;

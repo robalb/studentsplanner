@@ -6,9 +6,13 @@ import zxcvbn from 'zxcvbn';
 function FormPasswordInfo(props){
   let [showPasswordInfo, setShowPasswordInfo] = React.useState(false);
   let audit = zxcvbn(props.password)
-  console.log(audit)
   let strength = "password strength " + audit.score;
-  let longInfo = {};
+  let longInfo = {
+    guesses: audit.guesses < 100000 ? audit.guesses : ("10^ "+Math.floor(audit.guesses_log10)) ,
+    offline_slow_times_display: audit.crack_times_display.offline_slow_hashing_1e4_per_second,
+    feedback_warning: audit.feedback.warning || "-",
+    feedback_suggestion: audit.feedback.suggestions.join(" ") || "-"
+  };
   return(
     <div className="password-state-container">
       <p>{t("password strength:")}<span>{t(strength)}</span></p>

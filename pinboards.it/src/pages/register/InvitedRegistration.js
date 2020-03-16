@@ -28,10 +28,6 @@ function InvitedRegistration(props){
   }
 
   function validatePassword(password){
-    if(password.length < 1){
-      setPasswordState(false);
-      return 0;
-    }
     setPasswordState(
       <FormPasswordInfo password={password}/>
     );
