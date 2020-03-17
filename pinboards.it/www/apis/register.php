@@ -13,8 +13,6 @@ if(!isset($_SESSION['registration_currentStep']){
   echo json_encode(['error'=>'session_error_refresh']);
   die();
 }
-/* $_SESSION['registration_fromInvite'] = true; */
-/* $_SESSION['registration_classID'] = $row['classID']; */
 
 $body = file_get_contents('php://input');
 //validates received data, and returns an error if something is not right
@@ -26,9 +24,34 @@ try{
   $request = [];
   $error++;
 }
+if($error !== 0){
+  http_response_code(400);
+  echo json_encode(['error'=>'malformed_request']);
+  die();
+}
+
 
 //TODO: check step parameter, and session variables, and perform relevant checks
 
+//handle first step
+if($_SESSION['registration_currentStep'] === 0){
+  $error = 0;
+  //check mail existance and max length
+  $error += !(isset($request['mail']) && strlen($request['mail']) < 150 );
+  //check password existence and max length
+  $error += !(isset($request['password']) && strlen($request['password']) < 200 );
+  if($error !== 0){
+    http_response_code(400);
+    echo json_encode(['error'=>'malformed_request']);
+    die();
+  }
+}
+
+else if($_SESSION['registration_currentStep'] === 1){
+  //handle second step
+  /* $_SESSION['registration_fromInvite'] = true; */
+  /* $_SESSION['registration_classID'] = $row['classID']; */
+}
 /* //check mail existance and max length */
 /* $error += !(isset($request['mail']) && strlen($request['mail']) < 150 ); */
 /* //check password existence and max length */
