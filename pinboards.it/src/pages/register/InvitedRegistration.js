@@ -19,7 +19,9 @@ function InvitedRegistration(props){
         password = password.substring(0, 99);
       }
       let audit = zxcvbn(password)
-      validatePassword(audit);
+      setPasswordState(
+        <FormPasswordInfo audit={audit}/>
+      );
       strength = {strength: audit.score}
     }
     return ({...state, ...action, ...strength});
@@ -36,11 +38,6 @@ function InvitedRegistration(props){
     setErrorMessage( <FormErrorMessage msg={message}/> )
   }
 
-  function validatePassword(audit){
-    setPasswordState(
-      <FormPasswordInfo audit={audit}/>
-    );
-  }
 
   function validateForm(){
     let mailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
@@ -53,10 +50,14 @@ function InvitedRegistration(props){
     else if(form.strength < 2){
       error(t( "weak password" ));
     }
+    else if(form.password.length >= 200){
+      error(t("password too long", {maxLength: 200}))
+    }
     else if(form.password !== form.confirmPassword){
       error(t("confirm password wrong"))
     }else{
       if(errorMessage) error("");
+      //TODO
     }
 
   }
