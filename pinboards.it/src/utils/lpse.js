@@ -110,7 +110,7 @@ async function checkBreaches(password, options){
 
 /*
  * parameters:
- * string password - default ""
+ * string password - defaults to an empty string
  * object options:
  *   int timeout - the number of milliseconds a request can take before automatically being terminated
  *   bool breaches - when set to false, only the offline analysis of the password is performed
@@ -124,9 +124,10 @@ async function lpse(password = "", options={timeout:0, breaches: true}){
   //perform the first audit using the zxcvbn library
   let staticAudit = zxcvbn(password);
 
-  //if not disabled in the options, perform a second audit using the pwned passwords k-anonimity api
+  //if not disabled in the options, and the password is not too simple
+  //perform a second audit using the pwned passwords k-anonimity api
   let apiAudit = false;
-  if(options.breaches){
+  if(options.breaches && staticAudit.score > 2){
     apiAudit = await checkBreaches(password, options);
   }
 
