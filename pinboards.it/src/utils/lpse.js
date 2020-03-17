@@ -39,7 +39,7 @@ function recalculateScore(audit, matches){
     i++;
   }
   //apply the caps defined in the config
-  if(config.scoreCap && audit.score > config.scoreCap){
+  if(config.scoreCap !== undefined && audit.score > config.scoreCap){
     audit.score = config.scoreCap;
   }
   if(config.guessesCap && audit.guesses > config.guessesCap(matches)){
@@ -127,9 +127,11 @@ async function lpse(password = "", options={timeout:0, breaches: true}){
   //if not disabled in the options, and the password is not too simple
   //perform a second audit using the pwned passwords k-anonimity api
   let apiAudit = false;
-  if(options.breaches && staticAudit.score > 2){
+  if(options.breaches && staticAudit.score > 1){
     apiAudit = await checkBreaches(password, options);
   }
+
+  console.log(apiAudit)
 
   //merge the two audits
   let audit = staticAudit;

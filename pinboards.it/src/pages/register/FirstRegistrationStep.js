@@ -6,8 +6,8 @@ import FormErrorMessage from '../../components/FormErrorMessage.js';
 import FormInput from '../../components/FormInput.js';
 import FormPasswordInfo from './FormPasswordInfo.js';
 
-function InvitedRegistration(props){
-  let inviteData = props.inviteData;
+function FirstRegistrationStep(props){
+  let inviteData = props.phpData.invited ? props.phpData.inviteData : {};
   let [errorMessage, setErrorMessage] = React.useState("");
   let [passwordState, setPasswordState] = React.useState(false);
   let [audit, setAudit] = React.useState({score: 0});
@@ -69,7 +69,11 @@ function InvitedRegistration(props){
     <header></header>
     <div className="register-container">
     <div className="top-header">
-      <h2>{t("register invite notice", {name:inviteData.invitedBy,classroom: inviteData.className})}</h2>
+    {
+      props.phpData.invited ?
+      <h2>{t("register invite notice", {name:inviteData.invitedBy,classroom: inviteData.className})}</h2> :
+      <h2>{t("register title")}</h2>
+    }
       <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
     </div>
 
@@ -112,4 +116,4 @@ function InvitedRegistration(props){
   );
 }
 
-export default InvitedRegistration;
+export default FirstRegistrationStep;

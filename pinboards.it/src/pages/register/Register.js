@@ -2,8 +2,7 @@ import React from 'react';
 import t from '../../utils/i18n.js';
 //page specific imports
 import './register.css';
-import InvitedRegistration from './InvitedRegistration.js';
-import ClassRegistration from './ClassRegistration.js';
+import FirstRegistrationStep from './FirstRegistrationStep.js';
 
 
 function Register(props){
@@ -31,9 +30,8 @@ function Register(props){
     );
   }
 
-  return phpData.invited ? 
-    <InvitedRegistration inviteData={phpData.inviteData} /> :
-    <ClassRegistration inviteData={phpData.inviteData} /> ;
+  return <FirstRegistrationStep phpData={phpData} />
+
 }
 
 export default Register;
