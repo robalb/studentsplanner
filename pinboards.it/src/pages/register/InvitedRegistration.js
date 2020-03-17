@@ -1,8 +1,8 @@
 import React from 'react';
+import zxcvbn from 'zxcvbn';
 import t from '../../utils/i18n.js';
 import FormErrorMessage from '../../components/FormErrorMessage.js';
 import FormInput from '../../components/FormInput.js';
-
 import FormPasswordInfo from './FormPasswordInfo.js';
 
 function InvitedRegistration(props){
@@ -11,14 +11,23 @@ function InvitedRegistration(props){
   let [passwordState, setPasswordState] = React.useState(false);
 
   let formReducer = (state, action)=>{
+    let strength = {}
     if(action.password){
-      validatePassword(action.password);
+      //truncate long passwords to preserve performance, as suggested by the library
+      let password = action.password || " ";
+      if (password.length > 100) {
+        password = password.substring(0, 99);
+      }
+      let audit = zxcvbn(password)
+      validatePassword(audit);
+      strength = {strength: audit.score}
     }
-    return ({...state, ...action});
+    return ({...state, ...action, ...strength});
   }
   let [form, dispatchForm] = React.useReducer(formReducer, {
     mail: "",
     password: "",
+    strength: 0,
     confirmPassword: "",
     fullName: ""
   });
@@ -27,9 +36,9 @@ function InvitedRegistration(props){
     setErrorMessage( <FormErrorMessage msg={message}/> )
   }
 
-  function validatePassword(password){
+  function validatePassword(audit){
     setPasswordState(
-      <FormPasswordInfo password={password}/>
+      <FormPasswordInfo audit={audit}/>
     );
   }
 
@@ -41,8 +50,8 @@ function InvitedRegistration(props){
     else if(! (form.mail.length > 3 && mailRe.test(form.mail))){
       error(t("invalid mail"));
     }
-    else if(form.password.length < 6){
-      error(t( "invalid password" ));
+    else if(form.strength < 2){
+      error(t( "weak password" ));
     }
     else if(form.password !== form.confirmPassword){
       error(t("confirm password wrong"))

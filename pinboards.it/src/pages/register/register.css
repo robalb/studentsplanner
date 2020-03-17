@@ -22,13 +22,15 @@
 }
 
 .password-state-container{
-  background-color: rgba(0,0,200, 0.1);
+  /* background-color: rgba(0,0,200, 0.1); */
+  transition: all 0.2s;
   max-width: 300px;
   margin: 0 auto;
 }
 .password-state-container p{
   margin: 10px;
-  margin-top: 15px;
+  /* https://stackoverflow.com/a/23206940/9169799 */
+  display: inline-block;
 }
 .password-state-container .div-button{
   display: flex;
@@ -36,7 +38,7 @@
   align-items: center;
 }
 .password-state-container .collapsible{
-  max-height: 200px;
+  max-height: 300px;
   transition: all 0.5s;
   overflow: hidden;
   white-space: pre-line;
