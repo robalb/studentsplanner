@@ -1,5 +1,6 @@
 import React from 'react';
-import zxcvbn from 'zxcvbn';
+// import zxcvbn from 'zxcvbn';
+import lpse from  '../../utils/lpse.js';
 import t from '../../utils/i18n.js';
 import FormErrorMessage from '../../components/FormErrorMessage.js';
 import FormInput from '../../components/FormInput.js';
@@ -9,27 +10,18 @@ function InvitedRegistration(props){
   let inviteData = props.inviteData;
   let [errorMessage, setErrorMessage] = React.useState("");
   let [passwordState, setPasswordState] = React.useState(false);
+  let [audit, setAudit] = React.useState({score: 0});
 
   let formReducer = (state, action)=>{
-    let strength = {}
     if(action.password){
-      //truncate long passwords to preserve performance, as suggested by the library
       let password = action.password || " ";
-      if (password.length > 100) {
-        password = password.substring(0, 99);
-      }
-      let audit = zxcvbn(password)
-      setPasswordState(
-        <FormPasswordInfo audit={audit}/>
-      );
-      strength = {strength: audit.score}
+      validatePassword(password);
     }
-    return ({...state, ...action, ...strength});
+    return ({...state, ...action});
   }
   let [form, dispatchForm] = React.useReducer(formReducer, {
     mail: "",
     password: "",
-    strength: 0,
     confirmPassword: "",
     fullName: ""
   });
@@ -38,6 +30,17 @@ function InvitedRegistration(props){
     setErrorMessage( <FormErrorMessage msg={message}/> )
   }
 
+  async function validatePassword(password){
+    let options = {
+      timeout: 3000,
+      breaches: true
+    };
+    let audit = await lpse(password, options)
+    setAudit(audit);
+    setPasswordState(
+      <FormPasswordInfo audit={audit}/>
+    );
+  }
 
   function validateForm(){
     let mailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
@@ -47,7 +50,7 @@ function InvitedRegistration(props){
     else if(! (form.mail.length > 3 && mailRe.test(form.mail))){
       error(t("invalid mail"));
     }
-    else if(form.strength < 2){
+    else if(audit.score < 2){
       error(t( "weak password" ));
     }
     else if(form.password.length >= 200){
