@@ -10,7 +10,7 @@ $body = file_get_contents('php://input');
 
 //validates received data, and returns an error if something is not right
 $error = 0;
-$error += (strlen($body) > 250) || (strlen($body) < 5);
+$error += (strlen($body) > 400) || (strlen($body) < 5);
 try{
   $request = json_decode($body, true, 3);
 } catch(Exception $e){

@@ -23,6 +23,18 @@ const mergeConfig = [
     min: 1000,
     scoreCap: 0,
     guessesCap: matches => 100,
+    crackTimesDisplay: {
+      offline_fast_hashing_1e10_per_second: "less than a second",
+      offline_slow_hashing_1e4_per_second: "less than a second",
+      online_no_throttling_10_per_second: "2 minutes",
+      online_throttling_100_per_hour: "10 hours",
+    },
+    crackTimesSeconds: {
+      offline_fast_hashing_1e10_per_second: 1.001e-7,
+      offline_slow_hashing_1e4_per_second: 0.1001,
+      online_no_throttling_10_per_second: 100.1,
+      online_throttling_100_per_hour: 36036,
+    },
     forceWarning: false,
     warning: matches => `this password has previously appeared over ${matches} times in several data breaches and should never be used`,
   }
@@ -51,6 +63,13 @@ function recalculateScore(audit, matches){
   if(!audit.feedback.warning || config.forceWarning){
     audit.feedback.warning = config.warning(matches);
   }
+  //change the time representations
+  if(config.crackTimesSeconds){
+    audit.crack_times_seconds = config.crackTimesSeconds;
+  }
+  if(config.crackTimesDisplay){
+    audit.crack_times_display = config.crackTimesDisplay;
+  }
   return audit;
 }
 
@@ -73,7 +92,6 @@ async function checkBreaches(password, options){
   }catch(e){
     apiAudit.success = false;
     apiAudit.error = "could not generate the password hash";
-    console.log(e)
   }
   if(hash){
     hash = hash.toUpperCase();
@@ -130,8 +148,6 @@ async function lpse(password = "", options={timeout:0, breaches: true}){
   if(options.breaches && staticAudit.score > 1){
     apiAudit = await checkBreaches(password, options);
   }
-
-  console.log(apiAudit)
 
   //merge the two audits
   let audit = staticAudit;

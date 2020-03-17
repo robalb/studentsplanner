@@ -35,16 +35,11 @@ export async function getBulkApiData(types){
 }
 
 
-export async function register(mail, password, isHash, getData){
-  let response = await fetch(`${API_PATH}login.php`, {
+export async function register(registrationData){
+  let response = await fetch(`${API_PATH}register.php`, {
     headers: { "Content-Type": "application/json; charset=utf-8" },
     method: 'POST',
-    body: JSON.stringify({
-      mail: mail,
-      password: password,
-      isHash: isHash,
-      getData: getData
-    })
+    body: JSON.stringify(registrationData)
   });
   let data = await response.json();
   return data;

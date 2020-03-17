@@ -24,6 +24,7 @@ $locale = $languageManager->getNegotiatedUserLocale();
 //initialize variables that will be injected into the page as a js global varaible
 $JSdata = ["invited" => false];
 //initialize global variables that will be used by the registration api endpoint
+$_SESSION['registration_currentStep'] = 0;
 $_SESSION['registration_fromInvite'] = false;
 
 //check if there is a valid code being passed as get parameter

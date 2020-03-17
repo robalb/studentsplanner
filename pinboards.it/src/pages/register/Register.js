@@ -30,7 +30,11 @@ function Register(props){
     );
   }
 
-  return <FirstRegistrationStep phpData={phpData} />
+  function firstStepSuccess(data){
+    //TODO: depending on the invited status, render another step, or redirect to the account page
+  }
+
+  return <FirstRegistrationStep callback={firstStepSuccess} phpData={phpData} />
 
 }
 
