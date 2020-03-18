@@ -8,7 +8,7 @@ require_once '../core/classes/GetApplicationData.php';
 $session = new SessionManager();
 
 //check that session variables related to the registration already exist
-if(!isset($_SESSION['registration_currentStep']){
+if(!isset($_SESSION['registration_currentStep'])){
   http_response_code(500);
   echo json_encode(['error'=>'session_error_refresh']);
   die();
@@ -40,6 +40,8 @@ if($_SESSION['registration_currentStep'] === 0){
   $error += !(isset($request['mail']) && strlen($request['mail']) < 150 );
   //check password existence and max length
   $error += !(isset($request['password']) && strlen($request['password']) < 200 );
+  //check maxLength existence and max length
+  $error += !(isset($request['fullName']) && strlen($request['fullName']) < 100 );
   if($error !== 0){
     http_response_code(400);
     echo json_encode(['error'=>'malformed_request']);

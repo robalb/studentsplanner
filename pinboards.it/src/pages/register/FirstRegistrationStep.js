@@ -47,7 +47,7 @@ function FirstRegistrationStep(props){
 
   async function validateForm(){
     let mailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
-    if(form.fullName.length < 3){
+    if(form.fullName.length < 3 || form.fullName.length >= 100){
       error(t("invalid name"));
     }
     else if(! (form.mail.length > 3 && mailRe.test(form.mail))){
