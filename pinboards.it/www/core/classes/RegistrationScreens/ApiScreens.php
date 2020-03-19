@@ -15,9 +15,12 @@ class ApiScreens extends RegistrationScreens{
       if(!isset($data['caller'])){
         $data['caller'] = 'captcha';
       }
+      if(!isset($data['time'])){
+        $data['time'] = 30;
+      }
       $this->setData([
         'callerScreen' => $data['caller'],
-        'limitEndTime' => (time() + 60)
+        'limitEndTime' => (time() + $data['time'])
       ]);
     }else{
       $endTime = $this->getData('limitEndTime');
@@ -29,8 +32,6 @@ class ApiScreens extends RegistrationScreens{
   }
 
   protected function captcha($data){
-    //TODO: this is just a temporary test. change all this code
-
     //initialize variables that won't be resetted on successives first calls
     //of this screen
     $captchasSolved = $this->getData('captchasSolved') ? $this->getData('captchasSolved') : 0;
@@ -38,12 +39,24 @@ class ApiScreens extends RegistrationScreens{
       'captchasSolved' => $captchasSolved
     ]);
 
-    //if this is the first call, set the variables to 0
+    //if this is the first call
     if($data['firstCall']){
+      //initialize variables
       $this->setData([
         'wrongCaptchaAttempts' => 0,
         'captchaRefreshes' => 0
       ]);
+      //ratelimit the user if this is not the first time a captcha is requested.
+      if($captchasSolved % 2 == 0){
+        $rateLimitTime = $captchasSolved * 60;
+        //increment solved counter (even tho it has not been solved yet, this is done
+        //to prevent an infinite ratelimit)
+        $this->setData([
+          'captchasSolved' => ($this->getData('captchasSolved') +1)
+        ]);
+        $this->setScreen('error', ['time' => $rateLimitTime]);
+        return 0;
+      }
     }else{
       //check the user input
       if(isset($data['answer'])){
@@ -63,6 +76,11 @@ class ApiScreens extends RegistrationScreens{
             'wrongCaptchaAttempts' => ($this->getData('wrongCaptchaAttempts') +1)
           ]);
         }
+      }else if(isset($data['refresh'])){
+        //increment refreshes counter
+        $this->setData([
+          'captchaRefreshes' => ($this->getData('captchaRefreshes') +1)
+        ]);
       }
     }
     //generate random question - answer pair.
@@ -78,14 +96,10 @@ class ApiScreens extends RegistrationScreens{
     //send the 'scrambled' random string to the user
     $this->setFrontData(['captchaQuestion' => $question]);
 
-    //increment refreshes counter
-    $this->setData([
-      'captchaRefreshes' => ($this->getData('captchaRefreshes') +1)
-    ]);
-
-
+    //ratelimit the user if there have been too many refreshes or errors
     if($this->getData( 'captchaRefreshes' ) > 10 || $this->getData( 'wrongCaptchaAttempts' ) > 10){
-      $this->setScreen('error', ['error' => '-']);
+      $this->setScreen('error', ['time' => 60]);
+      return 0;
     }
   }
 

@@ -66,7 +66,7 @@ class PageScreens extends RegistrationScreens{
         $errors += 1;
         $this->setData(['wrongCodeAttempts' => $errors]);
         //if there have been too many attempts
-        if($errors > 5){
+        if($errors > 2){
           $this->setData(['wrongCodeAttempts' => 0]);
           $this->setScreen('captcha', []);
           return false;
@@ -100,9 +100,12 @@ class PageScreens extends RegistrationScreens{
       if(!isset($data['caller'])){
         $data['caller'] = 'captcha';
       }
+      if(!isset($data['time'])){
+        $data['time'] = 30;
+      }
       $this->setData([
         'callerScreen' => $data['caller'],
-        'limitEndTime' => (time() + 60)
+        'limitEndTime' => (time() + $data['time'])
       ]);
     }else{
       $endTime = $this->getData('limitEndTime');
@@ -110,25 +113,38 @@ class PageScreens extends RegistrationScreens{
         //the time has passed, redirect back to the old screen
         $this->setScreen($this->getData('callerScreen'), []);
       }
+      /* echo($endTime - time()); */
     }
   }
 
   protected function captcha($data){
-    //TODO: this is just a temporary test. change all this code
-
-    //if this is the first call, set the variables to 0
-    if($data['firstCall']){
-      $this->setData([
-        'wrongCaptchaAttempts' => 0,
-        'captchaRefreshes' => 0
-      ]);
-    }
     //initialize variables that won't be resetted on successives first calls
     //of this screen
     $captchasSolved = $this->getData('captchasSolved') ? $this->getData('captchasSolved') : 0;
     $this->setData([
       'captchasSolved' => $captchasSolved
     ]);
+
+    //if this is the first call
+    if($data['firstCall']){
+      //initialize variables
+      $this->setData([
+        'wrongCaptchaAttempts' => 0,
+        'captchaRefreshes' => 0
+      ]);
+      //ratelimit the user if this is not the first time a captcha is requested.
+      if($captchasSolved > 1 && $captchasSolved % 2 == 0){
+        $rateLimitTime = $captchasSolved * 60;
+        //increment solved counter (even tho it has not been solved yet, this is done
+        //to prevent an infinite ratelimit)
+        $this->setData([
+          'captchasSolved' => ($this->getData('captchasSolved') +1)
+        ]);
+        $this->setScreen('error', ['time' => $rateLimitTime, 'caller' => 'captcha']);
+        return 0;
+      }
+    }
+
     //generate random question - answer pair.
     //NOTE: this is just a temporary setup for testing purposes. not a real captcha.
     $value1 = rand(1,30);
@@ -147,8 +163,9 @@ class PageScreens extends RegistrationScreens{
       'captchaRefreshes' => ($this->getData('captchaRefreshes') +1)
     ]);
 
-    if($this->getData( 'captchaRefreshes' ) > 10 || $this->getData( 'wrongCaptchaAttempts' ) > 10){
-      $this->setScreen('error', ['error' => '-']);
+    if($this->getData('captchaRefreshes') > 10 || $this->getData( 'wrongCaptchaAttempts' ) > 10){
+      //ratelimit the user for 60 seconds
+      $this->setScreen('error', ['time' => 60]);
     }
   }
 
