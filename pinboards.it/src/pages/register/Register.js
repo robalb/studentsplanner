@@ -1,40 +1,64 @@
 import React from 'react';
-import t from '../../utils/i18n.js';
 //page specific imports
 import './register.css';
-import FirstRegistrationStep from './FirstRegistrationStep.js';
+
+//import all the possible steps of the registration process
+//note: lazy loading could be used, but almost all these steps are necessary, and 
+//those that may be not are all very small components anyway
+import UserForm from './screens/UserForm.js';
+import InviteError from './screens/InviteError.js';
+import GenericError from './screens/GenericError.js';
+import Captcha from './screens/Captcha.js';
+import ClassForm from './screens/ClassForm.js';
+import MailConfirmation from './screens/MailConfirmation.js';
+import Ok from './screens/Ok.js';
+
+
+let screens = {
+  userForm: UserForm,
+  inviteError: InviteError,
+  error : GenericError,
+  captcha: Captcha,
+  classForm: ClassForm,
+  mailConfirmation: MailConfirmation,
+  ok: Ok,
+};
 
 
 function Register(props){
+  let [currentScreen, setCurrentScreen] = React.useState(false);
   let phpData = {};
   if(PHP_GLOBALS){
     phpData = PHP_GLOBALS;
   }
 
-  if(phpData.invited && phpData.error){
-    let error = phpData.error;
-    if(["invalid_code", "expired_code", "invalid_code_get"].includes(error)){
-      error = t(error)
-    }else{
-      error = t("generic invite code error", {error: error})
+  //if a screen is not set, set the screen passed by php
+  //a 'screen' is a state in the registration state-based system
+  //i call it screen and not state because i started with this dumb name, and now i'm too lazy to rename everything.
+  if(phpData.screen && !currentScreen){
+    setScreen(phpData.screen, phpData)
+  }
+
+  function setScreen(screen, data){
+    console.log(screen)
+    if(!screens[screen] || typeof screens[screen] !== 'function' ){
+      screen = 'error';
+      data = {error: 'screen not found'}
     }
-    return(
-    <>
-      <header></header>
-      <div className="register-container error">
-        <h3>{error}</h3>
-        <p><a href="../">{t("home")}</a></p>
-        <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
-      </div>
-    </>
-    );
+    let component = screens[screen]
+    console.log(component)
+    console.log(screen)
+    let state = {
+      data: data,
+      setScreen: setScreen
+    }
+    setCurrentScreen(component(state));
   }
 
-  function firstStepSuccess(data){
-    //TODO: depending on the invited status, render another step, or redirect to the account page
-  }
+  //render the current screen
+  return currentScreen;
 
-  return <FirstRegistrationStep callback={firstStepSuccess} phpData={phpData} />
+  
 
 }
 

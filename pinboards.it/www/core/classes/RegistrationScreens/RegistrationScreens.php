@@ -44,15 +44,15 @@ class RegistrationScreens {
 
   //call this method to execute the current screen
   public function refreshCurrentScreen(){
-    //save a copy of the current frontdata before emptying it.
-    //by doing this we can restore it
-    //if the code in this refresh does not cange screen and does not call setFrontData
-    $this->firstFrontData = $_SESSION['registrationScreen_front'];
-    $this->firstScreen = $_SESSION['registrationScreen_current'];
-
-    $_SESSION['registrationScreen_front'] = [];
     $screenName = $_SESSION['registrationScreen_current'];
     if(method_exists($this, $screenName)){
+      //save a copy of the current frontdata before emptying it.
+      //by doing this we can restore it
+      //if the code in this refresh does not cange screen and does not call setFrontData
+      $this->firstFrontData = $_SESSION['registrationScreen_front'];
+      $this->firstScreen = $_SESSION['registrationScreen_current'];
+
+      $_SESSION['registrationScreen_front'] = [];
       $data = [
         'refresh' => true
       ];
