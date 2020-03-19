@@ -3,7 +3,6 @@ import React from 'react';
 import lpse from  '../../../utils/lpse.js';
 import t from '../../../utils/i18n.js';
 import { sha256 } from '../../../utils/crypto.js';
-import {register} from '../../../utils/apiResolver.js';
 import FormErrorMessage from '../../../components/FormErrorMessage.js';
 import FormInput from '../../../components/FormInput.js';
 import FormPasswordInfo from '../FormPasswordInfo.js';
@@ -79,27 +78,20 @@ function UserForm(props){
       isHash = false
     }
     let response = false;
-    try{
-      response = await register({
-        mail: form.mail,
-        password: hashedPassword,
-        fullName: form.fullName,
-        isHash: isHash
-      });
-    }catch(e){
-      console.log(e);
+    response = await props.sendApiData({
+      mail: form.mail,
+      password: hashedPassword,
+      fullName: form.fullName,
+      isHash: isHash
+    });
+    if(!response){
       error(t('connection error'));
       setLoading(false);
-    }
-    if(response.error){
+    }else if(response.error){
       //TODO: replace these errors with the relevant ones for the registration
       error(response.error=='wrong_mail_or_password'?t('incorrect username or password') : response.error);
       setLoading(false);
-    }else if(response.setScreen){
-      setLoading(false);
-      props.setScreen(response.setScreen,response);
     }
-    console.log(response);
   }
 
   let button = loading?

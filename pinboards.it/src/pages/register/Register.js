@@ -1,6 +1,7 @@
 import React from 'react';
 //page specific imports
 import './register.css';
+import {register} from '../../utils/apiResolver.js';
 
 //import all the possible steps of the registration process
 //note: lazy loading could be used, but almost all these steps are necessary, and 
@@ -27,6 +28,7 @@ let screens = {
 
 function Register(props){
   let [currentScreen, setCurrentScreen] = React.useState(false);
+  let [currentScreenName, setCurrentScreenName] = React.useState(false);
   let phpData = {};
   if(PHP_GLOBALS){
     phpData = PHP_GLOBALS;
@@ -39,26 +41,37 @@ function Register(props){
     setScreen(phpData.screen, phpData)
   }
 
+  //api for sending and receiving data from the api endpoint
+  //associated to the current screen. If the response contains a setScreen parameter,
+  //a change of screen is triggered
+  async function sendApiData(data){
+    data['screen'] = currentScreenName || 'error';
+    let response = false;
+    try{
+      response = await register(data);
+    }catch(e){
+      console.log(e);
+    }
+    if(response.setScreen){
+      setScreen(response.setScreen, response);
+      return false;
+    }else{
+      return response;
+    }
+  }
+
   function setScreen(screen, data){
-    console.log(screen)
+    setCurrentScreenName(screen);
     if(!screens[screen] || typeof screens[screen] !== 'function' ){
       screen = 'error';
       data = {error: 'screen not found'}
     }
-    let component = screens[screen]
-    console.log(component)
-    console.log(screen)
-    let state = {
-      data: data,
-      setScreen: setScreen
-    }
-    setCurrentScreen(component(state));
+    let Component = screens[screen];
+    setCurrentScreen(<Component data={data} sendApiData={sendApiData} setScreen={setScreen} />);
   }
 
   //render the current screen
   return currentScreen;
-
-  
 
 }
 
