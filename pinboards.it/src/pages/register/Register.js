@@ -45,7 +45,8 @@ function Register(props){
   //associated to the current screen. If the response contains a setScreen parameter,
   //a change of screen is triggered
   async function sendApiData(data){
-    data['screen'] = currentScreenName || 'error';
+    data['screen'] = currentScreenName || phpData.screen || "error";
+    console.log(data)
     let response = false;
     try{
       response = await register(data);
