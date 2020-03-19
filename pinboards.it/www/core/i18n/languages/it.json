@@ -23,6 +23,7 @@
   "confirm password wrong": "le due password non sono uguali",
   "password": "password",
   "password strength:": "sicurezza della password: ",
+  "mail_already_exists": "esiste già un account registrato con questo indirizzo mail",
   "weak password": "password troppo debole",
   "more info": "informazioni",
   "generic error": "non è stato possibile mostrare questa pagina a causa di un errore",

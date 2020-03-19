@@ -88,8 +88,13 @@ function UserForm(props){
       error(t('connection error'));
       setLoading(false);
     }else if(response.error){
-      //TODO: replace these errors with the relevant ones for the registration
-      error(response.error=='wrong_mail_or_password'?t('incorrect username or password') : response.error);
+      let translatedError = "";
+      if(["mail_already_exists", "invalid_code", "expired_code", "invalid_code_get"].includes(response.error)){
+        translatedError = t(response.error)
+      }else{
+        translatedError = t("generic connection error ", {error: response.error})
+      }
+      error(translatedError);
       setLoading(false);
     }
   }

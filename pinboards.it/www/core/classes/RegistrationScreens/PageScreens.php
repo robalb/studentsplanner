@@ -17,8 +17,7 @@ class PageScreens extends RegistrationScreens{
       'wrongCodeAttempts' => $wrongCodeAttempts,
       'wrongPasswordAttempts' => $wrongPasswordAttempts,
       //invitation state
-      'fromInvite' => false,
-      'classID' => false
+      'inviteCode' => false
     ]);
     //initialize variables that will be injected into the page as a js global varaible
     $JSdata = ["invited" => false];
@@ -26,6 +25,8 @@ class PageScreens extends RegistrationScreens{
     if(isset($_GET['invite']) &&
       is_string($_GET['invite']) &&
       strlen($_GET['invite']) === 16 ){
+      //store the invite code in a session variable
+      $this->setData([ 'inviteCode' => $_GET['invite'] ]);
       //retrieve invite informations from db
       $instance = ConnectDb::getInstance();
       $pdo = $instance->getConnection();
@@ -37,11 +38,6 @@ class PageScreens extends RegistrationScreens{
         //check if the invite has not expired
         if(time() - $row['creationDate'] < $row['lifespan']){
           //the invite is good.
-          //update the invitation related global variables
-          $this->setData([
-            'fromInvite' => true,
-            'classID' => $row['classID']
-          ]);
           //prepare data that will be passed to js
           $JSdata = [
             "invited" => true,
@@ -66,7 +62,7 @@ class PageScreens extends RegistrationScreens{
         $errors += 1;
         $this->setData(['wrongCodeAttempts' => $errors]);
         //if there have been too many attempts
-        if($errors > 2){
+        if($errors > 3){
           $this->setData(['wrongCodeAttempts' => 0]);
           $this->setScreen('captcha', []);
           return false;

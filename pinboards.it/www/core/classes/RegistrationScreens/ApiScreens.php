@@ -4,6 +4,120 @@ require_once dirname(__FILE__) . '/../ConnectDb.php';
 
 class ApiScreens extends RegistrationScreens{
   protected function userForm($data){
+    //initialize some variables that will be useful to track abuses in the registration process
+    $wrongMailAttempts = $this->getData('wrongMailAttempts') ? $this->getData('wrongMailAttempts') : 0;
+    $wrongCodeAttempts = $this->getData('wrongCodeAttempts') ? $this->getData('wrongCodeAttempts') : 0;
+    $wrongPasswordAttempts = $this->getData('wrongPasswordAttempts') ? $this->getData('wrongPasswordAttempts') : 0;
+    //initialize the invite code, that is fetched when the page is reloaded
+    $inviteCode = $this->getData('inviteCode') ? $this->getData('inviteCode') : false;
+    $this->setData([
+      //security varaibles
+      'wrongMailAttempts' => $wrongMailAttempts,
+      'wrongCodeAttempts' => $wrongCodeAttempts,
+      'wrongPasswordAttempts' => $wrongPasswordAttempts,
+      //invitation state
+      'inviteCode' => $inviteCode
+    ]);
+
+    //data that will be used when the user is successfuly authenticated
+    //to determine what is the next screen
+    $invited = false;
+    $classID = false;
+
+    //before performing any check on the user submitted form,
+    //check the validity of the invite code. if it's bad, redirect to the inviteError screen
+    $invite = $this->getData('inviteCode');
+    if($invite){
+      //retrieve invite informations from db
+      $instance = ConnectDb::getInstance();
+      $pdo = $instance->getConnection();
+      $stmt = $pdo->prepare('SELECT i.code, i.classID, i.invitedBy, i.creationDate, i.lifespan, c.name FROM invite_codes i, class c WHERE i.code = ? and i.classID = c.ID');
+      $stmt->execute([$invite]);
+      //check if the invite code exists
+      if($stmt->rowCount() > 0){
+        $row = $stmt->fetch();
+        //check if the invite has not expired
+        if(time() - $row['creationDate'] < $row['lifespan']){
+          //the invite is good.
+          //update the related variables
+          $invited = true;
+          $classID = $row['classID'];
+        }else{
+          //the invite code has expired.
+          //remove it from the database
+          $stmt = $pdo->prepare('DELETE FROM invite_codes where code = ?');
+          $stmt->execute([$invite]);
+          //set the current state to inviteError
+          $this->setScreen('inviteError', ['error' => "expired_code"]);
+          return false;
+        }
+      }else{
+        //the invite code does not exist.
+        //increment the error counter, stored in this screen session data
+        $errors = $this->getData('wrongCodeAttempts');
+        $errors += 1;
+        $this->setData(['wrongCodeAttempts' => $errors]);
+        //if there have been too many attempts
+        if($errors > 3){
+          $this->setData(['wrongCodeAttempts' => 0]);
+          $this->setScreen('captcha', []);
+          return false;
+        }
+        $this->setScreen('inviteError', ['error' => "invalid_code"]);
+        return false;
+      }
+    }
+
+    //check the user submitted data
+    if(!$data['firstCall']){
+      $error = 0;
+      //check mail existance and max length
+      $error += !(isset($data['mail']) && strlen($data['mail']) < 150 );
+      //check password existence and length
+      $error += !(isset($data['password']) && strlen($data['password']) < 200 );
+      //check fullName existence and length
+      $error += !(isset($data['fullName']) && strlen($data['fullName']) > 2 && strlen($data['fullName']) < 100 );
+      //chek mail validity and create filtered mail variable
+      $mail = filter_var($data['mail'], FILTER_SANITIZE_EMAIL);
+      $error += !$mail;
+      if($error !== 0){
+        http_response_code(400);
+        var_dump($data);
+        echo json_encode(['error'=>'malformed_request']);
+        die();
+      }
+      //check if the mail is available.
+      $instance = ConnectDb::getInstance();
+      $pdo = $instance->getConnection();
+      $stmt = $pdo->prepare('SELECT fullName FROM students WHERE mail = ?');
+      $stmt->execute([$mail]);
+      //if the mail is not available, return an error
+      if($stmt->rowCount() > 0){
+        http_response_code(400);
+        //TODO: handle abuse
+        echo json_encode(['error'=>'mail_already_exists']);
+        die();
+      }else{
+        //the mail is available, understand what is the next screen, and redirect to it
+        $password = $data['password'];
+        //handle the case where the client couldn't send a hashed password
+        if(isset($data["isHash"]) && $data["isHash"] == false){
+          $password = hash("sha256", $password);
+        }
+        $screenData = [
+          'fullName' => $data['fullName'],
+          'hash' => $password,
+          'mail' => $mail,
+          'invited' => $invited,
+          'classID' => $classID
+        ];
+        //if the user is invited, the next screen is the classform, otherwise it's the final one
+        $screen = $invited ? 'classform' : 'ok';
+        $this->setScreen($screen, $screenData);
+        return 0;
+      }
+    }
+
   }
 
   protected function inviteError($data){
