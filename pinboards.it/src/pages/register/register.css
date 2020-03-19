@@ -57,3 +57,29 @@
 }
 
 
+.register-container.captcha{
+  margin-top: 20px;
+  padding: 20px 5px 20px 5px;
+}
+.register-container.captcha .controls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.register-container.captcha .controls .lds-ring{
+  margin: 35px 0 35px 0;
+}
+.register-container.captcha .controls .div-button{
+  margin: 35px 0 35px 0;
+  height: 43px;
+  width: 43px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.register-container.captcha .controls .div-button:last-of-type{
+  padding: 0 5px 0 5px;
+  width: auto;
+}
+

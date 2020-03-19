@@ -118,7 +118,7 @@ class PageScreens extends RegistrationScreens{
     $this->setFrontData(['captchaQuestion' => $question]);
 
     if($answer < 20){
-      $this->setScreen('ok', ['initialData' => 42]);
+      /* $this->setScreen('ok', ['initialData' => 42]); */
     }
   }
 
