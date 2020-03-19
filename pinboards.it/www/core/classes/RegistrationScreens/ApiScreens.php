@@ -30,7 +30,6 @@ class ApiScreens extends RegistrationScreens{
 
   protected function captcha($data){
     //TODO: this is just a temporary test. change all this code
-    var_dump($data);
 
     //initialize variables that won't be resetted on successives first calls
     //of this screen
@@ -49,7 +48,6 @@ class ApiScreens extends RegistrationScreens{
       //check the user input
       if(isset($data['answer'])){
         if($data['answer'] === $this->getData('captchaAnswer')){
-          echo(123);
           //the captcha has been solved
           //increment solved counter
           $this->setData([

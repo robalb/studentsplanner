@@ -67,6 +67,7 @@ class PageScreens extends RegistrationScreens{
         $this->setData(['wrongCodeAttempts' => $errors]);
         //if there have been too many attempts
         if($errors > 5){
+          $this->setData(['wrongCodeAttempts' => 0]);
           $this->setScreen('captcha', []);
           return false;
         }
