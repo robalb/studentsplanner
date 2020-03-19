@@ -4,17 +4,13 @@ import FormInput from '../../../components/FormInput.js';
 import Button from '../../../components/Button.js';
 
 function Captcha(props){
+  let data = props.data
+  if(!data.captchaQuestion){
+    data.captchaQuestion = "-";
+  }
   let [answer, setAnswer] = React.useState('');
-  let [question, setQuestion] = React.useState('');
+  let [question, setQuestion] = React.useState(data.captchaQuestion);
   let [loading, setLoading] = React.useState(false);
-
-  React.useEffect(() =>{
-    let data = props.data
-    if(!data.captchaQuestion){
-      data.captchaQuestion = "-";
-    }
-    setQuestion(data.captchaQuestion);
-  });
 
 
   async function sendAnswer(refresh=false){
@@ -23,8 +19,8 @@ function Captcha(props){
     let data = refresh ? {refresh: true} : {answer: answer};
     response = await props.sendApiData(data);
     setLoading(false);
-    if(response && response.question){
-      setQuestion(response.question);
+    if(response && response.captchaQuestion){
+      setQuestion(response.captchaQuestion);
     }
   }
 

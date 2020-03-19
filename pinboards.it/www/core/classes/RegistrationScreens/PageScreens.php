@@ -86,7 +86,7 @@ class PageScreens extends RegistrationScreens{
 
   protected function inviteError($data){
     //on page refresh, go back to the original screen
-    if($data['refresh']){
+    if(!$data['firstCall']){
       $this->setScreen('userForm', []);
     }else{
       $this->setFrontData([ 'error' => $data['error'] ]);
@@ -94,16 +94,40 @@ class PageScreens extends RegistrationScreens{
   }
 
   protected function error($data){
-    //on page refresh, go back to the original screen
-    if($data['refresh']){
-      $this->setScreen('userForm', []);
+    //rate limit the user with this session
+    if($data['firstCall']){
+      if(!isset($data['caller'])){
+        $data['caller'] = 'captcha';
+      }
+      $this->setData([
+        'callerScreen' => $data['caller'],
+        'limitEndTime' => (time() + 60)
+      ]);
     }else{
-      $this->setFrontData([ 'error' => $data['error'] ]);
+      $endTime = $this->getData('limitEndTime');
+      if(time() > $endTime){
+        //the time has passed, redirect back to the old screen
+        $this->setScreen($this->getData('callerScreen'), []);
+      }
     }
   }
 
   protected function captcha($data){
     //TODO: this is just a temporary test. change all this code
+
+    //if this is the first call, set the variables to 0
+    if($data['firstCall']){
+      $this->setData([
+        'wrongCaptchaAttempts' => 0,
+        'captchaRefreshes' => 0
+      ]);
+    }
+    //initialize variables that won't be resetted on successives first calls
+    //of this screen
+    $captchasSolved = $this->getData('captchasSolved') ? $this->getData('captchasSolved') : 0;
+    $this->setData([
+      'captchasSolved' => $captchasSolved
+    ]);
     //generate random question - answer pair.
     //NOTE: this is just a temporary setup for testing purposes. not a real captcha.
     $value1 = rand(1,30);
@@ -111,14 +135,19 @@ class PageScreens extends RegistrationScreens{
     $question = "$value1 + $value2 = ";
     //it has been widely proved that internet bots can't perform integer operations.
     //i'm joking, but there are real websites that use this kind of captcha.
-    $answer = $value1 + $value2;
+    $answer = (string) ($value1 + $value2);
     //set the random string in the session variable
     $this->setData(['captchaAnswer' => $answer]);
     //send the 'scrambled' random string to the user
     $this->setFrontData(['captchaQuestion' => $question]);
 
-    if($answer < 20){
-      /* $this->setScreen('ok', ['initialData' => 42]); */
+    //increment refreshes counter
+    $this->setData([
+      'captchaRefreshes' => ($this->getData('captchaRefreshes') +1)
+    ]);
+
+    if($this->getData( 'captchaRefreshes' ) > 10 || $this->getData( 'wrongCaptchaAttempts' ) > 10){
+      $this->setScreen('error', ['error' => '-']);
     }
   }
 

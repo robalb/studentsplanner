@@ -36,14 +36,14 @@ class RegistrationScreens {
     $_SESSION['registrationScreen_current'] = $screenName;
     $_SESSION['registrationScreen_front'] = [];
     $data = array_merge( $data, [
-        'refresh' => false
+        'firstCall' => true
       ]);
     $this->setFrontData(['screen' => $screenName]);
     $this->{$screenName}($data);
   }
 
   //call this method to execute the current screen
-  public function refreshCurrentScreen(){
+  public function refreshCurrentScreen($data = []){
     $screenName = $_SESSION['registrationScreen_current'];
     if(method_exists($this, $screenName)){
       //save a copy of the current frontdata before emptying it.
@@ -53,9 +53,9 @@ class RegistrationScreens {
       $this->firstScreen = $_SESSION['registrationScreen_current'];
 
       $_SESSION['registrationScreen_front'] = [];
-      $data = [
-        'refresh' => true
-      ];
+      $data = array_merge( $data, [
+        'firstCall' => false
+      ]);
       $this->setFrontData(['screen' => $screenName]);
       $this->{$screenName}($data);
 

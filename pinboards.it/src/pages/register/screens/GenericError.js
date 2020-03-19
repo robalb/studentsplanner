@@ -2,12 +2,7 @@ import React from 'react';
 import t from '../../../utils/i18n.js';
 
 function GenericError(props){
-  let data = props.data
-  if(!data.error){
-    data.error = "-";
-  }
-  let error = t("generic error", {error: data.error})
-
+  let error = t("generic error")
   return(
   <>
     <header></header>
