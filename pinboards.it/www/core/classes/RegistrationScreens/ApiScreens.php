@@ -42,6 +42,13 @@ class ApiScreens extends RegistrationScreens{
           //update the related variables
           $invited = true;
           $classID = $row['classID'];
+          $this->setFrontData([
+            "invited" => true,
+            "inviteData" => [
+              "invitedBy" => $row['invitedBy'],
+              "className" => $row['name']
+            ]
+          ]);
         }else{
           //the invite code has expired.
           //remove it from the database
@@ -91,10 +98,20 @@ class ApiScreens extends RegistrationScreens{
       $pdo = $instance->getConnection();
       $stmt = $pdo->prepare('SELECT fullName FROM students WHERE mail = ?');
       $stmt->execute([$mail]);
-      //if the mail is not available, return an error
+      //if the mail is not available
       if($stmt->rowCount() > 0){
+        //increment the mail error counter
+        $wrongMailAttempts = $this->getData('wrongMailAttempts');
+        $wrongMailAttempts++;
+        $this->setData(['wrongMailAttempts' => $wrongMailAttempts]);
+        //if there have been too many attempts
+        if($wrongMailAttempts > 3){
+          $this->setData(['wrongMailAttempts' => 0]);
+          $this->setScreen('captcha', []);
+          return 0;
+        }
+        //otherwise return an error
         http_response_code(400);
-        //TODO: handle abuse
         echo json_encode(['error'=>'mail_already_exists']);
         die();
       }else{
@@ -161,14 +178,14 @@ class ApiScreens extends RegistrationScreens{
         'captchaRefreshes' => 0
       ]);
       //ratelimit the user if this is not the first time a captcha is requested.
-      if($captchasSolved % 2 == 0){
+      if($captchasSolved > 1 && $captchasSolved % 2 == 0){
         $rateLimitTime = $captchasSolved * 60;
         //increment solved counter (even tho it has not been solved yet, this is done
         //to prevent an infinite ratelimit)
         $this->setData([
           'captchasSolved' => ($this->getData('captchasSolved') +1)
         ]);
-        $this->setScreen('error', ['time' => $rateLimitTime]);
+        $this->setScreen('error', ['time' => $rateLimitTime, 'caller' => 'captcha']);
         return 0;
       }
     }else{
