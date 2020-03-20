@@ -244,12 +244,42 @@ class ApiScreens extends RegistrationScreens{
   protected function classForm($data){
     //if this is the first call, store in a session variable the passed user data
     if($data['firstCall']){
-      //TODO
+      $this->setData([
+        'hash' => $data['hash'],
+        'fullName' => $data['fullName'],
+        'invited' => $data['invited'],
+        'mail' => $data['mail'],
+        'classID' => $data['classID']
+      ]);
+    }else{
+      //check the user submitted data
+      //check for a page back redirect
+      if(isset($data['previousScreen'])){
+        $this->setScreen('userForm', []);
+        return 0;
+      }
+      //check for and validate class data form
+      $error = 0;
+      //check class name and length
+      $error += !(isset($data['name']) && strlen($data['name']) < 26 && strlen($data['name']) > 1);
+      if($error !== 0){
+        http_response_code(400);
+        echo json_encode(['error'=>'malformed_request']);
+        die();
+      }
+      //data is good
+      $returnData = [
+        'hash' => $this->getData( 'hash' ),
+        'fullName' => $this->getData( 'fullName' ),
+        'invited' => $this->getData( 'invited' ),
+        'mail' => $this->getData( 'mail' ),
+        'classID' => $this->getData( 'classID' )
+      ];
+      $this->setScreen('ok', $returnData);
+      return 0;
     }
-
-    //check the user submitted data
-    //TODO
   }
+
 
   protected function mailConfirmation($data){
   }

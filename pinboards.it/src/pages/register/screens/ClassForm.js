@@ -16,6 +16,8 @@ function ClassForm(props){
   async function validateData(){
     if(name.length < 2){
       error(t('class name too short'));
+    }else if(name.length > 25){
+      error(t('class name too long'));
     }else{
       callApi({
         name: name
