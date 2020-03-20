@@ -84,6 +84,11 @@ function UserForm(props){
       fullName: form.fullName,
       isHash: isHash
     });
+    if(response == 'die'){
+      console.log('died')
+      return 0;
+    }
+    console.log('received data: ', response);
     if(!response){
       error(t('connection error'));
       setLoading(false);

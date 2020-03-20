@@ -18,6 +18,11 @@ function Captcha(props){
     let response = false;
     let data = refresh ? {refresh: true} : {answer: answer};
     response = await props.sendApiData(data);
+    if(response == 'die'){
+      console.log('died')
+      return 0;
+    }
+    console.log('data received:', response);
     setLoading(false);
     if(response && response.captchaQuestion){
       setQuestion(response.captchaQuestion);

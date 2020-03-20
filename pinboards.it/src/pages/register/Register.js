@@ -27,6 +27,7 @@ let screens = {
 
 
 function Register(props){
+  // let [abortTools, setAbortTools] = React.useState({});
   let [currentScreen, setCurrentScreen] = React.useState(false);
   let [currentScreenName, setCurrentScreenName] = React.useState(false);
   let phpData = {};
@@ -46,22 +47,32 @@ function Register(props){
   //a change of screen is triggered
   async function sendApiData(data){
     data['screen'] = currentScreenName || phpData.screen || "error";
-    console.log(data)
     let response = false;
     try{
+      // response = await register(data, abortTools.signal);
       response = await register(data);
     }catch(e){
       console.log(e);
     }
     if(response.screen && response.screen != data['screen']){
+      console.log('changing screen from ',data['screen'], ' to ', response.screen)
       setScreen(response.screen, response);
-      return false;
+      console.log('requesting death');
+      return 'die';
     }else{
+      console.log('passing response', response);
       return response;
     }
   }
 
   function setScreen(screen, data){
+    // if(abortTools.abortController){
+    //   abortController.abort();
+    // }
+    // const abortController = new AbortController();
+    // const signal = abortController.signal;
+    // setAbortTools({signal, abortController});
+
     setCurrentScreenName(screen);
     if(!screens[screen] || typeof screens[screen] !== 'function' ){
       screen = 'error';
