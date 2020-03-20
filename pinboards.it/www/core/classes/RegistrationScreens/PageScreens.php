@@ -172,10 +172,8 @@ class PageScreens extends RegistrationScreens{
   }
 
   protected function ok($data){
-    //TODO: this is just a temporary test. change alll this code
-    if(isset($data['initialData'])){
-      $this->setFrontData(['dataSetOnlyOnce' => 42]);
-    }
+      //go back to the first screen
+      $this->setScreen('userForm', []);
   }
 
 }

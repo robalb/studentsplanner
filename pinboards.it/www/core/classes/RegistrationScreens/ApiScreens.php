@@ -285,6 +285,16 @@ class ApiScreens extends RegistrationScreens{
   }
 
   protected function ok($data){
+    //if this is the first call, proceed to register the user
+    if($data['firstCall']){
+      //TODO
+      //consider:
+      //at the end of the registration, destroying the user session
+      //at the beginning of the registration, performing user trust analisys
+    }else{
+      //go back to the first screen
+      $this->setScreen('userForm', []);
+    }
   }
 
 }

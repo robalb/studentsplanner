@@ -6,7 +6,7 @@ function Ok(props){
     <>
       <div className="register-container">
       <h2>{t("registration successfull")}</h2>
-      <p> {t("login from registration link text")} <a href="../account/">{t("login button")}</a> </p>
+      <p><a href="../account/">{t("login after registration button")}</a> </p>
       </div>
     </>
   );
