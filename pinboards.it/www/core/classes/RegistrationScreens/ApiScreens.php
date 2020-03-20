@@ -85,11 +85,12 @@ class ApiScreens extends RegistrationScreens{
       //check fullName existence and length
       $error += !(isset($data['fullName']) && strlen($data['fullName']) > 2 && strlen($data['fullName']) < 100 );
       //chek mail validity and create filtered mail variable
-      $mail = filter_var($data['mail'], FILTER_SANITIZE_EMAIL);
-      $error += !$mail;
+      if(isset($data['mail'])){
+        $mail = filter_var($data['mail'], FILTER_SANITIZE_EMAIL);
+        $error += !$mail;
+      }
       if($error !== 0){
         http_response_code(400);
-        var_dump($data);
         echo json_encode(['error'=>'malformed_request']);
         die();
       }
