@@ -1,10 +1,12 @@
 .register-container{
   margin: 0 auto;
   max-width: 600px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   text-align: center;
   margin-top: 20px;
   padding: 0px 5px 20px 5px;
+}
+.register-container.shadow{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .register-container .top-header{
   padding: 10px;
@@ -82,4 +84,5 @@
   padding: 0 5px 0 5px;
   width: auto;
 }
+
 

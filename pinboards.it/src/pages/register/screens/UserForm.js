@@ -88,10 +88,10 @@ function UserForm(props){
       console.log('died')
       return 0;
     }
+    setLoading(false);
     console.log('received data: ', response);
     if(!response){
       error(t('connection error'));
-      setLoading(false);
     }else if(response.error){
       let translatedError = "";
       if(["mail_already_exists", "invalid_code", "expired_code", "invalid_code_get"].includes(response.error)){
@@ -100,7 +100,6 @@ function UserForm(props){
         translatedError = t("generic connection error ", {error: response.error})
       }
       error(translatedError);
-      setLoading(false);
     }
   }
 

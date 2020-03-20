@@ -26,6 +26,10 @@
   "mail_already_exists": "esiste già un account registrato con questo indirizzo mail",
   "weak password": "password troppo debole",
   "more info": "informazioni",
+  "class registration info": "Potrai sempre modificare questi dati, rimuovere o aggiungere membri alla classe nelle impostazioni",
+  "class registration title": "configura la tua classe",
+  "class name": "nome della classe",
+  "class name too short": "il nome della classe è troppo corto",
   "generic error": "non è stato possibile mostrare questa pagina a causa di un errore",
   "generic error hints": "Prova a ricaricare la pagina. se il problema persiste, riprova più tardi",
   "password long info": "  tentativi stimati necessari per indovinare la password: {{guesses}} \n\n tempo necessario in condizioni ottimali: {{offline_slow_times_display}} \n\n problemi riscontrati: {{feedback_warning}} \n\n suggerimenti: {{feedback_suggestion}} \n\n ",
@@ -37,8 +41,9 @@
   "password strength 4": "alta",
   "toggle password info": "apri o chiudi la finestra di informazioni",
   "register invite notice": "{{name}} ti ha invitato nella classe {{classroom}}",
-  "register title": "registrazione",
+  "register title": "crea il tuo account",
   "registration next": "avanti",
+  "registration previous": "indietro",
   "sign in": "login",
   "test message": "messaggio di test"
 }

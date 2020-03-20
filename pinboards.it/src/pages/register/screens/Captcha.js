@@ -58,7 +58,6 @@ function Captcha(props){
 
   return(
   <>
-    <header></header>
     <div className="register-container captcha">
       <h3>{t("captcha confirm text")}</h3>
       <p>{question}</p>

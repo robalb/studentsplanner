@@ -5,7 +5,6 @@ function GenericError(props){
   let error = t("generic error")
   return(
   <>
-    <header></header>
     <div className="register-container error">
       <h3>{error}</h3>
       <p>{t("generic error hints")}</p>

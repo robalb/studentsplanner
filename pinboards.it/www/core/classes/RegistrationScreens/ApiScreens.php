@@ -129,8 +129,8 @@ class ApiScreens extends RegistrationScreens{
           'invited' => $invited,
           'classID' => $classID
         ];
-        //if the user is invited, the next screen is the classform, otherwise it's the final one
-        $screen = $invited ? 'classform' : 'ok';
+        //if the user is invited, the next screen is the classForm, otherwise it's the final one
+        $screen = $invited ? 'ok' : 'classForm';
         $this->setScreen($screen, $screenData);
         return 0;
       }
@@ -242,6 +242,13 @@ class ApiScreens extends RegistrationScreens{
   }
 
   protected function classForm($data){
+    //if this is the first call, store in a session variable the passed user data
+    if($data['firstCall']){
+      //TODO
+    }
+
+    //check the user submitted data
+    //TODO
   }
 
   protected function mailConfirmation($data){

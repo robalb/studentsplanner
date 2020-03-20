@@ -14,7 +14,6 @@ function InviteError(props){
 
   return(
   <>
-    <header></header>
     <div className="register-container error">
       <h3>{error}</h3>
       <p><a href="../">{t("home")}</a></p>
