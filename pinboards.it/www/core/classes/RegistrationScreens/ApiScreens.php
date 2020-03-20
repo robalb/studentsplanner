@@ -139,6 +139,12 @@ class ApiScreens extends RegistrationScreens{
   }
 
   protected function inviteError($data){
+    //on page refresh, go back to the original screen
+    if(!$data['firstCall']){
+      $this->setScreen('userForm', []);
+    }else{
+      $this->setFrontData([ 'error' => $data['error'] ]);
+    }
   }
 
   protected function error($data){
@@ -179,7 +185,7 @@ class ApiScreens extends RegistrationScreens{
         'captchaRefreshes' => 0
       ]);
       //ratelimit the user if this is not the first time a captcha is requested.
-      if($captchasSolved > 1 && $captchasSolved % 2 == 0){
+      if($captchasSolved > 2 && $captchasSolved % 2 == 0){
         $rateLimitTime = $captchasSolved * 60;
         //increment solved counter (even tho it has not been solved yet, this is done
         //to prevent an infinite ratelimit)
