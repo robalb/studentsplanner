@@ -27,9 +27,7 @@ let screens = {
 
 
 function Register(props){
-  // let [abortTools, setAbortTools] = React.useState({});
   let [currentScreen, setCurrentScreen] = React.useState(false);
-  let [currentScreenName, setCurrentScreenName] = React.useState(false);
   let phpData = {};
   if(PHP_GLOBALS){
     phpData = PHP_GLOBALS;
@@ -42,44 +40,41 @@ function Register(props){
     setScreen(phpData.screen, phpData)
   }
 
-  //api for sending and receiving data from the api endpoint
-  //associated to the current screen. If the response contains a different screen parameter
-  //a change of screen is triggered
-  async function sendApiData(data){
-    data['screen'] = currentScreenName || phpData.screen || "error";
-    let response = false;
-    try{
-      // response = await register(data, abortTools.signal);
-      response = await register(data);
-    }catch(e){
-      console.log(e);
-    }
-    if(response.screen && response.screen != data['screen']){
-      console.log('changing screen from ',data['screen'], ' to ', response.screen)
-      setScreen(response.screen, response);
-      console.log('requesting death');
-      return 'die';
-    }else{
-      console.log('passing response', response);
-      return response;
+  //get the function for sending and receiving data from the registration apis
+  function getSendApiData(screenName){
+    if (!screenName) screenName = phpData.screen || "error";
+    //return the async function that will be passed to the current screen component for api updates.
+    //this async function has a closure over the current screen name. If the server response 
+    //has a different screen name, a screen change is triggered
+    return async function sendApiData(data){
+      console.log(screenName)
+      let response = false;
+      try{
+        response = await register(data);
+      }catch(e){
+        console.log(e);
+      }
+      if(response.screen && response.screen != screenName){
+        console.log('changing screen from ', screenName, ' to ', response.screen)
+        setScreen(response.screen, response);
+        console.log('requesting death');
+        return 'die';
+      }else{
+        console.log('passing response', response);
+        return response;
+      }
     }
   }
 
   function setScreen(screen, data){
-    // if(abortTools.abortController){
-    //   abortController.abort();
-    // }
-    // const abortController = new AbortController();
-    // const signal = abortController.signal;
-    // setAbortTools({signal, abortController});
-
-    setCurrentScreenName(screen);
+    //if the screen is not valid, set an error screen as screen
     if(!screens[screen] || typeof screens[screen] !== 'function' ){
       screen = 'error';
       data = {error: 'screen not found'}
     }
+    //generate the screen component, that will be stored is a state variable, and rendered
     let Component = screens[screen];
-    setCurrentScreen(<Component data={data} sendApiData={sendApiData} setScreen={setScreen} />);
+    setCurrentScreen(<Component data={data} sendApiData={getSendApiData(screen)} setScreen={setScreen} />);
   }
 
   //render the current screen
