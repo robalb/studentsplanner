@@ -154,7 +154,7 @@ class PageScreens extends RegistrationScreens{
       ]);
       //ratelimit the user if this is not the first time a captcha is requested.
       if($captchasSolved > 2 && $captchasSolved % 2 == 0){
-        $rateLimitTime = $captchasSolved * 60;
+        $rateLimitTime = $captchasSolved * 30;
         //increment solved counter (even tho it has not been solved yet, this is done
         //to prevent an infinite ratelimit)
         $this->setData([
