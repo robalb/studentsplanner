@@ -8,6 +8,8 @@ class ApiScreens extends RegistrationScreens{
     $wrongMailAttempts = $this->getData('wrongMailAttempts') ? $this->getData('wrongMailAttempts') : 0;
     $wrongCodeAttempts = $this->getData('wrongCodeAttempts') ? $this->getData('wrongCodeAttempts') : 0;
     $wrongPasswordAttempts = $this->getData('wrongPasswordAttempts') ? $this->getData('wrongPasswordAttempts') : 0;
+    $accountsCreated = $this->getData('accountsCreated') ? $this->getData('accountsCreated') : 0;
+    $registrationCompleted = $this->getData('registrationCompleted') ? $this->getData('registrationCompleted') : false;
     //initialize the invite code, that is fetched when the page is reloaded
     $inviteCode = $this->getData('inviteCode') ? $this->getData('inviteCode') : false;
     $this->setData([
@@ -15,9 +17,26 @@ class ApiScreens extends RegistrationScreens{
       'wrongMailAttempts' => $wrongMailAttempts,
       'wrongCodeAttempts' => $wrongCodeAttempts,
       'wrongPasswordAttempts' => $wrongPasswordAttempts,
+      'accountsCreated' => $accountsCreated,
+      'registrationCompleted' => $registrationCompleted,
       //invitation state
       'inviteCode' => $inviteCode
     ]);
+
+    //ratelimit the user if this is not the first time they create an account
+    if($data['firstCall'] && $this->getData('registrationCompleted')){
+      $this->setData(['registrationCompleted' => false]);
+      $accountsCreated = $this->getData('accountsCreated');
+      //if less than 3 accounts have benn created, just show a captcha
+      //otherwise ratelimit the user with an incremental time
+      if($accountsCreated < 3){
+        $this->setScreen('captcha', []);
+        return 0;
+      }else{
+        $this->setScreen('error', ['time' => $accountsCreated * 30]);
+        return 0;
+      }
+    }
 
     //data that will be used when the user is successfuly authenticated
     //to determine what is the next screen
@@ -142,6 +161,7 @@ class ApiScreens extends RegistrationScreens{
     //on page refresh, go back to the original screen
     if(!$data['firstCall']){
       $this->setScreen('userForm', []);
+      return 0;
     }else{
       $this->setFrontData([ 'error' => $data['error'] ]);
     }
@@ -165,6 +185,7 @@ class ApiScreens extends RegistrationScreens{
       if(time() > $endTime){
         //the time has passed, redirect back to the old screen
         $this->setScreen($this->getData('callerScreen'), []);
+        return 0;
       }
     }
   }
@@ -186,7 +207,7 @@ class ApiScreens extends RegistrationScreens{
       ]);
       //ratelimit the user if this is not the first time a captcha is requested.
       if($captchasSolved > 2 && $captchasSolved % 2 == 0){
-        $rateLimitTime = $captchasSolved * 60;
+        $rateLimitTime = 60;
         //increment solved counter (even tho it has not been solved yet, this is done
         //to prevent an infinite ratelimit)
         $this->setData([
@@ -291,6 +312,12 @@ class ApiScreens extends RegistrationScreens{
       //consider:
       //at the end of the registration, destroying the user session
       //at the beginning of the registration, performing user trust analisys
+      //
+      //increment the counter of accounts created within this session
+      $this->setData([
+        'accountsCreated' => $this->getData('accountsCreated') +1,
+        'registrationCompleted' => true
+      ]);
     }else{
       //go back to the first screen
       $this->setScreen('userForm', []);

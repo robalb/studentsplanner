@@ -3,6 +3,9 @@ import t from '../../../utils/i18n.js';
 
 function GenericError(props){
   let error = t("generic error")
+  if(props.data && props.data.error){
+    error = t("generic error data", {error: props.data.error});
+  }
   return(
   <>
     <div className="register-container error">

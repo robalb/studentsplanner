@@ -34,6 +34,7 @@
   "class name too short": "il nome della classe è troppo corto",
   "class name too long": "il nome della classe è troppo lungo",
   "generic error": "non è stato possibile mostrare questa pagina a causa di un errore",
+  "generic error data": "non è stato possibile mostrare questa pagina. errore: {{error}}",
   "generic error hints": "Prova a ricaricare la pagina. se il problema persiste, riprova più tardi",
   "password long info": "  tentativi stimati necessari per indovinare la password: {{guesses}} \n\n tempo necessario in condizioni ottimali: {{offline_slow_times_display}} \n\n problemi riscontrati: {{feedback_warning}} \n\n suggerimenti: {{feedback_suggestion}} \n\n ",
   "password too long": "la password supera la lunghezza massima di {{maxLength}} caratteri",

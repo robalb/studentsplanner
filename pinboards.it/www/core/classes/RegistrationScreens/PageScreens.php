@@ -11,14 +11,36 @@ class PageScreens extends RegistrationScreens{
     $wrongMailAttempts = $this->getData('wrongMailAttempts') ? $this->getData('wrongMailAttempts') : 0;
     $wrongCodeAttempts = $this->getData('wrongCodeAttempts') ? $this->getData('wrongCodeAttempts') : 0;
     $wrongPasswordAttempts = $this->getData('wrongPasswordAttempts') ? $this->getData('wrongPasswordAttempts') : 0;
+    $accountsCreated = $this->getData('accountsCreated') ? $this->getData('accountsCreated') : 0;
+    $registrationCompleted = $this->getData('registrationCompleted') ? $this->getData('registrationCompleted') : false;
+    //initialize the invite code, that is fethed later in this function
+    $inviteCode = false;
     $this->setData([
       //security varaibles
       'wrongMailAttempts' => $wrongMailAttempts,
       'wrongCodeAttempts' => $wrongCodeAttempts,
       'wrongPasswordAttempts' => $wrongPasswordAttempts,
+      'accountsCreated' => $accountsCreated,
+      'registrationCompleted' => $registrationCompleted,
       //invitation state
-      'inviteCode' => false
+      'inviteCode' => $inviteCode
     ]);
+
+    //ratelimit the user if this is not the first time they create an account
+    if($data['firstCall'] && $this->getData('registrationCompleted')){
+      $this->setData(['registrationCompleted' => false]);
+      $accountsCreated = $this->getData('accountsCreated');
+      //if less than 3 accounts have benn created, just show a captcha
+      //otherwise ratelimit the user with an incremental time
+      if($accountsCreated < 3){
+        $this->setScreen('captcha', []);
+        return 0;
+      }else{
+        $this->setScreen('error', ['time' => $accountsCreated * 30]);
+        return 0;
+      }
+    }
+
     //initialize variables that will be injected into the page as a js global varaible
     $JSdata = ["invited" => false];
     //check if there is a valid code being passed as get parameter
@@ -85,6 +107,7 @@ class PageScreens extends RegistrationScreens{
     //on page refresh, go back to the original screen
     if(!$data['firstCall']){
       $this->setScreen('userForm', []);
+      return 0;
     }else{
       $this->setFrontData([ 'error' => $data['error'] ]);
     }
@@ -108,6 +131,7 @@ class PageScreens extends RegistrationScreens{
       if(time() > $endTime){
         //the time has passed, redirect back to the old screen
         $this->setScreen($this->getData('callerScreen'), []);
+        return 0;
       }
       /* echo($endTime - time()); */
     }
@@ -162,6 +186,7 @@ class PageScreens extends RegistrationScreens{
     if($this->getData('captchaRefreshes') > 10 || $this->getData( 'wrongCaptchaAttempts' ) > 10){
       //ratelimit the user for 60 seconds
       $this->setScreen('error', ['time' => 60]);
+      return 0;
     }
   }
 
@@ -174,6 +199,7 @@ class PageScreens extends RegistrationScreens{
   protected function ok($data){
       //go back to the first screen
       $this->setScreen('userForm', []);
+      return 0;
   }
 
 }
