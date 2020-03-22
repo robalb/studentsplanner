@@ -309,10 +309,9 @@ class ApiScreens extends RegistrationScreens{
     //if this is the first call, proceed to register the user
     if($data['firstCall']){
       //TODO
-      //consider:
-      //at the end of the registration, destroying the user session
-      //at the beginning of the registration, performing user trust analisys
-      //
+      //register the user, using the data in $data and
+      //the current user locale
+
       //increment the counter of accounts created within this session
       $this->setData([
         'accountsCreated' => $this->getData('accountsCreated') +1,
