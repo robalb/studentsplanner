@@ -77,8 +77,7 @@ function UserForm(props){
       console.log(e)
       isHash = false
     }
-    let response = false;
-    response = await props.sendApiData({
+    let response = await props.sendApiData({
       mail: form.mail,
       password: hashedPassword,
       fullName: form.fullName,
@@ -90,16 +89,8 @@ function UserForm(props){
     }
     setLoading(false);
     console.log('received data: ', response);
-    if(!response){
-      error(t('connection error'));
-    }else if(response.error){
-      let translatedError = "";
-      if(["mail_already_exists", "invalid_code", "expired_code", "invalid_code_get"].includes(response.error)){
-        translatedError = t(response.error)
-      }else{
-        translatedError = t("generic connection error ", {error: response.error})
-      }
-      error(translatedError);
+    if(response.error){
+      error(t(response.error));
     }
   }
 

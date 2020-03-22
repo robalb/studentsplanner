@@ -1,7 +1,7 @@
 import React from 'react';
 //page specific imports
 import './register.css';
-import {register} from '../../utils/apiResolver.js';
+import {apiRequest} from '../../utils/apiResolver.js';
 
 //import all the possible steps of the registration process
 //note: lazy loading could be used, but almost all these steps are necessary, and 
@@ -48,12 +48,7 @@ function Register(props){
     //has a different screen name, a screen change is triggered
     return async function sendApiData(data){
       console.log(screenName)
-      let response = false;
-      try{
-        response = await register(data);
-      }catch(e){
-        console.log(e);
-      }
+      let response = await apiRequest('register', data, 'POST');
       if(response.screen && response.screen != screenName){
         console.log('changing screen from ', screenName, ' to ', response.screen)
         setScreen(response.screen, response);

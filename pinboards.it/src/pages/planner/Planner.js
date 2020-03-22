@@ -10,7 +10,7 @@ import './planner.css';
 //context imports
 import accountContext from '../../contexts/accountContext.js';
 import plannerContext from '../../contexts/plannerContext.js';
-import {login, getApiData, updatePlannerData} from '../../utils/apiResolver.js';
+import {apiRequest} from '../../utils/apiResolver.js';
 
 class Planner extends React.Component{
   constructor(props){
@@ -32,7 +32,9 @@ class Planner extends React.Component{
 
   async loadAccountContextData(){
     this.setState({accountDataLoading: true})
-    const newData = await getApiData('account')
+    const newData = await apiRequest('getData', {
+      data: ['account']
+    }, 'POST');
     this.setState({
       accountDataLoading: false,
       accountData: newData
@@ -40,7 +42,9 @@ class Planner extends React.Component{
   }
   async loadPlannerContextData(){
     this.setState({plannerDataLoading: true})
-    const newData = await getApiData('planner')
+    const newData = await apiRequest('getData', {
+      data: ['planner']
+    }, 'POST');
     this.setState({
       plannerDataLoading: false,
       plannerData: newData
@@ -76,7 +80,7 @@ class Planner extends React.Component{
             events: [...this.state.plannerData.events, newData]
           }
         })
-        const response1 = await updatePlannerData(this.state.plannerData)
+        const response1 = await apiRequest('planner', this.state.plannerData, 'POST');
         this.setState({
            plannerDataUpdating: false
         })
@@ -92,7 +96,7 @@ class Planner extends React.Component{
             events: newEvents
           }
         })
-        const response2 = await updatePlannerData(this.state.plannerData)
+        const response2 = await apiRequest(this.state.plannerData)
         this.setState({
            plannerDataUpdating: false
         })
@@ -107,7 +111,7 @@ class Planner extends React.Component{
             events: newEvents2
           }
         })
-        const response3 = await updatePlannerData(this.state.plannerData)
+        const response3 = await apiRequest(this.state.plannerData)
         this.setState({
            plannerDataUpdating: false
         })

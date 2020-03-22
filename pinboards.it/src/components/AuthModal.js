@@ -1,6 +1,6 @@
 import React from 'react';
 import t from '../utils/i18n.js';
-import {login} from '../utils/apiResolver.js';
+import {apiRequest} from '../utils/apiResolver.js';
 import FormErrorMessage from './FormErrorMessage.js';
 import FormInput from './FormInput.js';
 
@@ -53,19 +53,17 @@ function AuthModal(props){
       console.log(e)
       isHash = false
     }
-    let response = false;
-    try{
-      response = await login(mail, hashedPassword, isHash, ["account","planner"])
-    } catch(e){
-      console.log(e);
-      error(t('connection error'));
-      setLoading(false);
+    let data = {
+      mail: mail,
+      password: hashedPassword,
+      isHash: isHash,
+      getData: ['account', 'planner']
     }
+    let response = await apiRequest('login', data, 'POST');
+    setLoading(false);
     if(response.error){
-      error(response.error=='wrong_mail_or_password'?t('incorrect username or password') : response.error);
-      setLoading(false);
+      error(t(response.error));
     }else if(response.success){
-      setLoading(false);
       props.auth(response);
     }
   }

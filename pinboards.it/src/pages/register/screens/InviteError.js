@@ -3,13 +3,9 @@ import t from '../../../utils/i18n.js';
 
 function InviteError(props){
   let data = props.data
-  let error = "invite error";
+  let error = t('generic invite code error');
   if(data.error){
-    if(["invalid_code", "expired_code", "invalid_code_get"].includes(data.error)){
-      error = t(data.error)
-    }else{
-      error = t("generic invite code error", {error: data.error})
-    }
+    error = t(data.error)
   }
 
   return(

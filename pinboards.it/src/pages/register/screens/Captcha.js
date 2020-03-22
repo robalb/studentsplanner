@@ -24,7 +24,9 @@ function Captcha(props){
     }
     console.log('data received:', response);
     setLoading(false);
-    if(response && response.captchaQuestion){
+    if(response.error){
+      //TODO: handle error display
+    }else if(response.captchaQuestion){
       setQuestion(response.captchaQuestion);
     }
   }

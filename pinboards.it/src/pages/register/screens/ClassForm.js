@@ -41,11 +41,8 @@ function ClassForm(props){
     }
     setLoading(false);
     console.log('received data: ', response);
-    if(!response){
-      error(t('connection error'));
-      setLoading(false);
-    }else if(response.error){
-      error(t("generic connection error ", {error: response.error}));
+    if(response.error){
+      error(t(response.error));
     }
   }
 

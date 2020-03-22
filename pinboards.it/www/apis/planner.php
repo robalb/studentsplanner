@@ -25,6 +25,15 @@ try{
   $request = [];
   $error++;
 }
+
+//TODO: fix the frontend data reducer, and then work on this.
+//expected data format:
+//{
+//  action: ['pushHistory', 'getHistory', 'forceHistory' ... stuff like that]
+//  data: {the whole plannerData object}
+//}
+
+
 //check action field
 $error += !(isset($request['action']) && strlen($request['action']) < 60 );
 //check that data is a populated array if its set
