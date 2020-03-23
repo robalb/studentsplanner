@@ -83,6 +83,8 @@ class PageScreens extends RegistrationScreens{
         $errors = $this->getData('wrongCodeAttempts');
         $errors += 1;
         $this->setData(['wrongCodeAttempts' => $errors]);
+        //set the appropriate response code. this will be useful for fail2ban ip ban, o simply log analysis
+        http_response_code(401);
         //if there have been too many attempts
         if($errors > 3){
           $this->setData(['wrongCodeAttempts' => 0]);

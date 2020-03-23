@@ -83,6 +83,8 @@ class ApiScreens extends RegistrationScreens{
         $errors = $this->getData('wrongCodeAttempts');
         $errors += 1;
         $this->setData(['wrongCodeAttempts' => $errors]);
+        //set the appropriate response code. this will be useful for fail2ban ip ban, o simply log analysis
+        http_response_code(401);
         //if there have been too many attempts
         if($errors > 3){
           $this->setData(['wrongCodeAttempts' => 0]);
@@ -131,7 +133,7 @@ class ApiScreens extends RegistrationScreens{
           return 0;
         }
         //otherwise return an error
-        http_response_code(400);
+        http_response_code(401);
         echo json_encode(['error'=>'mail_already_exists']);
         die();
       }else{

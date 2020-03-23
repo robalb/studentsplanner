@@ -4,11 +4,11 @@ class CSRFmanager{
   //TODO: study wether this is needed, or i can just generate a
   //token when it is requested and it doesnt exist without security problems
   public static function generate(){
-    if(isset($_SESSION['CSRF'])){
-      throw new Exception('csrf token already generated');
-    }else{
-      $_SESSION['CSRF'] = bin2hex(random_bytes(64));
-    }
+    /* if(isset($_SESSION['CSRF'])){ */
+    /*   throw new Exception('csrf token already generated'); */
+    /*   return 0; */
+    /* } */
+    $_SESSION['CSRF'] = bin2hex(random_bytes(64));
   }
 
   public static function getToken(){

@@ -61,7 +61,11 @@ function AuthModal(props){
     }
     let response = await apiRequest('login', data, 'POST');
     setLoading(false);
-    if(response.error){
+    //the user got logged, probably from another tab. refresh the page
+    if(response.error && response.error == 'session_error_refresh'){
+      location.reload();
+    }
+    else if(response.error){
       error(t(response.error));
     }else if(response.success){
       props.auth(response);
