@@ -53,6 +53,9 @@ function Register(props){
         console.log('changing screen from ', screenName, ' to ', response.screen)
         setScreen(response.screen, response);
         console.log('requesting death');
+        //when the screen that initiated the apiRequest receives this violent message, it is supposed to immediately
+        //return and break the function execution, to avoid the creation of memory leaks when the component will
+        //stop being rendered. Sounds like a bad hack. It is indeed one.
         return 'die';
       }else if(response.error && response.error == 'session_error_refresh'){
         redirectToAccountPage();
