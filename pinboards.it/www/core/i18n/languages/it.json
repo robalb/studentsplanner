@@ -7,6 +7,7 @@
   "generic invite code error": "non è possibile utilizzare questo codice invito a causa di un errore",
   "home": "pagina iniziale",
   "wrong_mail_or_password": "username o password errati",
+  "csrf_error": "errore interno (csrf error)",
   "invalid mail": "indirizzo email non valido",
   "invalid password": "password non valida",
   "invalid_code": "codice di invito non valido",

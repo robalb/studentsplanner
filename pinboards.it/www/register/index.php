@@ -2,6 +2,7 @@
 require_once '../core/classes/BundlesManager.php';
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
+require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/LanguageManager.php';
 
 require_once '../core/classes/RegistrationScreens/PageScreens.php';
@@ -37,13 +38,16 @@ if(!$currentScreen){
 /* var_dump($_SESSION); */
 
 //injection of the global js variables, using bundlesManager
+//csrf token related variables
+$JScsrfToken = CSRFmanager::getToken();
 //registration screen related variables
 $JSdata = $pageScreens->getFrontData();
 $JSencodedData = json_encode($JSdata);
 //language related variables
 $JSlanguageJson = $languageManager->getUserLanguageJson($locale);
 $jsGlobalVariables = <<<ES6
-;var LANGUAGE = $JSlanguageJson;
+;var PHP_CSRF = '$JScsrfToken';
+var LANGUAGE = $JSlanguageJson;
 var PHP_GLOBALS = $JSencodedData;
 ES6;
 $bundlesManager->addScript($jsGlobalVariables, $nonce);

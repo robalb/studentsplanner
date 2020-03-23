@@ -4,12 +4,12 @@ let envBasePath = __ENV_BASE_PATH__;
 const API_PATH = (envBasePath || '') + '/apis/';
 
 //get the csrf token
-const CSRF = 'no_csrf_found';
+let CSRF = 'no_csrf_found';
 //TODO: decomment this once the csrf token injection has been
 //implemented in php
-// if(PHP_CSRF){
-//   CSRF = PHP_CSRF;
-// }
+if(PHP_CSRF){
+  CSRF = PHP_CSRF;
+}
 
 export async function apiRequest(api, data, method){
   data.CSRF = CSRF;

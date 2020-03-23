@@ -1,6 +1,7 @@
 <?php
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
+require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/RegistrationScreens/ApiScreens.php';
 
 //initialize screen manager, get the current screen
@@ -31,6 +32,13 @@ try{
 if($error !== 0){
   http_response_code(400);
   echo json_encode(['error'=>'malformed_request']);
+  die();
+}
+
+//validate csrf token
+if(!isset($request['CSRF']) || !CSRFmanager::validate($request['CSRF'])){
+  http_response_code(400);
+  echo json_encode(['error'=>'csrf_error']);
   die();
 }
 
