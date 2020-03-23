@@ -13,8 +13,10 @@ $session = new SessionManager();
 $isLogged = $session->isValid();
 
 if($isLogged){
-  //set a screen that in the frontend will redirect to the home section
-  $apiScreens->setScreen('ok', []);
+  //return a session error that in the frontend code will trigger
+  //a redirect to the account page
+  http_response_code(400);
+  echo json_encode(['error'=>'session_error_refresh']);
   die();
 }
 

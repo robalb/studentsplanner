@@ -2,6 +2,7 @@
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/ConnectDb.php';
+require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/GetApplicationData.php';
 
 
@@ -26,6 +27,21 @@ $error += (isset($request['getData']) && !( is_array($request['getData']) && cou
 if($error !== 0){
   http_response_code(400);
   echo json_encode(['error'=>'malformed_request']);
+  die();
+}
+//validate csrf token
+if(!isset($request['CSRF']) || !CSRFmanager::validate($request['CSRF'])){
+  http_response_code(400);
+  echo json_encode(['error'=>'csrf_error']);
+  die();
+}
+
+//return error if the user is logged
+$isLogged = $session->isValid();
+if($isLogged){
+  //redirect to home section
+  http_response_code(400);
+  echo json_encode(['error'=>'session_error_refresh']);
   die();
 }
 

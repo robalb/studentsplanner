@@ -26,14 +26,6 @@ try{
   $error++;
 }
 
-//TODO: fix the frontend data reducer, and then work on this.
-//expected data format:
-//{
-//  action: ['pushHistory', 'getHistory', 'forceHistory' ... stuff like that]
-//  data: {the whole plannerData object}
-//}
-
-
 //check action field
 $error += !(isset($request['action']) && strlen($request['action']) < 60 );
 //check that data is a populated array if its set
@@ -43,6 +35,24 @@ if($error !== 0){
   echo json_encode(['error'=>'malformed_request']);
   die();
 }
+//validate csrf token
+if(!isset($request['CSRF']) || !CSRFmanager::validate($request['CSRF'])){
+  http_response_code(400);
+  echo json_encode(['error'=>'csrf_error']);
+  die();
+}
+
+
+//TODO: fix the frontend data reducer, and then work on this.
+//expected data format:
+//{
+//  action: ['pushHistory', 'getHistory', 'forceHistory' ... stuff like that]
+//  data: {the whole plannerData object}
+//}
+//
+//all the code under this line needs to be completely rewritten
+//
+// --------------------
 
 //push case
 if($request['action'] == "push"){

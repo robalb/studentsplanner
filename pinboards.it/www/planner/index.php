@@ -3,6 +3,7 @@ require_once '../core/classes/BundlesManager.php';
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/GetApplicationData.php';
+require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/LanguageManager.php';
 
 $bundlesManager = new BundlesManager('planner', '../bundles/');
@@ -29,10 +30,15 @@ if($isLogged){
 
 
 //injection of the global js variables, using bundlesManager
+//csrf token related variables
+$JScsrfToken = CSRFmanager::getToken();
+//language related variables
 $JSlanguageJson = $languageManager->getUserLanguageJson($locale);
+//app data variables
 $JSencodedData = json_encode($JSdata);
 $jsGlobalVariables = <<<ES6
-;var LANGUAGE = $JSlanguageJson;
+;var PHP_CSRF = '$JScsrfToken';
+var LANGUAGE = $JSlanguageJson;
 var PHP_GLOBALS = $JSencodedData;
 ES6;
 $bundlesManager->addScript($jsGlobalVariables, $nonce);

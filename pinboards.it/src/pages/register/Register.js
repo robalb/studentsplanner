@@ -54,11 +54,17 @@ function Register(props){
         setScreen(response.screen, response);
         console.log('requesting death');
         return 'die';
+      }else if(response.error && response.error == 'session_error_refresh'){
+        redirectToAccountPage();
       }else{
         console.log('passing response', response);
         return response;
       }
     }
+  }
+
+  function redirectToAccountPage(){
+    window.location.replace('../account/');
   }
 
   function setScreen(screen, data){
