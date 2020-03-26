@@ -78,7 +78,7 @@ function AuthModal(props){
   ) : (
     <button className="btn"
     onClick={validateForm}
-    tabIndex="3"
+    tabIndex={3}
     aria-label={t("sign in")}
     >{t("sign in")}</button>
   )
@@ -92,12 +92,14 @@ function AuthModal(props){
       <FormInput 
       onChange = {e=>setMail(e.target.value)}
       label={t("mail")}
+      tabIndex={1}
       type={"mail"}
       />
 
       <FormInput 
       onChange = {e=>setPassword(e.target.value)}
       label={t("password")}
+      tabIndex={2}
       onEnter={loading?()=>{}:validateForm}
       type={"password"}
       />

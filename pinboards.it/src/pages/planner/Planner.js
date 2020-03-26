@@ -12,6 +12,8 @@ import accountContext from '../../contexts/accountContext.js';
 import plannerContext from '../../contexts/plannerContext.js';
 import {apiRequest} from '../../utils/apiResolver.js';
 
+import plannerDataReducers from './plannerDataReducers.js';
+
 //initial state handler
 function getInitialState(){
   let initialState = {
@@ -65,7 +67,12 @@ function Planner(props){
 
   async function updatePlannerData(operation, newData){
     console.log("dataupdate", operation, newData);
-    //TODO: implement reducer, and api call interface with debouncer
+    setState( state => ({
+      ...state,
+      plannerDataUpdating: true,
+      plannerData: plannerDataReducers[operation](state.plannerData, newData)
+    }));
+    //TODO: implement api call interface with debouncer
   }
 
   async function handleAuthModal(response){
