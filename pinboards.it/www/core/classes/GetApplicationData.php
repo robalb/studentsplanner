@@ -84,6 +84,9 @@ class GetApplicationData{
         break;
       }
     }
+    if(!$valid){
+      return false;
+    }
 
     //generate the associative array to return
     $returnArray = [];

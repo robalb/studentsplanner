@@ -7,6 +7,7 @@ require_once '../core/classes/GetApplicationData.php';
 $session = new SessionManager();
 $body = file_get_contents('php://input');
 
+//validate session
 if(!$session->isValid()){
   http_response_code(401);
   echo json_encode(['error'=>'invalid session']);
@@ -43,10 +44,14 @@ if(!isset($request['CSRF']) || !CSRFmanager::validate($request['CSRF'])){
   die();
 }
 
-$response = [ 'error' => 'malformed_request' ];
-
+//initialize getAppdata, and request the user data
 $getAppData = new GetApplicationData($_SESSION);
 $data = $getAppData->getData($request['getData']);
-$response = ["data" => $data];
+//prepare the default response
+$response = [ 'error' => 'malformed_request' ];
+//if the requested data is valid, change the default response
+if($data){
+  $response = ["data" => $data];
+}
 
 echo json_encode($response);
