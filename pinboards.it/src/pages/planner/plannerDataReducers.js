@@ -20,7 +20,7 @@ const plannerDataReducers = {
     newData.dates.sort(sortDatesArray);
     return {
       ...plannerData,
-      events: [plannerData.events, newData]
+      events: [...plannerData.events, newData]
     };
   },
 
