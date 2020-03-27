@@ -146,16 +146,11 @@ header{
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
+/* pc view - default view */
 header .menu-container{
   height:100%;
   flex-shrink: 1;
-}
-header .menu-container div{
-  height:100%;
-  display:flex;
-  justify-content: center;
-  align-items:center;
-  margin: 0 20px 0 20px;
+  display: flex;
 }
 header .menu-container a{
   text-decoration: none;
@@ -163,40 +158,67 @@ header .menu-container a{
   margin: 0 10px 0 10px;
 }
 header .menu-container a:hover{
-  color: grey;
+  color: gray;
 }
-/* on mobile */
-header .menu-container .burger{
-  cursor: pointer;
+header .menu-container div{
+  height:100%;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  margin: 0 0px 0 20px;
 }
-header .menu-container div.menu{
-  overflow: hidden;
-  visibility: hidden;
+header .menu-container .burger a{
+  color: gray;
+}
+header .menu-container .burger span{
   display: none;
-  opacity: 0;
-
-  position: absolute;
-  transition: all 0.2s ease;
-  left: -20px;
-  box-sizing: border-box;
-  background-color: white;
-  width: 100%;
-  display: flex;
-  height: auto;
-  flex-direction: column;
-  align-items: flex-start;
-  box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
 }
 header .menu-container div.menu a{
-  margin: 30px;
-  margin-left: 20px;
+  margin-right: 30px;
 }
-header .menu-container:hover > .menu,
-header .menu-container:focus-within > .menu,
-header .menu-container .menu:hover{
-  visibility: visible;
-  opacity: 1;
-  display: flex;
+@media only screen and (max-width: 600px) {
+  header .menu-container{
+    display: block;
+  }
+  header .menu-container a:hover{
+    color: grey;
+  }
+  /* on mobile */
+  header .menu-container .burger{
+    cursor: pointer;
+  }
+  header .menu-container .burger span{
+    display: inline-block;
+  }
+  header .menu-container div.menu{
+    overflow: hidden;
+    visibility: hidden;
+    display: none;
+    opacity: 0;
+
+    position: absolute;
+    transition: all 0.2s ease;
+    left: -20px;
+    box-sizing: border-box;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
+  }
+  header .menu-container div.menu a{
+    margin: 30px;
+    margin-left: 20px;
+  }
+  header .menu-container:hover > .menu,
+  header .menu-container:focus-within > .menu,
+  header .menu-container .menu:hover{
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+  }
 }
 
 header .class-info{

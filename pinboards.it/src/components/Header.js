@@ -16,10 +16,10 @@ function Header(props){
     <header>
     <div className="menu-container">
       <div className="burger">
-        <a href="#">{t(currentPage)}</a>
+        <a href="#" aria-haspopup="true">{t(currentPage)}</a>
         <span class="material-icons"> arrow_drop_down </span>
       </div>
-      <div className="menu">
+      <div className="menu" aria-label="submenu">
         {list}
       </div>
     </div>

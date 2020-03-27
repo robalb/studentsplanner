@@ -160,7 +160,7 @@ function Planner(props){
     <accountContext.Provider value={{data: state.accountData, loading: state.accountDataLoading}}>
     <plannerContext.Provider value={plannerContextValues}>
       <LoadingBar active={state.plannerDataUpdating}/>
-      <Header/>
+      <Header currentPage={"planner"}/>
       <div className="content">
         <EventsListCard/>
         {currentEvent}
