@@ -2,6 +2,7 @@
 require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/ConnectDb.php';
+require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/GetApplicationData.php';
 
 $session = new SessionManager();
@@ -62,18 +63,26 @@ if($request['action'] == "push"){
   die();
   }
   //validate data
+  //TODO: diff calculation
 
+  //prepare update data
+  $timestamp = time();
+  $stateHash = bin2hex(random_bytes(8));
+  $plannerData = json_encode($request['data']);
   //update db table
-  /* $instance = ConnectDb::getInstance(); */
-  /* $pdo = $instance->getConnection(); */
-  /* $stmt = $pdo->prepare('SELECT s.classID, s.password, s.fullName, s.uniqueName, s.admin, s.locale, c.name FROM students s, class c WHERE s.mail = ? AND s.classID = c.ID'); */
-  /* $stmt->execute([$mail]); */
-  /* if($stmt->rowCount() > 0){ */
-  /*   $row = $stmt->fetch(); */
-  /* } */
+  $instance = ConnectDb::getInstance();
+  $pdo = $instance->getConnection();
 
+  $stmt = $pdo->prepare('UPDATE planner_states SET timestamp = ?, authorUniqueName = ?, stateHash = ?, plannerData = ? WHERE classID = ?');
+  $stmt->execute([
+    $timestamp,
+    $_SESSION['uniqueName'],
+    $stateHash,
+    $plannerData,
+    $_SESSION['classID']
+  ]);
+  echo json_encode(['success' => true]);
 }
 
 
-echo json_encode(['success' => true]);
 

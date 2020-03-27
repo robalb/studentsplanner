@@ -81,6 +81,8 @@ function Planner(props){
       ...state,
       plannerDataUpdating: true
     }));
+    //perform api call. since it depends on data inside pushManager,
+    //it has to be performed from within an update function of setPushManager
     setPushManager(current => {
       console.log("pushing from setPushManager", current)
       //perform api call
@@ -91,7 +93,7 @@ function Planner(props){
         };
         let response = await apiRequest('planner', data, 'POST');
         console.log("pushing from setPushManager done!")
-        //update the state based on the response
+        //update the state based on the response.
         setState( state => ({
           ...state,
           plannerDataUpdating: false

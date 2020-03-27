@@ -13,8 +13,6 @@ CREATE TABLE IF NOT EXISTS `class` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
   `schoolID` int(11),
-  `currentPlannerState` varchar(8),
-  `plannerStateHistory` varchar(255),
   PRIMARY KEY (`ID`)
 ) DEFAULT CHARSET = utf8mb4;
 
@@ -25,11 +23,11 @@ CREATE TABLE IF NOT EXISTS `students` (
   `password` char(60) NOT NULL,
   `fullName` varchar(60) NOT NULL,
   `uniqueName` varchar(60) NOT NULL,
-  `registrationTimestamp` int(11),
-  `lastLoginTimestamp` int(11),
-  `lastLoginIp` varchar(255),
-  `admin` boolean,
-  `locale` varchar(3),
+  `registrationTimestamp` int(11) NOT NULL,
+  `lastLoginTimestamp` int(11) NOT NULL,
+  `lastLoginIp` varchar(255) NOT NULL,
+  `admin` boolean NOT NULL,
+  `locale` varchar(3) NOT NULL,
   `trustScore` int(11),
   INDEX (`classID`),
   INDEX `mail` (`mail`)
@@ -39,7 +37,6 @@ CREATE TABLE IF NOT EXISTS `students` (
 CREATE TABLE IF NOT EXISTS `planner_states` (
   `classID` int(11) NOT NULL,
   `stateHash` varchar(8),
-  `parentStateHash` varchar(8),
   `plannerData` varchar(255),
   `authorUniqueName` varchar(60),
   `timestamp` int(11),
@@ -59,38 +56,50 @@ CREATE TABLE IF NOT EXISTS `invite_codes` (
 
 
 /* test data */
-INSERT INTO class (ID, name, currentPlannerState) VALUES (1, 'TEST', '7e57abcd');
+INSERT INTO class (ID, name) VALUES (1, 'TEST');
 
-INSERT INTO planner_states (classID, stateHash, parentStateHash) VALUES 
-(1, '7e57abcd', '00000000');
+INSERT INTO planner_states (classID, stateHash) VALUES
+(1, '00000000');
 
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student1@mail.com', '', 'andre asurname', 'asurname');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student2@mail.com', '', 'giorgio asurname', 'asurname g');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student3@mail.com', '', 'qwe bsurname', 'bsurname');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student4@mail.com', '', 'qweqwe eqwewqe csur', 'csur');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student5@mail.com', '', 'csurname', 'csurname');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student6@mail.com', '', 'cqwe cqwe', 'cqwe');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student7@mail.com', '', 'andre dellos', 'dellos');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student8@mail.com', '', 'sogni gorgoro', 'gorgoro');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student9@mail.com', '', 'sogni forbici', 'forbici');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student10@mail.com', '', 'fwer lorilli', 'lorilli');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student11@mail.com', '', 'qweqwe vernini', 'vernini');
-INSERT INTO students (classID, mail, password, fullName, uniqueName, admin) VALUES
-(1, '12@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'giorgio vasari', 'vasari', true);
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student13@mail.com', '', 'gargari zulli', 'zulli');
-INSERT INTO students (classID, mail, password, fullName, uniqueName) VALUES
-(1, 'student14@mail.com', '', 'gije zanti', 'zanti');
+INSERT INTO invite_codes (code, classID, invitedBy, creationDate, lifespan) VALUES
+('validInviteTestX', 1, 'giorgio vasari', 1585331238, 96400);
+INSERT INTO invite_codes (code, classID, invitedBy, creationDate, lifespan) VALUES
+('expiredInviteXXX', 1, 'giorgio vasari', 1585331238, 12);
 
+INSERT INTO students VALUES
+(1, '12@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'giorgio vasari', 'vasari',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '13@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'giorgio sarti', 'sarti',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '14@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'andrea perioli', 'perioli',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '15@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'rudyard sassari', 'sassari',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '16@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'francesco patressini', 'patressini',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '17@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'aieie aieie', 'aieie',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '18@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'ivo stebri', 'stebri',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '20@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'rudyard kipling', 'kipling',
+  1585330487, 1585330487, 'localhosts', true, 'en', 100);
+INSERT INTO students VALUES
+(1, '21@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'andrea se', 'se',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '22@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'joseph longsurnamelengthedgecase', 'surnamelength',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '23@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'namelengthedgecase smith', 'smith',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+INSERT INTO students VALUES
+(1, '24@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'xavier garcìa y fernandez y gonzales y rofriguez lopez', 'garcìa',
+  1585330487, 1585330487, 'localhosts', true, 'it', 100);
 

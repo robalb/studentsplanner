@@ -57,7 +57,7 @@ class GetApplicationData{
     $returnData = $this->defaults["planner"];
     $instance = ConnectDb::getInstance();
     $pdo = $instance->getConnection();
-    $stmt = $pdo->prepare('SELECT p.stateHash, p.plannerData FROM planner_states p, class c WHERE p.classID = c.ID AND p.stateHash = c.currentPlannerState AND c.ID = ? ');
+    $stmt = $pdo->prepare('SELECT stateHash, plannerData FROM planner_states WHERE classID = ? ');
     $stmt->execute([ $this->session['classID'] ]);
     if($stmt->rowCount() > 0){
       $row = $stmt->fetch();
@@ -65,7 +65,7 @@ class GetApplicationData{
       //if plannerData is not empty
       if($plannerData && (int) $row["stateHash"] != 0){
         try{
-          $returnData = json_decode($plannerData, true, 5);
+          $returnData = json_decode($plannerData, true, 10);
         }catch(Exception $e){
           echo var_dump($e);
           die;
