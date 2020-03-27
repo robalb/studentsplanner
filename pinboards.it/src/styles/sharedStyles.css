@@ -146,22 +146,57 @@ header{
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-header .logo{
+header .menu-container{
   height:100%;
-  max-width: 100px;
+  flex-shrink: 1;
+}
+header .menu-container div{
+  height:100%;
   display:flex;
   justify-content: center;
   align-items:center;
   margin: 0 20px 0 20px;
-  flex-shrink: 2;
-
 }
-header .logo .temporary-swg{
-  width: 40px;
-  height: 40px;
-  box-shadow: 5px 5px  #F7DBD7;
-  background-color: #9CC0E7;
-  background-color: #ff5252;
+header .menu-container a{
+  text-decoration: none;
+  color: black;
+  margin: 0 10px 0 10px;
+}
+header .menu-container a:hover{
+  color: grey;
+}
+/* on mobile */
+header .menu-container .burger{
+  cursor: pointer;
+}
+header .menu-container div.menu{
+  overflow: hidden;
+  visibility: hidden;
+  display: none;
+  opacity: 0;
+
+  position: absolute;
+  transition: all 0.2s ease;
+  left: -20px;
+  box-sizing: border-box;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,0.2);
+}
+header .menu-container div.menu a{
+  margin: 30px;
+  margin-left: 20px;
+}
+header .menu-container:hover > .menu,
+header .menu-container:focus-within > .menu,
+header .menu-container .menu:hover{
+  visibility: visible;
+  opacity: 1;
+  display: flex;
 }
 
 header .class-info{
@@ -182,7 +217,7 @@ header .user{
   align-items:center;
   cursor: pointer;
   min-width: 100px;
-  flex-shrink: 1;
+  flex-shrink: 2;
 }
 header .user p.name{
   margin-right: 3px;
