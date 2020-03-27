@@ -45,15 +45,24 @@ function getInitialState(){
   return initialState;
 }
 
+
 function Planner(props){
   let [state, setState] = React.useState(getInitialState());
+
+  let [pushManager, setPushManager] = React.useState({
+    timer: false,
+    data: false,
+    func: pushData,
+    time: 3000
+  });
 
   React.useEffect(()=>{
     //TODO: initialize updates poller if logged (maybe even if not, to check logged status)
     return function cleanup(){
       //TODO: remove updates poller
+      clearTimeout(pushManager.timer);
     }
-  });
+  }, []);
 
   function updateCurrentEvent(newCurrentEventIndex){
     //TODO: allow multiple events if not on mobile
@@ -65,17 +74,59 @@ function Planner(props){
     }));
   }
 
-  async function updatePlannerData(operation, newData){
-    console.log("dataupdate", operation, newData);
+  async function pushData(){
+    console.log("pushing")
+    //set state to loading
     setState( state => ({
       ...state,
-      plannerDataUpdating: true,
-      plannerData: plannerDataReducers[operation](state.plannerData, newData)
+      plannerDataUpdating: true
     }));
-    //TODO: implement api call interface with debouncer
+    setPushManager(current => {
+      console.log("pushing from setPushManager", current)
+      //perform api call
+      async function asyncPush(){
+        let data = {
+          action: 'push',
+          data: current.data
+        };
+        let response = await apiRequest('planner', data, 'POST');
+        console.log("pushing from setPushManager done!")
+        //update the state based on the response
+        setState( state => ({
+          ...state,
+          plannerDataUpdating: false
+        }));
+      }
+      asyncPush();
+      //update the pushManager state
+      let newData = {timer: false};
+      return { ...current, ...newData }
+    });
   }
 
-  async function handleAuthModal(response){
+  function updatePlannerData(operation, newData){
+    console.log("dataupdate", operation, newData);
+    //update the state using the newdata, and the old data passed through custom reducers
+    setState( state => {
+      let newState = {
+        ...state,
+        plannerData: plannerDataReducers[operation](state.plannerData, newData)
+      }
+      //update the push manager, passing the new state data
+      setPushManager(current => {
+        console.log('setting push manager', current)
+        let newData = { data: newState.plannerData};
+        //if not set, create the timer
+        if(!current.timer){
+          newData.timer = setTimeout(current.func, current.time);
+        }
+        return { ...current, ...newData }
+      });
+      return newState;
+    });
+  }
+
+  function handleAuthModal(response){
     //TODO: start short polling timer
     setState(state =>({
       ...state,
