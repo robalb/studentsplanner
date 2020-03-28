@@ -16,3 +16,38 @@ div.card.account .content h3{
   margin-top: 25px;
   margin-bottom: 35px;
 }
+div.card.account .members-container{
+  margin: 0 auto;
+  max-width: 300px;
+  border-top: 2px solid rgba(0,0,0,0.2);
+  box-shadow: 1px 3px 4px 2px rgba(0,0,0,0.1);
+  /* border: 1px solid gray; */
+}
+div.card.account .members-container .custom-button{
+  display: flex;
+  overflow: hidden;
+  justify-content: space-between;
+  width: 100%;
+}
+div.card.account .members-container .custom-button p{
+  margin: 12px 10px 12px 10px;
+}
+div.card.account .members-container .custom-button .admin-tag{
+  color: green;
+}
+div.card.account .members-container .collapsible-container{
+  border-bottom: 2px solid rgba(0,0,0,0.2);
+}
+
+div.card.account .members-container p{
+  margin: 12px 0 12px 0;
+}
+div.card.account .members-container .input-group{
+  margin: 0;
+  margin-top: 35px;
+}
+div.card.account .members-container .content{
+  border-top: 1px solid rgba(0,0,0,0.2);
+  text-align: left;
+}
+
