@@ -237,7 +237,6 @@ header .user{
   height:100%;
   display: flex;
   align-items:center;
-  cursor: pointer;
   min-width: 100px;
   flex-shrink: 2;
 }

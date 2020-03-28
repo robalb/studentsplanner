@@ -4,20 +4,20 @@ import React from 'react';
 import accountContext from '../contexts/accountContext.js';
 import PlaceHolder from './PlaceHolder.js';
 
-import Button from './Button.js';
+// import Button from './Button.js';
 import t from '../utils/i18n.js';
 
 function Header(props){
   let {data, loading} = React.useContext(accountContext);
   let pages = [ 'account', 'planner', 'polls' ];
-  let currentPage = props.currentPage ?? pages[0];
-  let list = pages.filter(page => page != currentPage).map( page => <a href={'../' + page}>{t(page)}</a> )
+  let currentPage = props.currentPage //?? pages[0];
+  let list = pages.filter(page => page != currentPage).map( page => <a key={page} href={'../' + page}>{t(page)}</a> )
   return(
     <header>
     <div className="menu-container">
       <div className="burger">
         <a href="#" aria-haspopup="true">{t(currentPage)}</a>
-        <span class="material-icons"> arrow_drop_down </span>
+        <span className="material-icons"> arrow_drop_down </span>
       </div>
       <div className="menu" aria-label="submenu">
         {list}
@@ -30,12 +30,12 @@ function Header(props){
        </PlaceHolder>
       </div>
 
-      <Button className="user">
+      <div className="user">
         <PlaceHolder ready={!loading}>
           <p className="name">{!loading && data.user.uid}</p>
         </PlaceHolder>
         <i className="material-icons"> account_circle </i>
-      </Button>
+      </div>
     </header>
   );
 }

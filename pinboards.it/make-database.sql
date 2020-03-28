@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `students` (
 CREATE TABLE IF NOT EXISTS `planner_states` (
   `classID` int(11) NOT NULL,
   `stateHash` varchar(8),
-  `plannerData` varchar(255),
+  `plannerData` varchar(4096),
   `authorUniqueName` varchar(60),
   `timestamp` int(11),
   INDEX (`classID`)

@@ -65,7 +65,7 @@ class GetApplicationData{
       //if plannerData is not empty
       if($plannerData && (int) $row["stateHash"] != 0){
         try{
-          $returnData = json_decode($plannerData, true, 10);
+          $returnData = json_decode($plannerData, true, 50);
         }catch(Exception $e){
           echo var_dump($e);
           die;
