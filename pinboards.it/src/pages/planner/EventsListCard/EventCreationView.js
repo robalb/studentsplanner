@@ -4,8 +4,9 @@ import colors from '../../../utils/colors.js';
 import plannerContext from '../../../contexts/plannerContext.js';
 import Calendar from '../../../components/Calendar.js'
 import Button from '../../../components/Button.js';
+import t from '../../../utils/i18n.js';
 
-function CreationMenu(props){
+function EventCreationView(props){
   const {data, loading, update} = React.useContext(plannerContext);
   let [selectedColor, selectColor] = React.useState(0)
   let [dates, setDates] = React.useState([])
@@ -34,8 +35,8 @@ function CreationMenu(props){
       <button
         className={(selectedColor==step?'selected':'')}
         onClick={()=>selectColor(step)}
-        aria-label={(selectedColor==step? 'unselect' : 'select' ) + " this theme color"}
-        title={"select this theme color"}
+        aria-label={t("select this theme color")}
+        title={t("select this theme color")}
         style={{backgroundColor:color}}
         key={step}
       />
@@ -96,13 +97,13 @@ function CreationMenu(props){
   let handleCreation = ()=>{
     let trimmedEventName = eventName.trim().replace(/ +(?= )/g,'');
     if(dates.length < 1){
-      alert("select one or more dates")
+      alert(t("select one or more dates"))
     }
     else if(trimmedEventName.length < 1){
-      alert("enter a name for the event")
+      alert(t("enter a name for the event"))
     }
     else if(eventExist(trimmedEventName)){
-      alert("this event already exist")
+      alert(t("this event already exist"))
     }
     else{
       update("newEvent", {
@@ -111,18 +112,18 @@ function CreationMenu(props){
         baseColor: aviableColors[selectedColor],
         dates: dates
       })
-      props.setCreationMode(false)
+      props.setView('events')
     }
   }
 
   return (
     limitReached ? 
     (<>
-     <h3>you reached the limit of events for a demo account</h3>
+     <h3>{t('events limit reached')}</h3>
       <div className="btns-container">
         <button className="btn "
-        onClick={()=>props.setCreationMode(false)}
-        aria-label={"undo event creation"}>ok</button>
+        onClick={()=>props.setView('events')}
+        aria-label={t("undo event creation")}>{t('ok')}</button>
       </div>
       <br/>
      </>) :
@@ -135,14 +136,14 @@ function CreationMenu(props){
         type="text"
         required/>
         <span className="bar"></span>
-        <label htmlFor="a11y-input1">Name</label>
+        <label htmlFor="a11y-input1">{t('input event name')}</label>
       </div>
 
       <div className="color-picker">
         {colorOptions}
       </div>
 
-      <h3> select one or more date</h3>
+      <h3>{t('event date selector title')}</h3>
       <div className="calendar-shadow">
       <Calendar
         cell={cell}
@@ -151,11 +152,8 @@ function CreationMenu(props){
       <div className="btns-container">
         <button className="btn"
         onClick={handleCreation}
-        aria-label={"create event"}
-        >create</button>
-        <button className="btn close"
-        onClick={()=>props.setCreationMode(false)}
-        aria-label={"undo event creation"}>close</button>
+        aria-label={t("close and save")}
+        >{t("close and save")}</button>
       </div>
       <br/>
 
@@ -163,4 +161,4 @@ function CreationMenu(props){
   )
 }
 
-export default CreationMenu;
+export default EventCreationView;

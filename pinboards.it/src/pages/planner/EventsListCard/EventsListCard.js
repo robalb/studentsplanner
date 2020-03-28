@@ -1,58 +1,44 @@
 import React from 'react';
-import ListView from './ListView.js';
+import EventView from './EventView.js';
 import CalendarView from './CalendarView.js';
-import CreationMenu from './CreationMenu.js';
+import EventCreationView from './EventCreationView.js';
+//TODO: import TestView
+
+import t from '../../../utils/i18n.js';
 
 
 function EventsListCard(){
-  const [viewMode, setViewMode] = React.useState('list');
-  const [creationMode, setCreationMode] = React.useState(false);
+  const [view, setView] = React.useState('events');
 
-  function toggleViewMode(){
-    setViewMode(current => current == 'list' ? 'calendar' : 'list');
+  let viewComponent = <p>loading..</p>
+  let tabBar = <p>loading..</p>
+  switch(view){
+    case 'events':
+      viewComponent = <EventView setView={setView}/>
+      tabBar = <>
+        <h2>{t('events list title')}</h2>
+        </>;
+      break;
+    case 'event-creation':
+      viewComponent = <EventCreationView setView={setView}/>
+      tabBar = <>
+        <h2>{t('event creation')}</h2>
+        <button aria-label={t("undo event creation")}
+         title={t("undo event creation")}
+         onClick={()=>setView('events')}
+        ><i className="material-icons">close</i></button>
+        </>;
+      break;
+    case 'calendar':
+      break;
   }
-  
-  //TODO: refactor and clean this mess into this: 
-  //topBarContent = [title] [controls]
-  //view = ...
-  //if creationMode {
-  //topBarcontent = [title] [controls]
-  //view = ..
-  //}
-  let toggleIcon = viewMode == 'list' ? 'event' : 'view_list';
-  let view = viewMode == 'list' ?  <ListView setCreationMode={setCreationMode}/>: <CalendarView/>
-  if(creationMode) view = <CreationMenu setCreationMode={setCreationMode}/>
 
-  let controls = creationMode ?
-    (
-      <button aria-label={"undo event ceration"}
-     title={"undo event creation"}
-     onClick={()=>setCreationMode(false)}
-     ><i className="material-icons">close</i></button>
-    )
-       :
-    (
-      <div>
-      <button aria-label={"toggle view mode"}
-      title={"toggle view mode"}
-      onClick={toggleViewMode}>
-      <i className="material-icons">{toggleIcon}</i>
-      </button>
-      <button
-      aria-label={"events options"}
-      title={"events options"}
-      >
-      <i className="material-icons">more_vert</i>
-      </button>
-      </div>
-  )
   return (
     <div className="card events-list">
       <div className="top-bar">
-        <h2>{creationMode ? 'create event' : 'events' }</h2>
-        {controls}
+        {tabBar}
       </div>
-      {view}
+      {viewComponent}
     </div>
   );
 }
