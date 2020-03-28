@@ -246,39 +246,44 @@ h3{
 /* --------------------------------- */
 /* large tablets */
 @media (min-width: 600px){
-div.content .card{
-  max-width: 550px;
-  margin-left: auto;
-  margin-right: auto;
+  div.content .card{
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
-}
-/* desktop - large screens */
+/* desktop - semi large screens */
 @media (min-width: 840px){
-div.content{
-  /* border: 2px solid blue; */
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  div.content{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
 
-  /* display: grid; */
-  /* grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); */
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  div.content .card{
+    max-width: none;
+    margin: 10px;
+  }
+  div.content .events-list{
+    width: 380px;
+  }
+  div.content .event{
+    width: 400px;
+    /* min-width: 400px; */
+    /* max-width: 500px; */
+  }
 }
-div.content .card{
-  max-width: none;
-  margin: 10px;
+/* desktop - very large screens */
+@media (min-width: 940px){
+  div.content .event{
+    width: auto;
+    min-width: 400px;
+    max-width: 500px;
+  }
 }
-div.content .events-list{
-  /* border: 2px solid green; */
-  width: 380px;
-}
-div.content .event{
-  /* border: 2px solid red; */
-  /* max-width: 500px; */
-  min-width: 400px;
-  max-width: 500px;
-}
-}
-
 
 /* --------------------------------- */
 /* ------   STUDENTS PICKER  ------- */
