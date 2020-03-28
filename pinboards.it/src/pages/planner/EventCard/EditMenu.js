@@ -3,6 +3,8 @@ import Calendar from '../../../components/Calendar.js'
 import plannerContext from '../../../contexts/plannerContext.js';
 import Button from '../../../components/Button.js';
 
+import t from '../../../utils/i18n.js';
+
 function EditMenu(props){
   const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext);
   const eventData = data.events[props.eventIndex]
@@ -68,7 +70,7 @@ function EditMenu(props){
 
   return (
     <div className="edit-card-container">
-    <h3>edit dates</h3>
+    <h3>{t("edit dates")}</h3>
     <div className="calendar-shadow">
       <Calendar currentMonth={dates.length>0 ? dates[0].month : undefined} cell={cell}/>
     </div>
@@ -76,10 +78,7 @@ function EditMenu(props){
       <button className="btn"
       aria-label={"save changes"}
       onClick={handleCreation}
-      >save</button>
-      <button className="btn close"
-      onClick={()=>props.setEditMode(false)}
-      aria-label={"undo changes"}>close</button>
+      >{t("close and save")}</button>
     </div>
     <br/>
     </div>

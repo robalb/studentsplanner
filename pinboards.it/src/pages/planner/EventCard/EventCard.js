@@ -6,6 +6,8 @@ import EditMenu from './EditMenu.js';
 import Button from '../../../components/Button.js';
 import StudentsList from './StudentsList.js';
 
+import t from '../../../utils/i18n.js';
+
 
 function EventCard(props){
   const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext);
@@ -49,8 +51,8 @@ function EventCard(props){
       participants = data.students.map(student=>(
         <div key={student} >
         {student}
-        <button aria-label={`remove ${student}`}
-        title={`remove ${student}`}
+        <button aria-label={t("remove student", {name: student})}
+        title={t("remove student", {name: student})}
         onClick={()=>handleDeleteStudent(index, data, student)}
         > 
         <i className="material-icons"> close </i>
@@ -65,8 +67,8 @@ function EventCard(props){
         </h4></div>
         <div className="participants">
           {participants}
-          <Button aria-label={"add student"}
-          title={"add student"}
+          <Button aria-label={t("add student")}
+          title={t("add student")}
           onClick={()=>handleAddStudent(index)}><i className="material-icons"> add_circle</i></Button>
         </div>
       </div>
@@ -93,12 +95,12 @@ function EventCard(props){
           <StudentsList targetSelection={selectMode} setSelectMode={setSelectMode} />
           <h2>{ eventData.name }</h2>
           <div>
-          <button aria-label={"edit event"}
-          title={"edit event"}
+          <button aria-label={t("edit event")}
+          title={t("edit event")}
           onClick={()=>setEditMode(!editMode)}
           > <i className="material-icons"> edit </i></button>
-          <button aria-label={"close event card"}
-          title={"close event card"}
+          <button aria-label={t("close event card")}
+          title={t("close event card")}
           onClick={()=>updateCurrent(undefined)}
           ><i className="material-icons">close</i></button>
           </div>
