@@ -79,7 +79,7 @@ function EditMenu(props){
         title={t("toggle advanced options")}
       >
         <div className={"content"}>
-          <p>temporary placeholder</p>
+          <p>non ho ancora finito di fare sta parte. in futuro si potrà eliminare l'interrogazione, e altre cose utili</p>
         </div>
       </Collapsible>
     </div>
