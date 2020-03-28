@@ -6,3 +6,13 @@ div.card.account .top-bar{
 div.card.account .top-bar h2{
   margin-right: 10px;
 }
+div.card.account .content{
+  padding: 10px;
+  text-align: center;
+}
+
+/* class panel */
+div.card.account .content h3{
+  margin-top: 25px;
+  margin-bottom: 35px;
+}

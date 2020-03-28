@@ -10,16 +10,16 @@ const buildHandleEnterKeyPress = (onClick) => ({ key }) => {
 //   type - default text
 //   label
 //   centered - default true
-function FormInput(props){
+function FormInput({onEnter, type, centered, ...props}){
   let rndID = "a11y-" + Math.floor(Math.random()*10)
-  let centered = props.centered === false ? "" : "centered";
+  let isCentered = centered === false ? "" : "centered";
   return(
-    <div className={"input-group " + centered}>
+    <div className={"input-group " + isCentered}>
       <input id={rndID}
       aria-labelledby={"#"+rndID}
-      type={props.type || "text"}
-      onChange = {e=>props.onChange(e)}
-      onKeyPress={ buildHandleEnterKeyPress(props.onEnter) }
+      type={type || "text"}
+      onKeyPress={ buildHandleEnterKeyPress(onEnter) }
+      {...props}
       required/>
       <span className="bar"></span>
       <label htmlFor={rndID}>{props.label || props.type || ""}</label>
