@@ -5,6 +5,45 @@ import FormInput from '../../components/FormInput.js';
 import Collapsible from '../../components/Collapsible.js';
 import accountContext from '../../contexts/accountContext.js';
 
+function UserRow(props){
+  //TODO: use this
+  // let form = (
+  //   <FormInput 
+  //   centered={false}
+  //   onBlur = {e=>console.log(e.target.value)}
+  //   onChange={e=>console.log(e.target.value)}
+  //   aria-label={t("name")}
+  //   label={t("name")}
+  //   title={t("name")}
+  //   type={"text"}
+  //   />
+  // );
+
+  let isAdmin = props.isAdmin;
+  let customButton=(
+    <div className="custom-button">
+      <p>{props.uid}</p>
+      { isAdmin ?  <p className="admin-tag">[amministratore]</p> : "" }
+    </div>
+  );
+  return (
+    <Collapsible
+      customButton={customButton}
+      maxHeight={300}
+      aria-label={t("toggle user options")}
+      label={t("toggle user options")}
+      title={t("toggle user options")}
+    >
+      <div className={"content scalable"}>
+        <p>{props.fullName}</p>
+        <p>giorgio@mail.com</p>
+        { !isAdmin ?  <p> <a href="/">rendi amministratore</a> </p> : '' }
+        <p> <a href="/">rimuovi</a> </p>
+      </div>
+    </Collapsible>
+  );
+}
+
 function ClassPanel(props){
   let {data, loading} = React.useContext(accountContext);
   let [show, setShow] = React.useState(true);
@@ -15,12 +54,14 @@ function ClassPanel(props){
 
   let content = <p>loading..</p>
   if(!loading){
-    let customButton=(
-      <div className="custom-button">
-        <p>vasaqweqweri</p>
-        <p className="admin-tag">[amministratore]</p>
-      </div>
-    );
+    //generate members list
+    // let members = ""
+    // data.students.map( (student, key) => console.log(student, key))
+    let members = data.students.map( (student, key) => <UserRow
+      key={key}
+      {...student}
+      />);
+
     content = (
     <div className="content">
       <h3>{t('your class title')}</h3>
@@ -32,48 +73,22 @@ function ClassPanel(props){
       />
 
       <div className="members-container">
-
-        <Collapsible
-          customButton={customButton}
-          maxHeight={300}
-          aria-label={t("toggle advanced options")}
-          label={t("toggle advanced options")}
-          title={t("toggle advanced options")}
-        >
-          <div className={"content scalable"}>
-            <p>Giorgio Vasari</p>
-            <p>giorgio@mail.com</p>
-            <p> <a href="/">rendi amministratore</a> </p>
-            <p> <a href="/">rimuovi</a> </p>
-            <FormInput 
-            centered={false}
-            onBlur = {e=>console.log(e.target.value)}
-            onChange={e=>setClsName(e.target.value)}
-            aria-label={t("name")}
-            label={t("name")}
-            title={t("name")}
-            type={"text"}
-            />
-          </div>
-        </Collapsible>
-
+        {members}
       </div>
-
-
     </div>
   );
   }
   return(
-      <div className="card account">
-        <Button 
-        className="top-bar"
-        onClick={()=>setShow(!show)}
-        >
-          <h2>{t("class settings title")}</h2>
-          <i className="material-icons">{show? 'keyboard_arrow_up' : 'keyboard_arrow_down' }</i>
-        </Button>
-        {show ? content : ''}
-      </div>
+    <div className="card account">
+      <Button 
+      className="top-bar"
+      onClick={()=>setShow(!show)}
+      >
+        <h2>{t("class settings title")}</h2>
+        <i className="material-icons">{show? 'keyboard_arrow_up' : 'keyboard_arrow_down' }</i>
+      </Button>
+      {show ? content : ''}
+    </div>
   );
 }
 
