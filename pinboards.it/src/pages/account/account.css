@@ -1,0 +1,8 @@
+div.card.account{
+}
+div.card.account .top-bar{
+  justify-content: center;
+}
+div.card.account .top-bar h2{
+  margin-right: 10px;
+}
