@@ -17,7 +17,7 @@ if(!$session->isValid()){
 
 //validates received data, and returns an error if something is not right
 $error = 0;
-$error += (strlen($body) > 3500) || (strlen($body) < 5);
+$error += (strlen($body) > 9000) || (strlen($body) < 5);
 try{
   if($error === 0){
     $request = json_decode($body, true, 8);

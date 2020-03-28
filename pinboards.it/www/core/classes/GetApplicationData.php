@@ -63,7 +63,7 @@ class GetApplicationData{
       $row = $stmt->fetch();
       $plannerData = $row["plannerData"];
       //if plannerData is not empty
-      if($plannerData && (int) $row["stateHash"] != 0){
+      if(strlen($plannerData) > 0 && $row["stateHash"] != '00000000'){
         try{
           $returnData = json_decode($plannerData, true, 50);
         }catch(Exception $e){

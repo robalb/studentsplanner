@@ -57,7 +57,7 @@ function EditMenu(props){
 
   let handleCreation = ()=>{
     if(dates.length < 1){
-      alert("select at least one date")
+      alert(t("select one or more dates"))
     }
     else{
       update("updateEventDates", {
