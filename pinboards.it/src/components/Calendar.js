@@ -14,7 +14,7 @@ export default class Calendar extends React.Component {
   constructor(props){
     super(props);
     //TODO: connect this to global app i18n
-    let locale = 'it';
+    let locale = props.locale ?? 'en';
     //set the moment internationalizzation parameters
     moment.locale(locale)
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from '../../../components/Calendar.js'
 import plannerContext from '../../../contexts/plannerContext.js';
 import Button from '../../../components/Button.js';
+import Collapsible from '../../../components/Collapsible.js';
 
 import t from '../../../utils/i18n.js';
 
@@ -9,7 +10,7 @@ function EditMenu(props){
   const {data, loading, update, current, updateCurrent} = React.useContext(plannerContext);
   const eventData = data.events[props.eventIndex]
   const solidBaseColor = eventData.baseColor;
-  let [dates, setDates] = React.useState(eventData.dates)
+  let [dates, setDates] = React.useState(eventData.dates);
 
   let dateObjMatches = (momentObj, day, month, year)=>{
     return(
@@ -68,12 +69,29 @@ function EditMenu(props){
     }
   }
 
+  let advancedOptions = (
+    <div className="advanced-options-container">
+      <Collapsible
+        buttonTitle={t("advanced options")}
+        maxHeight={800}
+        aria-label={t("toggle advanced options")}
+        label={t("toggle advanced options")}
+        title={t("toggle advanced options")}
+      >
+        <div className={"content"}>
+          <p>temporary placeholder</p>
+        </div>
+      </Collapsible>
+    </div>
+  );
+
   return (
     <div className="edit-card-container">
     <h3>{t("edit dates")}</h3>
     <div className="calendar-shadow">
-      <Calendar currentMonth={dates.length>0 ? dates[0].month : undefined} cell={cell}/>
+      <Calendar locale={LANGUAGE['__locale']} currentMonth={dates.length>0 ? dates[0].month : undefined} cell={cell}/>
     </div>
+    {advancedOptions}
     <div className="btns-container">
       <button className="btn"
       aria-label={"save changes"}

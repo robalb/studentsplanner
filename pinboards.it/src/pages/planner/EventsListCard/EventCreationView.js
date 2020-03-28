@@ -146,6 +146,7 @@ function EventCreationView(props){
       <h3>{t('event date selector title')}</h3>
       <div className="calendar-shadow">
       <Calendar
+        locale={LANGUAGE['__locale']}
         cell={cell}
       />
       </div>
