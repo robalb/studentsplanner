@@ -17,6 +17,8 @@
   "undo event creation": "annulla aggiunta interrogazione",
   "events list title": "interrogazioni",
   "select event label": "seleziona l'interrogazione {{name}}",
+  "add member": "aggiungi membro",
+  "add member link": "aggiungi tramite link",
   "create new event": "nuova interrogazione",
   "close and save": "chiudi e salva",
   "select one or more dates": "seleziona una o più date",

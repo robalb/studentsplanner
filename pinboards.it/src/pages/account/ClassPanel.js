@@ -44,6 +44,50 @@ function UserRow(props){
   );
 }
 
+function AddMailRow(props){
+  let customButton=(
+    <div className="custom-button-add">
+      <span class="material-icons"> group_add </span>
+      <h4>{t("add member")}</h4>
+    </div>
+  );
+  return (
+    <Collapsible
+      customButton={customButton}
+      maxHeight={300}
+      aria-label={t("add member")}
+      label={t("add member")}
+      title={t("add member")}
+    >
+      <div className={"content scalable"}>
+        <p> <a href="/">rimuovi</a> </p>
+      </div>
+    </Collapsible>
+  );
+}
+
+function AddLinkRow(props){
+  let customButton=(
+    <div className="custom-button-add">
+      <span class="material-icons"> insert_link </span>
+      <h4>{t("add member link")}</h4>
+    </div>
+  );
+  return (
+    <Collapsible
+      customButton={customButton}
+      maxHeight={300}
+      aria-label={t("add member link")}
+      label={t("add member link")}
+      title={t("add member link")}
+    >
+      <div className={"content scalable"}>
+        <p> <a href="/">rimuovi</a> </p>
+      </div>
+    </Collapsible>
+  );
+}
+
 function ClassPanel(props){
   let {data, loading} = React.useContext(accountContext);
   let [show, setShow] = React.useState(true);
@@ -73,6 +117,8 @@ function ClassPanel(props){
       />
 
       <div className="members-container">
+        <AddMailRow />
+        <AddLinkRow />
         {members}
       </div>
     </div>

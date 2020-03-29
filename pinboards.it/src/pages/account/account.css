@@ -23,6 +23,17 @@ div.card.account .members-container{
   box-shadow: 1px 3px 4px 2px rgba(0,0,0,0.1);
   /* border: 1px solid gray; */
 }
+div.card.account .members-container .custom-button-add{
+  display: flex;
+  overflow: hidden;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+div.card.account .members-container .custom-button-add span{
+  margin-left: 15px;
+  margin-right: 10px;
+}
 div.card.account .members-container .custom-button{
   display: flex;
   overflow: hidden;
@@ -47,7 +58,8 @@ div.card.account .members-container .input-group{
   margin-top: 35px;
 }
 div.card.account .members-container .content{
-  border-top: 1px solid rgba(0,0,0,0.2);
+  background-color: white;
+  border-top: 1px solid rgba(0,0,0,0.1);
   text-align: left;
 }
 
