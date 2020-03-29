@@ -6,13 +6,48 @@ div.card.account .top-bar{
 div.card.account .top-bar h2{
   margin-right: 10px;
 }
-div.card.account .content{
+div.card.account .collapse-content{
   padding: 10px;
   text-align: center;
 }
 
+/*layout*/
+/* large tablets */
+@media (min-width: 600px){
+  div.content .card{
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+/* desktop - semi large screens */
+@media (min-width: 840px){
+  div.card.account .top-bar{
+    display: none;
+  }
+  div.content{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  div.content .card{
+    width: 380px;
+    margin: 10px;
+  }
+}
+/* desktop - very large screens */
+@media (min-width: 940px){
+  div.content .card{
+    width: 500px;
+  }
+}
+
 /* class panel */
-div.card.account .content h3{
+div.card.account .collapse-content h3{
   margin-top: 25px;
   margin-bottom: 35px;
 }
@@ -57,7 +92,7 @@ div.card.account .members-container .input-group{
   margin: 0;
   margin-top: 35px;
 }
-div.card.account .members-container .content{
+div.card.account .members-container .collapse-content{
   background-color: white;
   border-top: 1px solid rgba(0,0,0,0.1);
   text-align: left;

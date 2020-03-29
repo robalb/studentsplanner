@@ -675,9 +675,8 @@ to {left:3%;}
 /* ---------  COLLAPSIBLE  --------- */
 /* --------------------------------- */
 .collapsible-container{
-  /* background-color: rgba(0,0,200, 0.1); */
-  transition: all 0.2s;
-  animation: 1s ease-out large-decollapse;
+  /* transition: all 0.2s; */
+  /* animation: 1s ease-out large-decollapse; */
 }
 @keyframes large-decollapse{
   0%{
@@ -696,7 +695,7 @@ to {left:3%;}
 .collapsible-container .collapsible{
   max-height: 800px;
   max-height: attr(data-maxheight px);
-  transition: all 0.5s;
+  /* transition: all 0.5s; */
   overflow: hidden;
 }
 .collapsible-container .collapsible.collapsed{

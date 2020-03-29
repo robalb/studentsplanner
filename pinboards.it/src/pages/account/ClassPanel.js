@@ -34,7 +34,7 @@ function UserRow(props){
       label={t("toggle user options")}
       title={t("toggle user options")}
     >
-      <div className={"content scalable"}>
+      <div className={"collapse-content scalable"}>
         <p>{props.fullName}</p>
         <p>giorgio@mail.com</p>
         { !isAdmin ?  <p> <a href="/">rendi amministratore</a> </p> : '' }
@@ -47,7 +47,7 @@ function UserRow(props){
 function AddMailRow(props){
   let customButton=(
     <div className="custom-button-add">
-      <span class="material-icons"> group_add </span>
+      <span className="material-icons"> group_add </span>
       <h4>{t("add member")}</h4>
     </div>
   );
@@ -59,7 +59,7 @@ function AddMailRow(props){
       label={t("add member")}
       title={t("add member")}
     >
-      <div className={"content scalable"}>
+      <div className={"collapse-content scalable"}>
         <p> <a href="/">rimuovi</a> </p>
       </div>
     </Collapsible>
@@ -69,7 +69,7 @@ function AddMailRow(props){
 function AddLinkRow(props){
   let customButton=(
     <div className="custom-button-add">
-      <span class="material-icons"> insert_link </span>
+      <span className="material-icons"> insert_link </span>
       <h4>{t("add member link")}</h4>
     </div>
   );
@@ -81,7 +81,7 @@ function AddLinkRow(props){
       label={t("add member link")}
       title={t("add member link")}
     >
-      <div className={"content scalable"}>
+      <div className={"collapse-content scalable"}>
         <p> <a href="/">rimuovi</a> </p>
       </div>
     </Collapsible>
@@ -107,7 +107,7 @@ function ClassPanel(props){
       />);
 
     content = (
-    <div className="content">
+    <div className="collapse-content">
       <h3>{t('your class title')}</h3>
       <FormInput 
       value = {clsName}
