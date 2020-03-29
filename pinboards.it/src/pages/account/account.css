@@ -11,6 +11,7 @@ div.card.account .collapse-content{
   text-align: center;
 }
 
+
 /*layout*/
 /* large tablets */
 @media (min-width: 600px){
@@ -46,10 +47,26 @@ div.card.account .collapse-content{
   }
 }
 
-/* class panel */
+/* invites */
 div.card.account .collapse-content h3{
   margin-top: 25px;
   margin-bottom: 35px;
+}
+/* ivite via mail */
+div.card.account .collapse-content .btns-container{
+  display: flex;
+  justify-content: center;
+}
+/* ivite via link */
+div.card.account .collapse-content .link-container{
+  user-select: all;
+  color: green;
+  padding: 5px;
+}
+
+/* class panel */
+div.card.account .members-container .no-members{
+  padding: 30px 10px 40px 10px;
 }
 div.card.account .members-container{
   margin: 0 auto;
@@ -88,9 +105,8 @@ div.card.account .members-container .collapsible-container{
 div.card.account .members-container p{
   margin: 12px 0 12px 0;
 }
-div.card.account .members-container .input-group{
-  margin: 0;
-  margin-top: 35px;
+div.card.account .members-container .collapse-content .input-group{
+  margin-bottom: 15px;
 }
 div.card.account .members-container .collapse-content{
   background-color: white;

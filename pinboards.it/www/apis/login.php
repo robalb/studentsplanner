@@ -55,7 +55,7 @@ if(isset($request["isHash"]) && $request["isHash"] == false){
 $instance = ConnectDb::getInstance();
 $pdo = $instance->getConnection();
 if(!$session->isValid()){
-  $stmt = $pdo->prepare('SELECT s.classID, s.password, s.fullName, s.uniqueName, s.admin, s.locale, c.name FROM students s, class c WHERE s.mail = ? AND s.classID = c.ID');
+  $stmt = $pdo->prepare('SELECT classID, password, fullName, uniqueName, admin, locale FROM students WHERE mail = ?');
   $stmt->execute([$mail]);
   $match = false;
   //if the user is found
@@ -77,12 +77,26 @@ if(!$session->isValid()){
     die;
   }
 
+  $hasClassroom = $row['classID'] != 0;
+
+  //if the user is in a class, get the class name
+  $className = "";
+  if($hasClassroom){
+    $stmt = $pdo->prepare('SELECT name FROM class WHERE ID = ?');
+    $stmt->execute([ $row['classID'] ]);
+    if($stmt->rowCount() > 0){
+      $nameRow = $stmt->fetch(PDO::FETCH_ASSOC);
+      if(isset($nameRow['name'])){
+        $className = $nameRow['name'];
+      }
+    }
+  }
 
   //create sesion
   $isAdmin = (bool) $row["admin"];
   $_SESSION = array_merge($_SESSION, [
     'classID' => $row['classID'],
-    'className' => $row['name'],
+    'className' => $className,
     'mail' => $mail,
     'fullName' => $row['fullName'],
     'uniqueName' => $row['uniqueName'],

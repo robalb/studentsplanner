@@ -57,10 +57,16 @@ function AuthModal(props){
       mail: mail,
       password: hashedPassword,
       isHash: isHash,
-      getData: ['account', 'planner']
+      getData: props.requireData
     }
     let response = await apiRequest('login', data, 'POST');
     setLoading(false);
+    //the user is not in a class, redirect to account page
+    if(response.data && response.data.account && !response.data.account.user.inClassroom){
+      if(props.currentPage != 'account'){
+        window.location.replace ('../account');
+      }
+    }
     //the user got logged, probably from another tab. refresh the page
     if(response.error && response.error == 'session_error_refresh'){
       location.reload();

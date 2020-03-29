@@ -165,7 +165,7 @@ function Planner(props){
         <EventsListCard/>
         {currentEvent}
       </div>
-      { state.logged? '' : <AuthModal reqireData={['account','planner']} auth={handleAuthModal}/> }
+      { state.logged? '' : <AuthModal currentPage={"planner"} requireData={['account','planner']} auth={handleAuthModal}/> }
     </plannerContext.Provider>
     </accountContext.Provider>
   );

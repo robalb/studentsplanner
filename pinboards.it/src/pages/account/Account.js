@@ -19,6 +19,7 @@ function getInitialState(){
     //if true, the app avoids any logic involving accountData, or displays placeholders
     accountDataLoading: true,
     accountData: {},
+    inviteCode: {},
     //updating saved settings
     updatingChanges: false
   };
@@ -30,6 +31,7 @@ function getInitialState(){
       logged: logged,
       accountDataLoading: !logged,
       accountData: !logged || PHP_GLOBALS.data.account,
+      inviteCode: !logged || PHP_GLOBALS.data.inviteCode
     };
   }
   return initialState;
@@ -46,6 +48,7 @@ function Account(props){
       logged: true,
       accountDataLoading: false,
       accountData: response.data.account,
+      inviteCode: response.data.inviteCode
     }));
     console.log(response)
   }
@@ -58,14 +61,14 @@ function Account(props){
   }
 
   return(
-    <accountContext.Provider value={{data: state.accountData, loading: state.accountDataLoading}}>
+    <accountContext.Provider value={{data: state.accountData, inviteCode: state.inviteCode, loading: state.accountDataLoading}}>
       <LoadingBar active={state.updatingChanges}/>
       <Header currentPage={"account"}/>
       <div className="content">
         <AccountPanel setUpdating={setUpdating} />
         <ClassPanel setUpdating={setUpdating} />
       </div>
-      { state.logged? '' : <AuthModal reqireData={['account']} auth={handleAuthModal}/> }
+      { state.logged? '' : <AuthModal currentPage={"account"} requireData={['account', 'inviteCode']} auth={handleAuthModal}/> }
     </accountContext.Provider>
   );
 }

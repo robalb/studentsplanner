@@ -324,6 +324,7 @@ header .user i{
   position:relative;
   width: 300px;
   margin-bottom:35px;
+  margin-top:35px;
 }
 .scalable .input-group{
   width: auto;
@@ -335,6 +336,7 @@ header .user i{
 .input-group.centered{
   margin: 0 auto;
   margin-bottom:35px;
+  margin-top:35px;
 }
 .input-group input {
   font-size:18px;

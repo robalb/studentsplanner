@@ -16,6 +16,9 @@ return array(
   'dbPassword' => '',
   //SECURITY
   'bcryptCost' => 13,
+  //WEBSITE URLS
+  'baseUrl' => 'https://pinboards.it',
+  'inviteUrl' => 'https://pinboards.it/register?code=',
   //MAIL CONFIGURATION
   'smtpHost' => '',
   'smtpUsername' => '',

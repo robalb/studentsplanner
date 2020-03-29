@@ -20,6 +20,11 @@ if($isLogged){
   //get planner data
   $getAppData = new GetApplicationData($_SESSION);
   $data = $getAppData->getData(["account", "planner"]);
+  //if the user is not in a class, redirect to account
+  if(!$data['account']['user']['inClassroom']){
+    header('location: ../account/');
+    die();
+  }
   $JSdata += ["data" => $data];
   //get locale from session variable
   $locale = $_SESSION['locale'];

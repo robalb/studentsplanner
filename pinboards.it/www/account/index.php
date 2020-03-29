@@ -18,7 +18,7 @@ $JSdata = [ "logged" => $isLogged];
 if($isLogged){
   //get user data
   $getAppData = new GetApplicationData($_SESSION);
-  $data = $getAppData->getData(["account"]);
+  $data = $getAppData->getData(["account", "inviteCode"]);
   $JSdata += ["data" => $data];
   //get locale from session variable
   $locale = $_SESSION['locale'];

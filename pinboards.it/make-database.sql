@@ -12,6 +12,7 @@ USE `pinboards_0`;
 CREATE TABLE IF NOT EXISTS `class` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
+  `inviteCode` char(16),
   `schoolID` int(11),
   PRIMARY KEY (`ID`)
 ) DEFAULT CHARSET = utf8mb4;
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `invite_codes` (
 
 
 /* test data */
-INSERT INTO class (ID, name) VALUES (1, 'TEST');
+INSERT INTO class (ID, name, inviteCode) VALUES (1, 'TEST', 'validInviteTestX');
 
 INSERT INTO planner_states (classID, stateHash) VALUES
 (1, '00000000');
