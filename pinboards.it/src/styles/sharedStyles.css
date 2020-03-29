@@ -563,7 +563,7 @@ to {left:3%;}
   transition: all 2s;
   background-color: white;
   text-align:center;
-  animation: 2s ease-out 0s 1 slideIn;
+  animation: 3s ease-out 0s 1 slideIn;
   /* min-width: 300px; */
   max-width: 600px;
   margin: 0px auto;
@@ -575,7 +575,7 @@ to {left:3%;}
   0%{
     opacity: 0;
   }
-  50%{
+  80%{
     opacity: 0;
   }
   100%{
@@ -586,7 +586,7 @@ to {left:3%;}
   0% {
     transform: translateY(0);
   }
-  50%{
+  60%{
     transform: translateY(-150px);
   }
   100% {
