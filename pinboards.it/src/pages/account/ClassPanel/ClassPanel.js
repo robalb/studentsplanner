@@ -1,5 +1,6 @@
 import React from 'react';
 
+import t from '../../../utils/i18n.js';
 import accountContext from '../../../contexts/accountContext.js';
 
 import NotInClassPanel from './NotInClassPanel.js';
@@ -21,8 +22,10 @@ function ClassPanel(props){
     }
   }
   return(
-    <div className="card account">
+    <div className="card account" id="class">
+      <div className="card-content">
         {content}
+      </div>
     </div>
   );
 }

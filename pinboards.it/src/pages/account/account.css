@@ -1,16 +1,34 @@
+/* cards system and dynamic tabs */
+/* https://css-tricks.com/css3-tabs/ */
 div.card.account{
-  padding: 10px;
-  text-align: center;
 }
+/* work in progress */
 div.card.account .top-bar{
-  justify-content: center;
+  background-color: red;
+  padding: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+div.card.account .top-bar div{
+  width: 40%;
+  text-align: center;
+  background-color: white;
+}
+div.card.account .top-bar .left{
+  justify-content: flex-start;
+  background-color: green;
+}
+div.card.account .top-bar .right{
+  justify-content: flex-end;
 }
 div.card.account .top-bar h2{
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
-div.card.account .collapse-content{
+
+
+div.card.account .card-content{
   padding: 10px;
   text-align: center;
+  background-color:#fcfcfc;
 }
 
 
@@ -49,6 +67,12 @@ div.card.account .collapse-content{
   }
 }
 
+
+/* collapsible content in all the elements*/
+div.card.account .collapse-content{
+  padding: 10px;
+  text-align: center;
+}
 /* invites */
 div.card.account h3{
   margin-top: 25px;
@@ -65,8 +89,7 @@ div.card.account .link-container{
   color: green;
   padding: 5px;
 }
-
-/* class panel */
+/* class members list panel */
 div.card.account .members-container .no-members{
   padding: 30px 10px 40px 10px;
 }
