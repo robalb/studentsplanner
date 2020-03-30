@@ -10,15 +10,6 @@ $currentScreen = $apiScreens->getCurrentScreen();
 
 //initialize session manager
 $session = new SessionManager();
-$isLogged = $session->isValid();
-
-if($isLogged){
-  //return a session error that in the frontend code will trigger
-  //a redirect to the account page
-  http_response_code(400);
-  echo json_encode(['error'=>'session_error_refresh']);
-  die();
-}
 
 //check that the user passed valid data
 $body = file_get_contents('php://input');

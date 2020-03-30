@@ -7,6 +7,9 @@ require_once dirname(__FILE__) . '/../ConnectDb.php';
 //check RegistrationScreens for all the internal methods
 class PageScreens extends RegistrationScreens{
   protected function userForm($data){
+    //unset a session variable that is used by the login apis to know if they should
+    //redirect back here after a login (useful for the case where a user visit an invitation link, is not logged, but has an account)
+    $_SESSION['user_invitecode'] = false;
     //initialize some variables that will be useful to track abuses in the registration process
     $wrongMailAttempts = $this->getData('wrongMailAttempts') ? $this->getData('wrongMailAttempts') : 0;
     $wrongCodeAttempts = $this->getData('wrongCodeAttempts') ? $this->getData('wrongCodeAttempts') : 0;
@@ -57,9 +60,23 @@ class PageScreens extends RegistrationScreens{
       //check if the invite code exists
       if($stmt->rowCount() > 0){
         $row = $stmt->fetch();
-        //check if the invite has not expired
-        if(time() - $row['creationDate'] < $row['lifespan']){
+        //check in case the invite has a lifespan, that it has not expired
+        if($row['lifespan'] == 0 || time() - $row['creationDate'] < $row['lifespan']){
           //the invite is good.
+          //if the user is logged, show the accept invite screen
+          if(isset($_SESSION['__is_valid'])){
+            $this->setScreen('acceptInvite', [
+              'inviteCode' => $_GET['invite'],
+              "invitedBy" => $row['invitedBy'],
+              "className" => $row['name']
+            ]);
+            return false;
+          }
+          //if the user is not logged
+          //create a session varaible that has nothing to do with this registration process
+          //it will be used by the login apis in case the user click the login link to recognize that
+          //the user was trying to use an invite code.
+          $_SESSION['user_invitecode'] = $_GET['invite'];
           //prepare data that will be passed to js
           $JSdata = [
             "invited" => true,
@@ -100,6 +117,12 @@ class PageScreens extends RegistrationScreens{
         $this->setScreen('inviteError', ['error' => "invalid_code_get"]);
         return false;
       }
+      //there is no invite code. if the user is logged, redirect to home screen
+      if(isset($_SESSION['__is_valid'])){
+        header('location: ../account/');
+        die();
+      }
+
     }
     $this->setFrontData($JSdata);
   }
@@ -111,7 +134,19 @@ class PageScreens extends RegistrationScreens{
       $this->setScreen('userForm', []);
       return 0;
     }else{
-      $this->setFrontData([ 'error' => $data['error'] ]);
+      $logged = isset($_SESSION['__is_valid']);
+      $this->setFrontData([ 'error' => $data['error'], "isLogged" => $logged ]);
+    }
+  }
+
+  protected function acceptInvite($data){
+    //on page refresh, go back to the original screen
+    if(!$data['firstCall']){
+      $this->setScreen('userForm', []);
+      return 0;
+    }else{
+      $this->setData(['inviteCode' => $data['inviteCode']]);
+      $this->setFrontData([ "invitedBy" => $data['invitedBy'], "className" => $data['className'] ]);
     }
   }
 
@@ -193,15 +228,39 @@ class PageScreens extends RegistrationScreens{
   }
 
   protected function classForm($data){
+    //if the user is logged, redirect to home screen
+    if(isset($_SESSION['__is_valid'])){
+      //return a session error that in the frontend code will trigger
+      //a redirect to the account page
+      http_response_code(400);
+      echo json_encode(['error'=>'session_error_refresh']);
+      die();
+    }
   }
 
   protected function mailConfirmation($data){
+    //if the user is logged, redirect to home screen
+    if(isset($_SESSION['__is_valid'])){
+      //return a session error that in the frontend code will trigger
+      //a redirect to the account page
+      http_response_code(400);
+      echo json_encode(['error'=>'session_error_refresh']);
+      die();
+    }
   }
 
   protected function ok($data){
-      //go back to the first screen
-      $this->setScreen('userForm', []);
-      return 0;
+    //if the user is logged, redirect to home screen
+    if(isset($_SESSION['__is_valid'])){
+      //return a session error that in the frontend code will trigger
+      //a redirect to the account page
+      http_response_code(400);
+      echo json_encode(['error'=>'session_error_refresh']);
+      die();
+    }
+    //go back to the first screen
+    $this->setScreen('userForm', []);
+    return 0;
   }
 
 }

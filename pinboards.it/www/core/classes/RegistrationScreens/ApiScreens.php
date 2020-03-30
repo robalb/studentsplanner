@@ -55,9 +55,19 @@ class ApiScreens extends RegistrationScreens{
       //check if the invite code exists
       if($stmt->rowCount() > 0){
         $row = $stmt->fetch();
-        //check if the invite has not expired
-        if(time() - $row['creationDate'] < $row['lifespan']){
+        //check in case the invite has a lifespan, that it has not expired
+        if($row['lifespan'] == 0 || time() - $row['creationDate'] < $row['lifespan']){
           //the invite is good.
+          //if the user is logged, show the accept invite screen
+          if(isset($_SESSION['__is_valid'])){
+            $this->setScreen('acceptInvite', [
+              'inviteCode' => $_GET['invite'],
+              "invitedBy" => $row['invitedBy'],
+              "className" => $row['name']
+            ]);
+            return false;
+          }
+          //if the user is not logged
           //update the related variables
           $invited = true;
           $classID = $row['classID'];
@@ -93,6 +103,15 @@ class ApiScreens extends RegistrationScreens{
         }
         $this->setScreen('inviteError', ['error' => "invalid_code"]);
         return false;
+      }
+    }else{
+      //there is no invite code. if the user is logged, redirect to home screen
+      if(isset($_SESSION['__is_valid'])){
+        //return a session error that in the frontend code will trigger
+        //a redirect to the account page
+        http_response_code(400);
+        echo json_encode(['error'=>'session_error_refresh']);
+        die();
       }
     }
 
@@ -165,7 +184,19 @@ class ApiScreens extends RegistrationScreens{
       $this->setScreen('userForm', []);
       return 0;
     }else{
-      $this->setFrontData([ 'error' => $data['error'] ]);
+      $logged = isset($_SESSION['__is_valid']);
+      $this->setFrontData([ 'error' => $data['error'], "isLogged" => $logged ]);
+    }
+  }
+
+  protected function acceptInvite($data){
+    //on page refresh, go back to the original screen
+    if(!$data['firstCall']){
+      $this->setScreen('userForm', []);
+      return 0;
+    }else{
+      $this->setData(['inviteCode' => $data['inviteCode']]);
+      $this->setFrontData([ "invitedBy" => $data['invitedBy'], "className" => $data['className'] ]);
     }
   }
 
@@ -265,6 +296,14 @@ class ApiScreens extends RegistrationScreens{
   }
 
   protected function classForm($data){
+    //if the user is logged, redirect to home screen
+    if(isset($_SESSION['__is_valid'])){
+      //return a session error that in the frontend code will trigger
+      //a redirect to the account page
+      http_response_code(400);
+      echo json_encode(['error'=>'session_error_refresh']);
+      die();
+    }
     //if this is the first call, store in a session variable the passed user data
     if($data['firstCall']){
       $this->setData([
@@ -305,9 +344,25 @@ class ApiScreens extends RegistrationScreens{
 
 
   protected function mailConfirmation($data){
+    //if the user is logged, redirect to home screen
+    if(isset($_SESSION['__is_valid'])){
+      //return a session error that in the frontend code will trigger
+      //a redirect to the account page
+      http_response_code(400);
+      echo json_encode(['error'=>'session_error_refresh']);
+      die();
+    }
   }
 
   protected function ok($data){
+    //if the user is logged, redirect to home screen
+    if(isset($_SESSION['__is_valid'])){
+      //return a session error that in the frontend code will trigger
+      //a redirect to the account page
+      http_response_code(400);
+      echo json_encode(['error'=>'session_error_refresh']);
+      die();
+    }
     //if this is the first call, proceed to register the user
     if($data['firstCall']){
       //TODO

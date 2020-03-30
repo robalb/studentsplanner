@@ -9,10 +9,12 @@ function AddLinkRow(props){
 
   function copyLink(){
     copyToClipboard(inviteUrl);
+    //todo: send api request to update the invitedBy row
   }
 
   function revoke(){
     console.log(1)
+    //delete current url in db. create a new one, update the code in the class table
   }
 
   let customButton=(

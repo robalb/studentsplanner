@@ -11,13 +11,6 @@ require_once '../core/classes/RegistrationScreens/PageScreens.php';
 $bundlesManager = new BundlesManager('register', '../bundles/');
 $nonce = SecurityHeaders::getNonce();
 $session = new SessionManager();
-$isLogged = $session->isValid();
-
-if($isLogged){
-  //redirect to home section
-  header('location: ../account/');
-  die();
-}
 
 //initialize languagemanager, and get user locale
 $languageManager = new LanguageManager();

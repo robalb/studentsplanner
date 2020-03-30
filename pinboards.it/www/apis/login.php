@@ -111,6 +111,14 @@ $response = [
   "success" => true
 ];
 
+//if the user tried to use an invite code, then clicked login
+if(isset($_SESSION['user_invitecode'])){
+  //TODO: this should be an actual link. use the data in the php config file
+  //clientSide, authmodal should check for this parameter and eventually redirect to the provided link
+  //NOTE: $_SESSION['user_invitecode'] is a safe value, already checked and sanitized
+  $response['inviteLink'] = $_SESSION['user_invitecode'];
+}
+
 //get required data
 if(isset($request['getData'])){
   $getAppData = new GetApplicationData($_SESSION);

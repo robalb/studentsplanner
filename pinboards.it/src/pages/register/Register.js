@@ -8,6 +8,7 @@ import {apiRequest} from '../../utils/apiResolver.js';
 //those that may be not are all very small components anyway
 import UserForm from './screens/UserForm.js';
 import InviteError from './screens/InviteError.js';
+import AcceptInvite from './screens/AcceptInvite.js';
 import GenericError from './screens/GenericError.js';
 import Captcha from './screens/Captcha.js';
 import ClassForm from './screens/ClassForm.js';
@@ -19,6 +20,7 @@ let screens = {
   userForm: UserForm,
   inviteError: InviteError,
   error : GenericError,
+  acceptInvite: AcceptInvite,
   captcha: Captcha,
   classForm: ClassForm,
   mailConfirmation: MailConfirmation,
