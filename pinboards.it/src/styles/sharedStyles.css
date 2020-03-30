@@ -81,7 +81,15 @@ button:active, .div-button:active{
   outline: 1px solid rgba(0,0,0,0.1)!important;
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.3)!important;
 }
-
+/* custom link button component */
+a{
+  cursor: pointer;
+  color: #146385;
+  text-decoration: none;
+}
+a:active{
+  color: #339ecc;
+}
 
 /* --------------------------------- */
 /* ---------  CARD TEMPLATE   ------ */
@@ -699,8 +707,10 @@ to {left:3%;}
   max-height: attr(data-maxheight px);
   /* transition: all 0.5s; */
   overflow: hidden;
+  display: flex;
 }
 .collapsible-container .collapsible.collapsed{
   max-height: 0;
+  display: none;
 }
 

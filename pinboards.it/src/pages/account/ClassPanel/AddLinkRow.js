@@ -1,9 +1,20 @@
 import React from 'react';
 import t from '../../../utils/i18n.js';
+import copyToClipboard from '../../../utils/copyToClipboard.js';
 import Collapsible from '../../../components/Collapsible.js';
+import LinkButton from '../../../components/LinkButton.js';
 
 function AddLinkRow(props){
   let inviteUrl = props.inviteCode.inviteUrl + props.inviteCode.inviteCode
+
+  function copyLink(){
+    copyToClipboard(inviteUrl);
+  }
+
+  function revoke(){
+    console.log(1)
+  }
+
   let customButton=(
     <div className="custom-button-add">
       <span className="material-icons"> insert_link </span>
@@ -23,8 +34,8 @@ function AddLinkRow(props){
         <div className="link-container">
           <p>{inviteUrl}</p>
         </div>
-        <p><a href="#">copia link</a></p>
-        <p><a href="#">revoca link</a></p>
+        <p><LinkButton onClick={copyLink}>copia link</LinkButton></p>
+        <p><LinkButton onClick={revoke}>revoca link</LinkButton></p>
       </div>
     </Collapsible>
   );

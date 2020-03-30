@@ -2,6 +2,7 @@ import React from 'react';
 import t from '../../../utils/i18n.js';
 import FormInput from '../../../components/FormInput.js';
 import Collapsible from '../../../components/Collapsible.js';
+import LinkButton from '../../../components/LinkButton.js';
 
 import AddLinkRow from './AddLinkRow.js';
 import AddMailRow from './AddMailRow.js';
@@ -10,6 +11,15 @@ function getUserRow(currentUser){
   //return the userRow component, that will have a closure over the current user
   return function UserRow(props){
     let isAdmin = props.isAdmin;
+
+    function removeUser(){
+      console.log("remove user");
+    }
+
+    function makeAdmin(){
+      console.log("make admin");
+    }
+
     let customButton=(
       <div className="custom-button">
       <p>{props.uid}</p>
@@ -19,8 +29,8 @@ function getUserRow(currentUser){
     let adminControls = !currentUser.isAdmin ? '' : (
       <>
       <p>giorgio@mail.com</p>
-      { !isAdmin ?  <p> <a href="/">rendi amministratore</a> </p> : '' }
-      <p> <a href="/">rimuovi</a> </p>
+      { !isAdmin ? <p><LinkButton onClick={makeAdmin}>{t('make admin btn')}</LinkButton></p> : '' }
+      <p><LinkButton className={"red-link"} onClick={removeUser}>{t('remove user btn')}</LinkButton></p>
       </>
     );
     return (
