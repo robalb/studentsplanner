@@ -137,6 +137,7 @@ div.card.account .members-container .collapse-content .input-group{
   margin-bottom: 15px;
 }
 div.card.account .members-container .collapse-content{
+  width: 100%;
   background-color: white;
   border-top: 1px solid rgba(0,0,0,0.1);
   text-align: left;

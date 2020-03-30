@@ -34,8 +34,8 @@ function AddLinkRow(props){
         <div className="link-container">
           <p>{inviteUrl}</p>
         </div>
-        <p><LinkButton onClick={copyLink}>copia link</LinkButton></p>
-        <p><LinkButton onClick={revoke}>revoca link</LinkButton></p>
+        <p><LinkButton onClick={copyLink}>{t('copy link btn')}</LinkButton></p>
+        <p><LinkButton onClick={revoke}>{t('revoke link btn')}</LinkButton></p>
       </div>
     </Collapsible>
   );
