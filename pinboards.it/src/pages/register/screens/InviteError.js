@@ -12,8 +12,14 @@ function InviteError(props){
   <>
     <div className="register-container error">
       <h3>{error}</h3>
-      <p><a href="../">{t("home")}</a></p>
-      <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
+      {
+        data.isLogged ?
+        <p><a href="../account">{t("back")}</a></p> :
+        <>
+          <p><a href="../">{t("home")}</a></p>
+          <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
+        </>
+      }
     </div>
   </>
   );
