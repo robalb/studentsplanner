@@ -4,6 +4,9 @@ require_once dirname(__FILE__) . '/../ConnectDb.php';
 
 class ApiScreens extends RegistrationScreens{
   protected function userForm($data){
+    //unset a session variable that is used by the login apis to know if they should
+    //redirect back here after a login (useful for the case where a user visit an invitation link, is not logged, but has an account)
+    $_SESSION['user_invitecode'] = false;
     //initialize some variables that will be useful to track abuses in the registration process
     $wrongMailAttempts = $this->getData('wrongMailAttempts') ? $this->getData('wrongMailAttempts') : 0;
     $wrongCodeAttempts = $this->getData('wrongCodeAttempts') ? $this->getData('wrongCodeAttempts') : 0;
@@ -68,6 +71,10 @@ class ApiScreens extends RegistrationScreens{
             return false;
           }
           //if the user is not logged
+          //create a session varaible that has nothing to do with this registration process
+          //it will be used by the login apis in case the user click the login link to recognize that
+          //the user was trying to use an invite code.
+          $_SESSION['user_invitecode'] = $_GET['invite'];
           //update the related variables
           $invited = true;
           $classID = $row['classID'];
@@ -195,6 +202,7 @@ class ApiScreens extends RegistrationScreens{
       $this->setScreen('userForm', []);
       return 0;
     }else{
+      echo("flag");
       $this->setData(['inviteCode' => $data['inviteCode']]);
       $this->setFrontData([ "invitedBy" => $data['invitedBy'], "className" => $data['className'] ]);
     }
