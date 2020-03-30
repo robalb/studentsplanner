@@ -61,6 +61,7 @@
   "mail_already_exists": "esiste già un account registrato con questo indirizzo mail",
   "weak password": "password troppo debole",
   "more info": "informazioni",
+  "user row admin": "[amministratore]",
   "advanced options": "altre impostazioni",
   "toggle advanced options": "apri o chiudi la finestra impostazioni",
   "toggle user options": "opzioni membro",

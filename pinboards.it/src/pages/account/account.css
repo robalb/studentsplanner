@@ -1,4 +1,6 @@
 div.card.account{
+  padding: 10px;
+  text-align: center;
 }
 div.card.account .top-bar{
   justify-content: center;
@@ -48,17 +50,17 @@ div.card.account .collapse-content{
 }
 
 /* invites */
-div.card.account .collapse-content h3{
+div.card.account h3{
   margin-top: 25px;
   margin-bottom: 35px;
 }
 /* ivite via mail */
-div.card.account .collapse-content .btns-container{
+div.card.account .btns-container{
   display: flex;
   justify-content: center;
 }
 /* ivite via link */
-div.card.account .collapse-content .link-container{
+div.card.account .link-container{
   user-select: all;
   color: green;
   padding: 5px;

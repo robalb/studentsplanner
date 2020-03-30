@@ -6,7 +6,7 @@ import AuthModal from '../../components/AuthModal.js'
 //page specific imports
 import './account.css';
 import AccountPanel from './AccountPanel.js';
-import ClassPanel from './ClassPanel.js';
+import ClassPanel from './ClassPanel/ClassPanel.js';
 //context imports
 import accountContext from '../../contexts/accountContext.js';
 import {apiRequest} from '../../utils/apiResolver.js';
@@ -60,6 +60,8 @@ function Account(props){
     }));
   }
 
+  // <h2>{t("class settings title")}</h2>
+  // <h2>{t("account settings title")}</h2>
   return(
     <accountContext.Provider value={{data: state.accountData, inviteCode: state.inviteCode, loading: state.accountDataLoading}}>
       <LoadingBar active={state.updatingChanges}/>
