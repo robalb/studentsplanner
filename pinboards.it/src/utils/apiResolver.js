@@ -31,7 +31,6 @@ export async function apiRequest(api, data, method){
     //the user got logged, probably from another tab. refresh the page
     if(decoded.error && decoded.error == 'session_error_refresh'){
       location.reload();
-      await sleep(5000);
     }
   }catch(e){
   }
@@ -39,6 +38,6 @@ export async function apiRequest(api, data, method){
 }
 
 ////for debugging purposes
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }

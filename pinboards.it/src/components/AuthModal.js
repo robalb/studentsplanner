@@ -71,9 +71,12 @@ function AuthModal(props){
         window.location.replace ('../account');
       }
     }
-    else if(response.error){
+    //there was some error. Display it (all the error codes must be in the language file)
+    if(response.error){
       error(t(response.error));
-    }else if(response.success){
+    }
+    //all good, auth the user
+    else if(response.success){
       console.log("flag")
       props.auth(response);
     }
