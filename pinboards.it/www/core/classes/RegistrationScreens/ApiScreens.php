@@ -170,8 +170,8 @@ class ApiScreens extends RegistrationScreens{
           $password = hash("sha256", $password);
         }
         $screenData = [
-          'fullName' => $data['fullName'],
           'hash' => $password,
+          'fullName' => $data['fullName'],
           'mail' => $mail,
           'invited' => $invited,
           'classID' => $classID
@@ -367,8 +367,8 @@ class ApiScreens extends RegistrationScreens{
       $this->setData([
         'hash' => $data['hash'],
         'fullName' => $data['fullName'],
-        'invited' => $data['invited'],
         'mail' => $data['mail'],
+        'invited' => $data['invited'],
         'classID' => $data['classID']
       ]);
     }else{
@@ -391,9 +391,9 @@ class ApiScreens extends RegistrationScreens{
       $returnData = [
         'hash' => $this->getData( 'hash' ),
         'fullName' => $this->getData( 'fullName' ),
-        'invited' => $this->getData( 'invited' ),
         'mail' => $this->getData( 'mail' ),
-        'classID' => $this->getData( 'classID' )
+        'invited' => $this->getData( 'invited' ),
+        'className' => $data['name']
       ];
       $this->setScreen('ok', $returnData);
       return 0;
@@ -423,9 +423,18 @@ class ApiScreens extends RegistrationScreens{
     }
     //if this is the first call, proceed to register the user
     if($data['firstCall']){
+      var_dump($data);
+      //expected from var_dump:
+      //hash, fullName, mail,
+      //invited:
+      //- true: classID
+      //- false: className
+
       //TODO
       //register the user, using the data in $data and
       //the current user locale
+
+      $this->setFrontData(['success'=>true]);
 
       //increment the counter of accounts created within this session
       $this->setData([
