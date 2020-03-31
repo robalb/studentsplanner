@@ -61,6 +61,10 @@ function AuthModal(props){
     }
     let response = await apiRequest('login', data, 'POST');
     setLoading(false);
+    //the user was trying to use an invite code before logging in. redirect back to the invite code page
+    if(response.inviteCode && response.inviteCode.length > 0){
+        window.location.replace ('../register/?invite=' + response.inviteCode);
+    }
     //the user is not in a class, redirect to account page
     if(response.data && response.data.account && !response.data.account.user.inClassroom){
       if(props.currentPage != 'account'){

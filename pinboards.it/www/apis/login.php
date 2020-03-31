@@ -111,21 +111,19 @@ $response = [
   "success" => true
 ];
 
-//if the user tried to use an invite code, then clicked login
-if(isset($_SESSION['user_invitecode'])){
-  //TODO: this should be an actual link. use the data in the php config file
-  //clientSide, authmodal should check for this parameter and eventually redirect to the provided link
-  //- or - keep this as an invite: right now authmodal is integrated only in 1-level deep folders. just use a relative link to ../register
+//if this variable is set, it means that the user tried to use an invite code, then clicked login.
+//Respond with the invite code, this will cause the frontend code to redirect to the invite page
+if(isset($_SESSION['user_invitecode']) && $_SESSION['user_invitecode']){
   //NOTE: $_SESSION['user_invitecode'] is a safe value, already checked and sanitized
-  $response['inviteLink'] = $_SESSION['user_invitecode'];
-}
-
-//get required data
-if(isset($request['getData'])){
-  $getAppData = new GetApplicationData($_SESSION);
-  $data = $getAppData->getData($request['getData']);
-  //what in the world is this? - oh, just the php equivalent of $response["data"] = $data;
-  $response += ["data" => $data];
+  $response['inviteCode'] = $_SESSION['user_invitecode'];
+}else{
+  //the user is not going to be redirected to the invite page, so fetch the current page data if required
+  if(isset($request['getData'])){
+    $getAppData = new GetApplicationData($_SESSION);
+    $data = $getAppData->getData($request['getData']);
+    //what in the world is this? - oh, just the php equivalent of $response["data"] = $data;
+    $response += ["data" => $data];
+  }
 }
 
 echo json_encode($response);
