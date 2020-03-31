@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/RegistrationScreens.php';
 require_once dirname(__FILE__) . '/../ConnectDb.php';
+require_once dirname(__FILE__) . '/../LanguageManager.php';
 
 class ApiScreens extends RegistrationScreens{
   protected function userForm($data){
@@ -169,6 +170,12 @@ class ApiScreens extends RegistrationScreens{
         if(isset($data["isHash"]) && $data["isHash"] == false){
           $password = hash("sha256", $password);
         }
+        //prepare the hash of the password hash, in the format that will be stored in the db
+        $config = require dirname(__FILE__).'/../../config/config.php';
+        $cost = $config['bcryptCost'];
+        $options = [ 'cost' => $cost, ];
+        $password = password_hash($password, PASSWORD_BCRYPT, $options);
+
         $screenData = [
           'hash' => $password,
           'fullName' => $data['fullName'],
@@ -423,18 +430,54 @@ class ApiScreens extends RegistrationScreens{
     }
     //if this is the first call, proceed to register the user
     if($data['firstCall']){
-      var_dump($data);
       //expected from var_dump:
       //hash, fullName, mail,
       //invited:
       //- true: classID
       //- false: className
+      if($data['invited']){
+        $classID = $data['classID'];
+      }else{
+        //TODO: call create class procedure: pass $data['className'] and get the new class id
+        $classID = 420;//update this
+      }
+      //prepare misc variables
+      //negotiated unique id for the current class
+      //TODO: call negotiate uid class procedure
+      $negotiatedUID = "todochangethis";
+      //registrationTimestamp
+      $registrationTimestamp = time();
+      //admin
+      $admin = !$data['invited'];
+      //locale
+      $languageManager = new LanguageManager();
+      $locale = $languageManager->getNegotiatedUserLocale();
+      //trustScore
+      $trustScore = 100;
 
-      //TODO
-      //register the user, using the data in $data and
-      //the current user locale
-
-      $this->setFrontData(['success'=>true]);
+      $instance = ConnectDb::getInstance();
+      $pdo = $instance->getConnection();
+      $stmt = $pdo->prepare('INSERT INTO students VALUES (:classID, :mail, :password, :fullName, :uniqueName, :registrationTimestamp, :lastLoginTimestamp, :lastLoginIp, :admin, :locale, :trustScore)');
+      $stmt->execute([
+        "classID" => $classID,
+        "mail" => $data['mail'],
+        "password" => $data['hash'],
+        "fullName" => $data['fullName'],
+        "uniqueName" => $negotiatedUID,
+        "registrationTimestamp" => $registrationTimestamp,
+        "lastLoginTimestamp" => 0,
+        "lastLoginIp" => '',
+        "admin" => $admin,
+        "locale" => $locale,
+        "trustScore" => $trustScore
+      ]);
+      if($stmt->rowCount() > 0){
+        //success
+        $this->setFrontData(['success'=>true]);
+      }else{
+        echo("saving error");
+        die();
+      }
 
       //increment the counter of accounts created within this session
       $this->setData([
