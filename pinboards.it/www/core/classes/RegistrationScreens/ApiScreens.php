@@ -64,7 +64,7 @@ class ApiScreens extends RegistrationScreens{
           //if the user is logged, show the accept invite screen
           if(isset($_SESSION['__is_valid'])){
             $this->setScreen('acceptInvite', [
-              'inviteCode' => $_GET['invite'],
+              'inviteCode' => $invite,
               "invitedBy" => $row['invitedBy'],
               "className" => $row['name']
             ]);
@@ -74,7 +74,7 @@ class ApiScreens extends RegistrationScreens{
           //create a session varaible that has nothing to do with this registration process
           //it will be used by the login apis in case the user click the login link to recognize that
           //the user was trying to use an invite code.
-          $_SESSION['user_invitecode'] = $_GET['invite'];
+          $_SESSION['user_invitecode'] = $invite;
           //update the related variables
           $invited = true;
           $classID = $row['classID'];
