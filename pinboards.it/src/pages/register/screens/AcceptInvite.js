@@ -16,9 +16,20 @@ function AcceptInvite(props){
 
   async function join(){
     console.log("join");
+    setLoading(true)
+    if(errorMessage) error("");
+
     let data = {accept:true};
     let response = await apiRequest('register', data, 'POST');
-    console.log(response)
+    setLoading(false);
+    //there was some error. Display it (all the error codes must be in the language file)
+    if(response.error){
+      error(t(response.error));
+    }
+    //all good, redirect the user back to the account page
+    else if(response.success){
+      window.location.replace ('../account');
+    }
   }
 
   let button = loading?
@@ -36,6 +47,7 @@ function AcceptInvite(props){
     <div className="register-container captcha">
       <h2>{t("invite notice", {name:data.invitedBy,classroom: data.className})}</h2>
       <p>{t("accept invite info")}</p>
+      {errorMessage}
       <p><a href="../account/">{t("back")}</a></p>
       {button}
     </div>

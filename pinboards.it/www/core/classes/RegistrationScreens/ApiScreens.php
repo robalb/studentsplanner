@@ -197,14 +197,64 @@ class ApiScreens extends RegistrationScreens{
   }
 
   protected function acceptInvite($data){
-    //on page refresh, go back to the original screen
-    if(!$data['firstCall']){
-      $this->setScreen('userForm', []);
-      return 0;
-    }else{
-      echo("flag");
+    if($data['firstCall']){
       $this->setData(['inviteCode' => $data['inviteCode']]);
-      $this->setFrontData([ "invitedBy" => $data['invitedBy'], "className" => $data['className'] ]);
+    }else{
+      //handle malformed data case
+      if(!$data['accept']){
+        http_response_code(400);
+        echo json_encode(['error'=>'malformed_request']);
+        die();
+      }
+      $instance = ConnectDb::getInstance();
+      $pdo = $instance->getConnection();
+      $stmt = $pdo->prepare('SELECT i.code, i.classID, i.invitedBy, i.creationDate, i.lifespan, c.name FROM invite_codes i, class c WHERE i.code = ? and i.classID = c.ID');
+      $stmt->execute([$this->getData('inviteCode')]);
+      //check if the invite code exists
+      if($stmt->rowCount() > 0){
+        $row = $stmt->fetch();
+        //check in case the invite has a lifespan, that it has not expired
+        if($row['lifespan'] == 0 || time() - $row['creationDate'] < $row['lifespan']){
+          //the invite is good
+          //check that the user is not already in that class
+          if($row['classID'] == $_SESSION['classID']){
+            http_response_code(400);
+            echo json_encode(['error'=>'already_in_class']);
+            die();
+          }
+          //all good, change the user class
+          $instance = ConnectDb::getInstance();
+          $pdo = $instance->getConnection();
+          $stmt = $pdo->prepare('UPDATE students SET classID = ?, admin = 0 WHERE mail = ?');
+          $stmt->execute([
+            $row['classID'],
+            $_SESSION['mail']
+          ]);
+          if($stmt->rowCount() > 0){
+            //DONE!
+            //update the user session variables
+            $_SESSION['classID'] = $row['classID'];
+            $_SESSION['className'] = $row['name'];
+            $_SESSION['isAdmin'] = false;
+            $this->setFrontData(['success' => true]);
+          }else{
+            //there was an error
+            http_response_code(400);
+            echo("update query error");
+            die();
+          }
+        }else{
+          //the invite code has expired
+          http_response_code(400);
+          echo json_encode(['error'=>'expired_code']);
+          die();
+        }
+      }else{
+        //the invite code does not exist
+        http_response_code(400);
+        echo json_encode(['error'=>'invalid_code']);
+        die();
+      }
     }
   }
 
