@@ -9,6 +9,16 @@ require_once '../core/classes/GetApplicationData.php';
 $session = new SessionManager();
 $body = file_get_contents('php://input');
 
+//return error if the user is logged, or it doesn't have a session
+$isLogged = $session->isValid();
+$isNew = $session->isNew();
+if($isNew || $isLogged){
+  //redirect to home section
+  http_response_code(400);
+  echo json_encode(['error'=>'session_error_refresh']);
+  die();
+}
+
 //validates received data, and returns an error if something is not right
 $error = 0;
 $error += (strlen($body) > 400) || (strlen($body) < 5);
@@ -33,15 +43,6 @@ if($error !== 0){
 if(!isset($request['CSRF']) || !CSRFmanager::validate($request['CSRF'])){
   http_response_code(400);
   echo json_encode(['error'=>'csrf_error']);
-  die();
-}
-
-//return error if the user is logged
-$isLogged = $session->isValid();
-if($isLogged){
-  //redirect to home section
-  http_response_code(400);
-  echo json_encode(['error'=>'session_error_refresh']);
   die();
 }
 

@@ -11,6 +11,15 @@ $currentScreen = $apiScreens->getCurrentScreen();
 //initialize session manager
 $session = new SessionManager();
 
+//if the user didn't have a session, return a refresh page error.
+//these apis can be called only if the user has a session (specifically, register and login
+//require a session, all the other pages require a valid (logged) session)
+if($session->isNew()){
+  http_response_code(401);
+  echo json_encode(['error'=>'session_error_refresh']);
+  die();
+}
+
 //check that the user passed valid data
 $body = file_get_contents('php://input');
 //validates received data, and returns an error if something is not right

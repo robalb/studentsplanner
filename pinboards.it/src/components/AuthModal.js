@@ -62,7 +62,7 @@ function AuthModal(props){
     let response = await apiRequest('login', data, 'POST');
     setLoading(false);
     //the user was trying to use an invite code before logging in. redirect back to the invite code page
-    if(response.inviteCode && response.inviteCode.length > 0){
+    if(response.inviteCode){
         window.location.replace ('../register/?invite=' + response.inviteCode);
     }
     //the user is not in a class, redirect to account page
@@ -71,13 +71,10 @@ function AuthModal(props){
         window.location.replace ('../account');
       }
     }
-    //the user got logged, probably from another tab. refresh the page
-    if(response.error && response.error == 'session_error_refresh'){
-      location.reload();
-    }
     else if(response.error){
       error(t(response.error));
     }else if(response.success){
+      console.log("flag")
       props.auth(response);
     }
   }

@@ -110,7 +110,7 @@ function UserForm(props){
     <div className="top-header">
     {
       props.data.invited ?
-      <h2>{t("register invite notice", {name:inviteData.invitedBy,classroom: inviteData.className})}</h2> :
+      <h2>{t("invite notice", {name:inviteData.invitedBy,classroom: inviteData.className})}</h2> :
       <h2>{t("register title")}</h2>
     }
       <p> {t("login link text")} <a href="../account/">{t("login button")}</a> </p>
