@@ -461,7 +461,8 @@ class ApiScreens extends RegistrationScreens{
         "mail" => $data['mail'],
         "password" => $data['hash'],
         "fullName" => $data['fullName'],
-        "uniqueName" => '',
+        //by default, if the user is not in a class the uid is the full name
+        "uniqueName" => $data['fullName'],
         "registrationTimestamp" => $registrationTimestamp,
         "lastLoginTimestamp" => 0,
         "lastLoginIp" => '',

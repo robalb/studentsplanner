@@ -7,7 +7,7 @@ require_once '../core/classes/Procedures.php';
   /*   (0) //lifespan */
   /* ); */
   /* var_dump($result); */
-  $result = Procedures::createClass('classtest2', 'tester');
+  $result = Procedures::negotiateName(1, 'qwe@qw.qw');
   var_dump($result);
 
 /* $options = [ */

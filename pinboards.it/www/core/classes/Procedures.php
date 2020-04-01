@@ -37,8 +37,109 @@ class Procedures{
   }
 
   public static function joinClass(int $classID, string $userMail, boolean $admin){
-    //TODO: leave the current class, check if it has to be deleted, join the new class
+    $instance = ConnectDb::getInstance();
+    $pdo = $instance->getConnection();
+    //delete the current class if it is empty
+    $stmt = $pdo->prepare('DELETE FROM class WHERE ID = (SELECT classID FROM students WHERE mail = ?) AND (SELECT count(*) FROM students WHERE classID = (SELECT classID FROM students WHERE mail = ?)) < 2');
+    $stmt->execute([$userMail, $userMail]);
+    if($stmt->rowCount() > 0){
+      //if the class was indeed empty, delete also its associated plannerstate and invitecodes
+      $stmt = $pdo->prepare('DELETE FROM planner_states WHERE classID = (SELECT classID FROM students WHERE mail = ?)');
+      $stmt->execute([$userMail]);
+      //note: invitecodes are not indexed by id, this could be quite slow
+      $stmt = $pdo->prepare('DELETE FROM invite_codes WHERE classID = (SELECT classID FROM students WHERE mail = ?)');
+      $stmt->execute([$userMail]);
+    }
+
+    //get the unique name for the new class
+    $uniqueName = self::negotiateName($classID, $userMail);
+    //join the class
+    $stmt = $pdo->prepare('UPDATE students SET classID = ?, uniqueName = ?, admin = ? WHERE mail = ?');
+    $stmt->execute([
+      $classID,
+      $uniqueName,
+      $admin,
+      $userMail
+    ]);
+    if($stmt->rowCount() > 0){
+      return $uniqueName;
+    }else{
+      return false;
+    }
   }
+
+
+  public static function negotiateName($classID, $userMail){
+    $instance = ConnectDb::getInstance();
+    $pdo = $instance->getConnection();
+    //get the user name
+    $stmt = $pdo->prepare('SELECT fullName, classID FROM students WHERE mail = ?');
+    $stmt->execute([$userMail]);
+    if($stmt->rowCount() > 0){
+      $row = $stmt->fetch();
+      //prepare variables useful for the name analysis
+      $fullName = $row['fullName'];
+      $parts = explode(" ", $fullName);
+
+      //case 1: the final name is the fullName
+      $newName = $fullName;
+      //case 2: the fullName is separated by a space. the final name is the second word after the space
+      //(probably an idiotic move, but hey)
+      if(count($parts) == 2) $newName = $parts[1];
+
+      //now that the surname has been _cleverly_ obtained, we can check if such identifier already exists in the class
+      $students = [];
+      //fetch all the student in the class
+      $stmt = $pdo->prepare('SELECT uniqueName, fullName FROM students WHERE classID = ? LIMIT 100');
+      $stmt->execute([ $row['classID'] ]);
+      if($stmt->rowCount() > 0){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          $students[] = [
+            "uid" => $row["uniqueName"],
+            "fullName" => $row["fullName"]
+          ];
+        }
+      }
+
+      //fix eventual conflicts (note: this is the first time in my life i write a do while in something that
+      //is not an exercise and this tells a lot about our society)
+      $round = 0;
+      do{
+        $round++;
+        //check conflict
+        $confict = false;
+        $conflictName = "";
+        foreach($students as $current){
+          if($current['uid'] == $newName){
+            $confict = true;
+            echo($newName . "<br>");
+            $conflictName = $current['fullName'];
+            break;
+          }
+        }
+        //if there was a confict:
+        if($confict){
+          //try 1: if the original name is separated by a space, use the initials of the first word unless the previous user has the exact same fullname
+          if($round == 1 && count($parts) == 2 && $conflictName !== $fullName){
+            $initial = strtoupper($parts[0][0]);
+            $newName = "{$parts[1]} $initial.";
+          }
+          else{
+            //try 2: add a number
+            $number = $round + 1;
+            //spot the bug
+            $newName = "$newName $number";
+          }
+        }
+
+      }while($confict == true && $round < 10);
+
+      return $newName;
+    }else{
+      return false;
+    }
+  }
+
 
   public static function createInviteCode(int $classID, string $invitedBy, int $lifespan){
     //generate the code
