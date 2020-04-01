@@ -231,18 +231,13 @@ class ApiScreens extends RegistrationScreens{
             die();
           }
           //all good, change the user class
-          $instance = ConnectDb::getInstance();
-          $pdo = $instance->getConnection();
-          $stmt = $pdo->prepare('UPDATE students SET classID = ?, admin = 0 WHERE mail = ?');
-          $stmt->execute([
-            $row['classID'],
-            $_SESSION['mail']
-          ]);
-          if($stmt->rowCount() > 0){
+          $newUniqueName = Procedures::joinClass($row['classID'], $_SESSION['mail'], false);
+          if($newUniqueName){
             //DONE!
             //update the user session variables
             $_SESSION['classID'] = $row['classID'];
             $_SESSION['className'] = $row['name'];
+            $_SESSION['uniqueName'] = $newUniqueName;
             $_SESSION['isAdmin'] = false;
             $this->setFrontData(['success' => true]);
           }else{
@@ -436,6 +431,9 @@ class ApiScreens extends RegistrationScreens{
       //invited:
       //- true: classID
       //- false: className
+
+      //prepare misc variables:
+      //get the classID
       if($data['invited']){
         $classID = $data['classID'];
       }else{
@@ -443,7 +441,6 @@ class ApiScreens extends RegistrationScreens{
         $newClassID = Procedures::createClass($data['className'], $data['fullName']);
         $classID = $newClassID ? $newClassID : 0;
       }
-      //prepare misc variables
       //registrationTimestamp
       $registrationTimestamp = time();
       //locale
@@ -452,6 +449,7 @@ class ApiScreens extends RegistrationScreens{
       //trustScore
       $trustScore = 100;
 
+      //register the user - without a class
       $instance = ConnectDb::getInstance();
       $pdo = $instance->getConnection();
       $stmt = $pdo->prepare('INSERT INTO students VALUES (:classID, :mail, :password, :fullName, :uniqueName, :registrationTimestamp, :lastLoginTimestamp, :lastLoginIp, :admin, :locale, :trustScore)');
@@ -471,7 +469,9 @@ class ApiScreens extends RegistrationScreens{
         "trustScore" => $trustScore
       ]);
       if($stmt->rowCount() > 0){
-        //TODO: call join class procedure, passing ($classID, $data['mail'], true)
+        //if the account got created, join the class
+        $admin = !$data['invited'];
+        Procedures::joinClass($classID, $data['mail'], $admin);
 
         //success
         $this->setFrontData(['success'=>true]);

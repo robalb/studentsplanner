@@ -7,7 +7,7 @@ require_once '../core/classes/Procedures.php';
   /*   (0) //lifespan */
   /* ); */
   /* var_dump($result); */
-  $result = Procedures::negotiateName(1, 'qwe@qw.qw');
+  /* $result = Procedures::negotiateName(1, 'qwe@qw.qw'); */
   var_dump($result);
 
 /* $options = [ */

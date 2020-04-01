@@ -63,7 +63,7 @@ INSERT INTO planner_states (classID, stateHash) VALUES
 (1, '00000000');
 
 INSERT INTO invite_codes (code, classID, invitedBy, creationDate, lifespan) VALUES
-('validInviteTestX', 1, 'giorgio vasari', 1585331238, 96400);
+('validInviteTestX', 1, 'giorgio vasari', 1585331238, 0);
 INSERT INTO invite_codes (code, classID, invitedBy, creationDate, lifespan) VALUES
 ('expiredInviteXXX', 1, 'giorgio vasari', 1585331238, 12);
 

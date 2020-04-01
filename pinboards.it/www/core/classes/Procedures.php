@@ -36,7 +36,7 @@ class Procedures{
     }
   }
 
-  public static function joinClass(int $classID, string $userMail, boolean $admin){
+  public static function joinClass(int $classID, string $userMail, bool $admin){
     $instance = ConnectDb::getInstance();
     $pdo = $instance->getConnection();
     //delete the current class if it is empty
@@ -73,7 +73,7 @@ class Procedures{
     $instance = ConnectDb::getInstance();
     $pdo = $instance->getConnection();
     //get the user name
-    $stmt = $pdo->prepare('SELECT fullName, classID FROM students WHERE mail = ?');
+    $stmt = $pdo->prepare('SELECT fullName FROM students WHERE mail = ?');
     $stmt->execute([$userMail]);
     if($stmt->rowCount() > 0){
       $row = $stmt->fetch();
@@ -91,7 +91,7 @@ class Procedures{
       $students = [];
       //fetch all the student in the class
       $stmt = $pdo->prepare('SELECT uniqueName, fullName FROM students WHERE classID = ? LIMIT 100');
-      $stmt->execute([ $row['classID'] ]);
+      $stmt->execute([$classID]);
       if($stmt->rowCount() > 0){
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
           $students[] = [
@@ -100,7 +100,6 @@ class Procedures{
           ];
         }
       }
-
       //fix eventual conflicts (note: this is the first time in my life i write a do while in something that
       //is not an exercise and this tells a lot about our society)
       $round = 0;
@@ -112,7 +111,7 @@ class Procedures{
         foreach($students as $current){
           if($current['uid'] == $newName){
             $confict = true;
-            echo($newName . "<br>");
+            /* echo($newName . "<br>"); */
             $conflictName = $current['fullName'];
             break;
           }

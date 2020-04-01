@@ -256,7 +256,7 @@ class PageScreens extends RegistrationScreens{
       //a redirect to the account page
       http_response_code(400);
       echo json_encode(['error'=>'session_error_refresh']);
-      die();
+      /* die(); */
     }
     //go back to the first screen
     $this->setScreen('userForm', []);
