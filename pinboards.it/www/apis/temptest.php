@@ -1,28 +1,14 @@
 <?php
-require_once '../core/classes/ConnectDb.php';
-  $instance = ConnectDb::getInstance();
-  $pdo = $instance->getConnection();
+require_once '../core/classes/Procedures.php';
 
-  //generate random invite code string
-  // base_convert ( string $number , int $frombase , int $tobase ) : string
-  $bytesLength = 12;
-  $default = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  $custom = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$$";
-  $randomBytes = random_bytes($bytesLength);
-  $randomString = base64_encode($randomBytes);
-  $code = strtr($randomString, $default, $custom);
-  var_dump($code);
-  $stmt = $pdo->prepare('INSERT INTO invite_codes VALUES (?, ?, ?, ?, ?)');
-  $stmt->execute([
-    $code, //code
-    1,//classID
-    'giorgio vasari',//invitedBy
-    time(),//creationDate
-    (60*60*24) //lifespan
-  ]);
-
-
-
+  /* $result = Procedures::createInviteCode( */
+  /*   1,//classID */
+  /*   'giorgio vasari',//invitedBy */
+  /*   (0) //lifespan */
+  /* ); */
+  /* var_dump($result); */
+  $result = Procedures::createClass('classtest2', 'tester');
+  var_dump($result);
 
 /* $options = [ */
 /*       'cost' => 13, */

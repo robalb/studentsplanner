@@ -2,6 +2,7 @@
 require_once dirname(__FILE__) . '/RegistrationScreens.php';
 require_once dirname(__FILE__) . '/../ConnectDb.php';
 require_once dirname(__FILE__) . '/../LanguageManager.php';
+require_once dirname(__FILE__) . '/../Procedures.php';
 
 class ApiScreens extends RegistrationScreens{
   protected function userForm($data){
@@ -438,17 +439,13 @@ class ApiScreens extends RegistrationScreens{
       if($data['invited']){
         $classID = $data['classID'];
       }else{
-        //TODO: call create class procedure: pass $data['className'] and get the new class id
-        $classID = 420;//update this
+        //create a new class, and get its id
+        $newClassID = Procedures::createClass($data['className'], $data['fullName']);
+        $classID = $newClassID ? $newClassID : 0;
       }
       //prepare misc variables
-      //negotiated unique id for the current class
-      //TODO: call negotiate uid class procedure
-      $negotiatedUID = "todochangethis";
       //registrationTimestamp
       $registrationTimestamp = time();
-      //admin
-      $admin = !$data['invited'];
       //locale
       $languageManager = new LanguageManager();
       $locale = $languageManager->getNegotiatedUserLocale();
@@ -459,19 +456,22 @@ class ApiScreens extends RegistrationScreens{
       $pdo = $instance->getConnection();
       $stmt = $pdo->prepare('INSERT INTO students VALUES (:classID, :mail, :password, :fullName, :uniqueName, :registrationTimestamp, :lastLoginTimestamp, :lastLoginIp, :admin, :locale, :trustScore)');
       $stmt->execute([
-        "classID" => $classID,
+        //by default, the user is created without a class
+        "classID" => 0,
         "mail" => $data['mail'],
         "password" => $data['hash'],
         "fullName" => $data['fullName'],
-        "uniqueName" => $negotiatedUID,
+        "uniqueName" => '',
         "registrationTimestamp" => $registrationTimestamp,
         "lastLoginTimestamp" => 0,
         "lastLoginIp" => '',
-        "admin" => $admin,
+        "admin" => false,
         "locale" => $locale,
         "trustScore" => $trustScore
       ]);
       if($stmt->rowCount() > 0){
+        //TODO: call join class procedure, passing ($classID, $data['mail'], true)
+
         //success
         $this->setFrontData(['success'=>true]);
       }else{
