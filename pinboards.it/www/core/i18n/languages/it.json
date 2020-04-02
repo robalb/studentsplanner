@@ -43,8 +43,9 @@
   "invalid password": "password non valida",
   "invalid_code": "codice di invito non valido",
   "invalid_code_get": "codice di invito malformato",
-  "login button": "login",
-  "login greeting": "effettua il login",
+  "login button": "accedi",
+  "delete event": "elimina questa interrogazione",
+  "login greeting": "effettua l'accesso",
   "login link text": "hai già un account? ",
   "refresh captcha": "ottieni un altro captcha",
   "mail": "mail",
@@ -99,6 +100,6 @@
   "register title": "crea il tuo account",
   "registration next": "avanti",
   "registration previous": "indietro",
-  "sign in": "login",
+  "sign in": "accedi",
   "test message": "messaggio di test"
 }

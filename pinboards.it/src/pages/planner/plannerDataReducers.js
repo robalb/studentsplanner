@@ -43,9 +43,11 @@ const plannerDataReducers = {
   },
 
   deleteEvent: (plannerData, newData) =>{
-    //TODO
+    let newEvents = plannerData.events.slice();
+    newEvents.splice(newData.eventIndex, 1);
     return {
-      ...plannerData
+      ...plannerData,
+      events: newEvents
     }
   },
 

@@ -239,8 +239,11 @@ h3{
 .event .edit-card-container .advanced-options-container{
   margin: 20px;
 }
-.event .edit-card-container .advanced-options-container .content{
-  text-align:center;
+.event .edit-card-container .advanced-options-container .toggle-content{
+  width: 100%;
+}
+.event .edit-card-container .advanced-options-container .toggle-content .red{
+  color: red;
 }
 
 

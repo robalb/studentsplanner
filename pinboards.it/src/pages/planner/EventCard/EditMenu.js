@@ -69,6 +69,13 @@ function EditMenu(props){
     }
   }
 
+  let handleDelete = ()=>{
+    update("deleteEvent", {
+      eventIndex: props.eventIndex
+    })
+    updateCurrent(undefined);
+  }
+
   let advancedOptions = (
     <div className="advanced-options-container">
       <Collapsible
@@ -78,8 +85,13 @@ function EditMenu(props){
         label={t("toggle advanced options")}
         title={t("toggle advanced options")}
       >
-        <div className={"content"}>
-          <p>non ho ancora finito di fare sta parte. in futuro si potrà eliminare l'interrogazione, e altre cose utili</p>
+        <div className={"toggle-content"}>
+          <div className="btns-container">
+            <button className="btn red"
+            aria-label={"delete event"}
+            onClick={handleDelete}
+            >{t("delete event")}</button>
+          </div>
         </div>
       </Collapsible>
     </div>

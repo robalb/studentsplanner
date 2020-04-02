@@ -5,14 +5,11 @@ import '../../styles/sharedStyles.css';
 function Index(){
   return (
     <>
-    <h1>Pinboards 5</h1><br/>
-    <p>homepage</p><a href="./planner">planner</a><br/>
-    <p>this is currently a closed demo. 
-      <a href="https://github.com/robalb/studentsplanner/issues/new">request a private link</a>
-    </p>
-    <p>
-      <a href="./register"> register </a>
-    </p>
+    <h1>Pinboards</h1><br/>
+    <p>homepage</p>
+    <p><a href="./account">accedi</a><br/> </p>
+    <p> <a href="./register"> registrati </a></p>
+      <p>this is project is open source at <a href="https://github.com/robalb/studentsplanner/">github</a> </p>
     </>
   )
 }
