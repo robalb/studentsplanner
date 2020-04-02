@@ -6,12 +6,15 @@ require_once '../core/classes/GetApplicationData.php';
 require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/LanguageManager.php';
 require_once '../core/classes/DataCache.php';
+require_once '../core/classes/registrationScreens/unset.php';
 
 $bundlesManager = new BundlesManager('account', '../bundles/');
 $nonce = SecurityHeaders::getNonce();
 $languageManager = new LanguageManager();
 $session = new SessionManager();
 $isLogged = $session->isValid();
+
+unsetRegistrationScreens();
 
 //array that will be json encoded and injected into the page as a js global varaible
 $JSdata = [ "logged" => $isLogged];
