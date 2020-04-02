@@ -3,7 +3,8 @@ import t from '../../utils/i18n.js';
 import Button from '../../components/Button.js';
 
 function AccountPanel(props){
-  let content = ( <p>loading..</p>);
+  let content = ( <p>questa pagina non è ancora finita. é possibile visualizzare informazioni sulla propria classe o il link di invito
+                 se si è amministratori, ma non è possibile compiere nessun altra azione</p>);
 
         // <div className="top-bar">
         //   <Button 
