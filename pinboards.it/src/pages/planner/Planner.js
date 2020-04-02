@@ -76,11 +76,6 @@ function Planner(props){
 
   async function pushData(){
     console.log("pushing")
-    //set state to loading
-    setState( state => ({
-      ...state,
-      plannerDataUpdating: true
-    }));
     //perform api call. since it depends on data inside pushManager,
     //it has to be performed from within an update function of setPushManager
     setPushManager(current => {
@@ -112,6 +107,7 @@ function Planner(props){
     setState( state => {
       let newState = {
         ...state,
+        plannerDataUpdating: true,
         plannerData: plannerDataReducers[operation](state.plannerData, newData)
       }
       //update the push manager, passing the new state data
