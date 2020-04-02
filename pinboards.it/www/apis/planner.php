@@ -4,6 +4,7 @@ require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/ConnectDb.php';
 require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/GetApplicationData.php';
+require_once '../core/classes/DataCache.php';
 
 $session = new SessionManager();
 $body = file_get_contents('php://input');
@@ -43,17 +44,8 @@ if(!isset($request['CSRF']) || !CSRFmanager::validate($request['CSRF'])){
   die();
 }
 
-
-//TODO: fix the frontend data reducer, and then work on this.
-//expected data format:
-//{
-//  action: ['pushHistory', 'getHistory', 'forceHistory' ... stuff like that]
-//  data: {the whole plannerData object}
-//}
-//
-//all the code under this line needs to be completely rewritten
-//
-// --------------------
+//reload the user data
+DataCache::reloadUserData($_SESSION['mail']);
 
 //push case
 if($request['action'] == "push"){

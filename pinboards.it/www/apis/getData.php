@@ -3,6 +3,7 @@ require_once '../core/classes/SessionManager.php';
 require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/GetApplicationData.php';
+require_once '../core/classes/DataCache.php';
 
 $session = new SessionManager();
 $body = file_get_contents('php://input');
@@ -43,6 +44,9 @@ if(!isset($request['CSRF']) || !CSRFmanager::validate($request['CSRF'])){
   echo json_encode(['error'=>'csrf_error']);
   die();
 }
+
+//refresh the session varaibles holding the user data
+DataCache::reloadUserData($_SESSION['mail']);
 
 //initialize getAppdata, and request the user data
 $getAppData = new GetApplicationData($_SESSION);

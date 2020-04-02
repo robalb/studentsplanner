@@ -5,6 +5,7 @@ require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/GetApplicationData.php';
 require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/LanguageManager.php';
+require_once '../core/classes/DataCache.php';
 
 $bundlesManager = new BundlesManager('planner', '../bundles/');
 $nonce = SecurityHeaders::getNonce();
@@ -18,6 +19,7 @@ $JSdata = [ "logged" => $isLogged];
 if($isLogged){
   //get user data
   //get planner data
+  DataCache::reloadUserData($_SESSION['mail']);
   $getAppData = new GetApplicationData($_SESSION);
   $data = $getAppData->getData(["account", "planner"]);
   //if the user is not in a class, redirect to account
