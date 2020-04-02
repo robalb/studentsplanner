@@ -4,6 +4,7 @@ require_once '../core/classes/SecurityHeaders.php';
 require_once '../core/classes/ConnectDb.php';
 require_once '../core/classes/CSRFmanager.php';
 require_once '../core/classes/GetApplicationData.php';
+require_once '../core/classes/RegistrationScreens/unset.php';
 
 
 $session = new SessionManager();
@@ -77,6 +78,8 @@ if(!$session->isValid()){
     echo json_encode(['error'=>'wrong_mail_or_password']);
     die;
   }
+
+  unsetRegistrationScreens();
 
   $hasClassroom = $row['classID'] != 0;
 

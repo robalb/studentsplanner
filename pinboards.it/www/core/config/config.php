@@ -18,7 +18,7 @@ return array(
   'bcryptCost' => 13,
   //WEBSITE URLS
   'baseUrl' => 'https://pinboards.it',
-  'inviteUrl' => 'https://pinboards.it/register?code=',
+  'inviteUrl' => 'https://pinboards.it/register?invite=',
   //MAIL CONFIGURATION
   'smtpHost' => '',
   'smtpUsername' => '',
