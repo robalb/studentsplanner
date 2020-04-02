@@ -230,10 +230,7 @@ class PageScreens extends RegistrationScreens{
   protected function classForm($data){
     //if the user is logged, redirect to home screen
     if(isset($_SESSION['__is_valid'])){
-      //return a session error that in the frontend code will trigger
-      //a redirect to the account page
-      http_response_code(400);
-      echo json_encode(['error'=>'session_error_refresh']);
+      header('location: ../account/');
       die();
     }
   }
@@ -241,10 +238,7 @@ class PageScreens extends RegistrationScreens{
   protected function mailConfirmation($data){
     //if the user is logged, redirect to home screen
     if(isset($_SESSION['__is_valid'])){
-      //return a session error that in the frontend code will trigger
-      //a redirect to the account page
-      http_response_code(400);
-      echo json_encode(['error'=>'session_error_refresh']);
+      header('location: ../account/');
       die();
     }
   }
@@ -252,11 +246,8 @@ class PageScreens extends RegistrationScreens{
   protected function ok($data){
     //if the user is logged, redirect to home screen
     if(isset($_SESSION['__is_valid'])){
-      //return a session error that in the frontend code will trigger
-      //a redirect to the account page
-      http_response_code(400);
-      echo json_encode(['error'=>'session_error_refresh']);
-      /* die(); */
+      header('location: ../account/');
+      die();
     }
     //go back to the first screen
     $this->setScreen('userForm', []);

@@ -416,6 +416,8 @@ class ApiScreens extends RegistrationScreens{
   }
 
   protected function ok($data){
+    //unset the session variable used by the login apis to know if they have to redirect back here after the login
+    $_SESSION['user_invitecode'] = false;
     //if the user is logged, redirect to home screen
     if(isset($_SESSION['__is_valid'])){
       //return a session error that in the frontend code will trigger
