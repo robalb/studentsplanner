@@ -72,7 +72,7 @@ INSERT INTO students VALUES
   1585330487, 1585330487, 'localhosts', true, 'it', 100);
 INSERT INTO students VALUES
 (1, '13@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'giorgio sarti', 'sarti',
-  1585330487, 1585330487, 'localhosts', true, 'it', 100);
+  1585330487, 1585330487, 'localhosts', false, 'it', 100);
 INSERT INTO students VALUES
 (1, '14@mail.com', '$2y$14$244vKtBFjCL0htHl23n6GeAIX7puuml.sPULc6YuzYTS9Ut3bjEAy', 'andrea perioli', 'perioli',
   1585330487, 1585330487, 'localhosts', true, 'it', 100);
