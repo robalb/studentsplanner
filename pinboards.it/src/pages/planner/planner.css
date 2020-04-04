@@ -271,7 +271,7 @@ h3{
   }
   div.content .card{
     max-width: none;
-    margin: 10px;
+    /* margin: 10px; */
   }
   div.content .events-list{
     width: 380px;

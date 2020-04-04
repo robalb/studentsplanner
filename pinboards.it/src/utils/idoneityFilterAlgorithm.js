@@ -2,6 +2,7 @@ import moment from 'moment'
 import colors from './colors.js';
 
 function idoneityFilterAlgorithm(students, eventIndex, dateIndex, events){
+  console.log({students,eventIndex, dateIndex, events});
   let currentDate = events[eventIndex].dates[dateIndex]
   students = students.map(student=> ( {
     uid: student,
