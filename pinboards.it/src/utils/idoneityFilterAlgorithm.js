@@ -114,7 +114,24 @@ function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events)
 
 
   //sort the studentsDistances array by priority. if the priority is the same, check the distance
+  function sortPriority(objA, objB){
+    let params = ['studentPriority', 'distance']
+    for(let param of params){
+      let a = objA[param]
+      let b = objB[param]
+      if (a > b) return 1;
+      if (b > a) return -1;
+    }
+    //if both the studentPriority and the distance are the same,
+    //set a flag
+    objA.same = true;
+    objB.same = true;
+    return 0;
+  }
+  currentDateSortedStudents.sort(sortPriority)
   //assign a color to every student, based on their priority and the color of their closest event
+
+
 
   console.log(studentsDistances);
   console.log(currentDateSortedStudents);
@@ -124,7 +141,7 @@ function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events)
 
 
   return [
-    {uid: 'vasari',
+    {uid: 'sassari',
       color: 'rgb(255,255,0)',
       priority: 21
     }
