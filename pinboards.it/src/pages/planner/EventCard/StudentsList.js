@@ -81,7 +81,7 @@ function StudentsList(props){
       )
     })
 
-    if(studentBadges.length < 1) studentBadges = <p>there are no students aviable for this date</p>;
+    if(studentBadges.length < 1) studentBadges = <p>{t('no students for this date')}</p>;
 
   }
   return (

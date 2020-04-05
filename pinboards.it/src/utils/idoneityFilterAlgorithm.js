@@ -2,8 +2,8 @@ import moment from 'moment'
 import colors from './colors.js';
 
 function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events){
-  allowedStudents = ["vasari", "sarti", "sassari"];
-  console.log({allowedStudents,eventIndex, dateIndex, events});
+  // allowedStudents = ["vasari", "sarti", "sassari"];
+  // console.log({allowedStudents,eventIndex, dateIndex, events});
 
   //utils functions
   function calculateDaysDifference(date1, date2){
@@ -49,10 +49,10 @@ function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events)
     month: date.month,
     year: date.year,
     distance: 21,
-    closestEventColor: false
+    closestEventColor: 'transparent'
   }));
 
-  console.log(currentEventDates);
+  // console.log(currentEventDates);
 
   //an object containing for every student an array of all the dates of the current event, with the associated smaller
   //distance from any other event
@@ -67,7 +67,7 @@ function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events)
       for(let student of date.students){
         if(studentsDistances[student]){
           //note: this could be optimize to perform less calls to calculateDaysDifference
-          console.log("updating distances for ",student,event);
+          // console.log("updating distances for ",student,event);
           studentsDistances[student].map( currentDate => updateDistance(currentDate, date, event.baseColor))
         }
       }
@@ -79,7 +79,7 @@ function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events)
     //if it is, update the stored date distance
     if(currentDate.distance > 0){
       let daysDifference = calculateDaysDifference(currentDate, date);
-      console.log(daysDifference);
+      // console.log(daysDifference);
       if(daysDifference < currentDate.distance){
         currentDate.distance = daysDifference;
         currentDate.closestEventColor = color;
@@ -122,30 +122,56 @@ function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events)
       if (a > b) return 1;
       if (b > a) return -1;
     }
-    //if both the studentPriority and the distance are the same,
-    //set a flag
-    objA.same = true;
-    objB.same = true;
     return 0;
   }
   currentDateSortedStudents.sort(sortPriority)
+
+
   //assign a color to every student, based on their priority and the color of their closest event
+  let lastStudentPriority = 0;
+  let lastDistance = 0;
+  let index = 0;
+  currentDateSortedStudents.map( (current)=>{
+    //TODO: handle duplicates case - obj same is present
+    //TODO: fix this mess
+    if(index > 0 && lastStudentPriority == current.studentPriority && lastDistance == current.distance){
+        // console.log("same");
+    }else{
+      index++;
+      lastStudentPriority = current.studentPriority;
+      lastDistance = current.distance;
+        // console.log("not same");
+    }
+    current.priority = index;
+    current.color = defineColor(current.closestEventColor, current.distance);
+    return current;
+  });
+  //return the color to associate to a name based on its daysInterval - priority
+  //allows easy configuration of color codes
+  function defineColor(color, priority){
+    //priority: bad
+    if(priority==0) return color
+    //priority: medium
+    if( priority <= 2) return colors.RGB.linearShade(0.6, color)
+    //priority: good
+    return 'rgb(255,255,255)'
+  }
 
 
 
-  console.log(studentsDistances);
+  // console.log(studentsDistances);
   console.log(currentDateSortedStudents);
 
 
 
+  return currentDateSortedStudents;
 
-
-  return [
-    {uid: 'sassari',
-      color: 'rgb(255,255,0)',
-      priority: 21
-    }
-  ];
+  // return [
+  //   {uid: 'vasari',
+  //     color: 'rgb(255,255,0)',
+  //     priority: 21
+  //   }
+  // ];
 }
 
 export default idoneityFilterAlgorithm
