@@ -115,12 +115,21 @@ function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events)
 
   //sort the studentsDistances array by priority. if the priority is the same, check the distance
   function sortPriority(objA, objB){
-    let params = ['studentPriority', 'distance']
+    let params = [
+      {
+        key:'studentPriority',
+        fromSmall:true
+      },
+      {
+       key: 'distance',
+      fromSmall: false
+      }]
     for(let param of params){
-      let a = objA[param]
-      let b = objB[param]
-      if (a > b) return 1;
-      if (b > a) return -1;
+      let fromSmallest = param.fromSmall ? 1 : -1;
+      let a = objA[param.key]
+      let b = objB[param.key]
+      if (a > b) return 1 * fromSmallest;
+      if (b > a) return -1 * fromSmallest;
     }
     return 0;
   }
