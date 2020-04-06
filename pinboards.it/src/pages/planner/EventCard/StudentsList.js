@@ -3,6 +3,7 @@ import plannerContext from '../../../contexts/plannerContext.js';
 import accountContext from '../../../contexts/accountContext.js';
 import Button from '../../../components/Button.js';
 import colors from '../../../utils/colors.js';
+import t from '../../../utils/i18n.js';
 import idoneityFilterAlgorithm from '../../../utils/idoneityFilterAlgorithm.js';
 
 function StudentsList(props){

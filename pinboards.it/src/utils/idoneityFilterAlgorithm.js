@@ -48,7 +48,7 @@ function idoneityFilterAlgorithm(allowedStudents, eventIndex, dateIndex, events)
     day: date.day,
     month: date.month,
     year: date.year,
-    distance: 21,
+    distance: 10,
     closestEventColor: 'transparent'
   }));
 
