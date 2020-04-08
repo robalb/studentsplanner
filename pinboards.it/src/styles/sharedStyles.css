@@ -564,14 +564,14 @@ to {left:3%;}
   flex-direction: column;
   justify-content: center;
   /* align-items: center; */
-  animation: 3s ease-out show;
+  animation: 1s ease-out show;
 }
 .auth-modal{
   padding: 10px 30px 10px 30px;
   transition: all 2s;
   background-color: white;
   text-align:center;
-  animation: 3s ease-out 0s 1 slideIn;
+  animation: 0.5s ease-out 0s 1 slideIn;
   /* min-width: 300px; */
   max-width: 600px;
   margin: 0px auto;
@@ -583,19 +583,13 @@ to {left:3%;}
   0%{
     opacity: 0;
   }
-  80%{
-    opacity: 0;
-  }
   100%{
     opacity: 1;
   }
 }
 @keyframes slideIn{
   0% {
-    transform: translateY(0);
-  }
-  60%{
-    transform: translateY(-150px);
+    transform: translateY(-100px);
   }
   100% {
     transform: translateY(0);
