@@ -6,6 +6,7 @@
   "generic invite code error": "couldn't use this invite code. error: {{error}}",
   "home": "home",
   "incorrect username or password": "incorrect username or password",
+  "remember login": "remember me",
   "invalid mail": "invalid email",
   "invalid password": "invalid password",
   "invalid_code": "invalid invite code",

@@ -10,6 +10,7 @@ import { sha256 } from '../utils/crypto.js';
 function AuthModal(props){
   let [password, setPassword] = React.useState("");
   let [mail, setMail] = React.useState("");
+  let [remember, setRemember] = React.useState(true);
   let [errorMessage, setErrorMessage] = React.useState("");
   let [loading, setLoading] = React.useState(false);
   //TODO: internal data validation. if valid, call received callback on click.
@@ -57,7 +58,8 @@ function AuthModal(props){
       mail: mail,
       password: hashedPassword,
       isHash: isHash,
-      getData: props.requireData
+      getData: props.requireData,
+      remember: remember
     }
     let response = await apiRequest('login', data, 'POST');
     setLoading(false);
@@ -88,7 +90,7 @@ function AuthModal(props){
   ) : (
     <button className="btn"
     onClick={validateForm}
-    tabIndex={3}
+    tabIndex={4}
     aria-label={t("sign in")}
     >{t("sign in")}</button>
   )
@@ -113,6 +115,11 @@ function AuthModal(props){
       onEnter={loading?()=>{}:validateForm}
       type={"password"}
       />
+
+      <div class="checkbox-group centered">
+       <input tabIndex={3} class="styled-checkbox" id="styled-checkbox-1" type="checkbox" onChange={e=>setRemember(e.target.checked)} checked={remember} value="selected" />
+       <label class="checkbox-label" for="styled-checkbox-1">{t('remember login')}</label>
+       </div>
 
       {button}
       

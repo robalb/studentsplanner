@@ -57,6 +57,7 @@
   "invalid name": "inserisci un nome valido",
   "confirm password wrong": "le due password non sono uguali",
   "password": "password",
+  "remember login": "rimani loggato",
   "password strength:": "sicurezza della password: ",
   "registration successfull": "registrazione avvenuta con successo!",
   "login after registration button": "accedi al tuo account",
