@@ -2,4 +2,7 @@
 
 a service for the organization of highschool classrooms
 
-aviable for free on pinboards.it
+available for free on [pinboards.it](https://pinboards.it)
+
+
+
