@@ -113,7 +113,7 @@ class SessionManager{
   /**
    * returns wether the session has been created now, or already existed
    * this can be useful in situations where a page depends on existing session variables,
-   * but the user is not logged (for example in registration or login pages)
+   * but the user is not logged (for example in registration or login pages) so isValid() can't help
    * @return boolean - the session is new or not
    */
   public function isNew(){
