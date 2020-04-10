@@ -31,6 +31,8 @@ try{
 }
 //check mail existance and max length
 $error += !(isset($request['mail']) && strlen($request['mail']) < 150 );
+//check remember me existance and max length
+$error += !(isset($request['remember']) && strlen($request['remember']) < 10 );
 //check password existence and max length
 $error += !(isset($request['password']) && strlen($request['password']) < 200 );
 //check that getData is a populated array if its set
@@ -108,6 +110,10 @@ if(!$session->isValid()){
     'isAdmin' => $isAdmin
   ]);
   $session->setValid();
+  //if the user wants to remember the session
+  if($request['remember'] === true){
+    $session->setPermanent(true);
+  }
 }
 
 //create response array, that will be turned into json and echoed

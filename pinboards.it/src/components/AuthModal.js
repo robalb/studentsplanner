@@ -79,7 +79,6 @@ function AuthModal(props){
     }
     //all good, auth the user
     else if(response.success){
-      console.log("flag")
       props.auth(response);
     }
   }
@@ -116,9 +115,9 @@ function AuthModal(props){
       type={"password"}
       />
 
-      <div class="checkbox-group centered">
-       <input tabIndex={3} class="styled-checkbox" id="styled-checkbox-1" type="checkbox" onChange={e=>setRemember(e.target.checked)} checked={remember} value="selected" />
-       <label class="checkbox-label" for="styled-checkbox-1">{t('remember login')}</label>
+      <div className="checkbox-group centered">
+       <input tabIndex={3} className="styled-checkbox" id="styled-checkbox-1" type="checkbox" onChange={e=>setRemember(e.target.checked)} checked={remember} value="selected" />
+       <label className="checkbox-label" htmlFor="styled-checkbox-1">{t('remember login')}</label>
        </div>
 
       {button}

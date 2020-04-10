@@ -20,7 +20,7 @@
  * </code>
  */
 class SessionManager{
-  //config
+  //default cookie settings
   private $defaultName = "SESSBISQUIT";
   private $defaultLifeTime = 0;
   private $defaultPath = "/";
@@ -29,7 +29,11 @@ class SessionManager{
   //WARNING !
   private $defaultSecure = false;
   private $defaultHttpOnly = true;
-  private $defaultSameSite = "lax";
+  private $defaultSameSite = "Lax";
+
+  //permanent cookie settings
+  private $permanentName = "STALEBISQUIT";
+  private $permanentLifeTime = (60 * 60 * 24 * 30); //30 days
 
   //class internal attributes
   private $isNew = false;
@@ -41,14 +45,14 @@ class SessionManager{
   function __construct($lifeTime = null){
     if(!$lifeTime)$lifeTime = $this->defaultLifeTime;
     session_name($this->defaultName);
-    session_set_cookie_params(
-      $lifeTime,
-      $this->defaultPath,
-      $this->defaultDomain,
-      $this->defaultSecure,
-      $this->defaultHttpOnly
-      //array("samesite" => $this->defaultSameSite)
-    );
+    session_set_cookie_params([
+        'lifetime' => $lifeTime,
+        'path' => $this->defaultPath,
+        'domain' => $this->defaultDomain,
+        'secure' => $this->defaultSecure,
+        'httponly' => $this->defaultHttpOnly,
+        'samesite' => $this->defaultSameSite
+      ]);
     session_start();
 
     //if the session is new
@@ -72,6 +76,33 @@ class SessionManager{
   }
 
   /**
+   * set a permanent cookie to remember the user session
+   */
+  public function setPermanent(){
+    //the cookie can only be set if the response headers have not already been sent
+    if(headers_sent()){
+      throw new Exception('Headers were already sent');
+      return 0;
+    }
+    //generate the secure uid
+    $bytes = random_bytes(33);
+    $uid = str_replace(['+','/','='], ['-','_',''], base64_encode($bytes));
+    //set the cookie
+    setcookie(
+      $this->permanentName,
+      $uid,
+      [
+        'expires' => time() + $this->permanentLifeTime,
+        'path' => $this->defaultPath,
+        'domain' => $this->defaultDomain,
+        'secure' => $this->defaultSecure,
+        'httponly' => $this->defaultHttpOnly,
+        'samesite' => $this->defaultSameSite
+      ]
+    );
+  }
+
+  /**
    * returns wether the user is new or has been already logged
    * @return boolean - the user state
    */
@@ -81,6 +112,8 @@ class SessionManager{
 
   /**
    * returns wether the session has been created now, or already existed
+   * this can be useful in situations where a page depends on existing session variables,
+   * but the user is not logged (for example in registration or login pages)
    * @return boolean - the session is new or not
    */
   public function isNew(){

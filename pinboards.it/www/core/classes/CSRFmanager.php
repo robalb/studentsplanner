@@ -8,12 +8,12 @@ class CSRFmanager{
     /*   throw new Exception('csrf token already generated'); */
     /*   return 0; */
     /* } */
-    $_SESSION['CSRF'] = bin2hex(random_bytes(64));
+    $_SESSION['CSRF'] = bin2hex(random_bytes(32));
   }
 
   public static function getToken(){
     if(!isset($_SESSION['CSRF'])){
-      $_SESSION['CSRF'] = bin2hex(random_bytes(64));
+      $_SESSION['CSRF'] = bin2hex(random_bytes(32));
     }
     return $_SESSION['CSRF'];
   }
