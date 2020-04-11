@@ -1,4 +1,5 @@
 <?php
+require_once 'ConnectDb.php';
 
 /**
  * class to manage php sessions, and improve the sessions security.
@@ -78,7 +79,7 @@ class SessionManager{
   /**
    * set a permanent cookie to remember the user session
    */
-  public function setPermanent(){
+  public function setPermanent($mail){
     //the cookie can only be set if the response headers have not already been sent
     if(headers_sent()){
       throw new Exception('Headers were already sent');
@@ -87,7 +88,24 @@ class SessionManager{
     //generate the secure uid
     $bytes = random_bytes(33);
     $uid = str_replace(['+','/','='], ['-','_',''], base64_encode($bytes));
-    //set the cookie
+    $uidHash = hash('sha512', $uid);
+    //prepare other variables
+    //add the secure id hash to the authIds table
+    $instance = ConnectDb::getInstance();
+    $pdo = $instance->getConnection();
+    $stmt = $pdo->prepare('INSERT INTO authIds VALUES (:tokenHash, :creationDate, :userMail, :creatorUserAgent, :creatorIp)');
+    $stmt->execute([
+      'tokenHash' => $uidHash,
+      'creationDate' => time(),
+      'userMail' => $mail,
+      'creatorUserAgent' => $userAgent,
+      'creatorIp' => $ip
+    ]);
+    if($stmt->rowCount() < 1){
+      //on fail avoid proceeding further with the cookie creation
+      return 0;
+    }
+    //on success, set the cookie
     setcookie(
       $this->permanentName,
       $uid,

@@ -112,7 +112,7 @@ if(!$session->isValid()){
   $session->setValid();
   //if the user wants to remember the session
   if($request['remember'] === true){
-    $session->setPermanent(true);
+    $session->setPermanent($mail);
   }
 }
 

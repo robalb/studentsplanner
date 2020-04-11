@@ -1,5 +1,8 @@
 <?php
-phpinfo();
+/* phpinfo(); */
+    $bytes = random_bytes(33);
+    $uid = str_replace(['+','/','='], ['-','_',''], base64_encode($bytes));
+    echo (hash('sha512', $uid));
 /* $bytes = random_bytes(33); */
 /* $encoded = str_replace(['+','/','='], ['-','_','$'], base64_encode($bytes)); */
 /* echo $encoded; */

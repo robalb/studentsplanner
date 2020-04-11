@@ -18,6 +18,17 @@ CREATE TABLE IF NOT EXISTS `class` (
 ) DEFAULT CHARSET = utf8mb4;
 
 
+CREATE TABLE IF NOT EXISTS `authIds` (
+  tokenHash char(64) NOT NULL,
+  creationDate int(11) NOT NULL,
+  userMail varchar(255) NOT NULL,
+  creatorUserAgent varchar(255),
+  creatorIp varchar(255),
+  PRIMARY KEY (`tokenHash`)
+) DEFAULT CHARSET = utf8mb4;
+
+
+
 CREATE TABLE IF NOT EXISTS `students` (
   `classID` int(11) NOT NULL,
   `mail` varchar(255) NOT NULL,
