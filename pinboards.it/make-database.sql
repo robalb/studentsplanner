@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `authIds` (
   userMail varchar(255) NOT NULL,
   creatorUserAgent varchar(255),
   creatorIp varchar(255),
-  PRIMARY KEY (`tokenHash`)
+  PRIMARY KEY (`tokenHash`) USING HASH
 ) DEFAULT CHARSET = utf8mb4;
 
 
