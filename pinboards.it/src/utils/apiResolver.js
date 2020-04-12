@@ -28,8 +28,8 @@ export async function apiRequest(api, data, method){
   let decoded = {error: 'internal_error'};
   try{
     decoded = await response.json();
-    //the user got logged, probably from another tab. refresh the page
-    if(decoded.error && decoded.error == 'session_error_refresh'){
+    //the user got logged, probably from another tab, or the csrf token somehow changed. refresh the page
+    if(decoded.error && ['session_error_refresh', 'csrf_error_refresh'].includes(decoded.error)){
       location.reload();
     }
   }catch(e){

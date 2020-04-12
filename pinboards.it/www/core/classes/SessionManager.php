@@ -57,7 +57,6 @@ class SessionManager{
 
     //if the session is new
     if(!isset($_SESSION['__id_is_recognized'])){
-      echo " debug- not recognized";
       //set a flag to recognize the session as old
       $_SESSION['__id_is_recognized'] = true;
       //set a temporary attribute to let the class know that the session is new
@@ -130,12 +129,10 @@ class SessionManager{
   }
 
   private function validatePermanent(){
-    echo " debug- validate permanent";
     //if the user didnt pass a stalecookie, return false
     if (!isset($_COOKIE[$this->permanentName])) {
       return false;
     }
-    echo " debug- found";
     $uid = $_COOKIE[$this->permanentName];
     $uidHash = hash('sha256', $uid);
     //check validity. Note: this is an easy target to dos. Connections
@@ -144,7 +141,7 @@ class SessionManager{
     //before any database query, the hash should be validate against the secret, stored carefully in a env variable.
     $instance = ConnectDb::getInstance();
     $pdo = $instance->getConnection();
-    $stmt = $pdo->prepare('SELECT * from auth_codes WHERE tokenHash = ?');
+    $stmt = $pdo->prepare('SELECT creationDate, userMail, creatorUserAgent FROM auth_codes WHERE tokenHash = ?');
     $stmt->execute([ $uidHash ]);
     //check if the code does not exist
     if($stmt->rowCount() < 1){
@@ -153,7 +150,6 @@ class SessionManager{
       http_response_code(401);
       return false;
     }
-    echo " debug- id exist";
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     //check if the code has expired
     if($row['creationDate'] + $this->permanentLifeTime < time()){
@@ -163,7 +159,6 @@ class SessionManager{
       $this->deletePermanentCookie();
       return false;
     }
-    echo " debug- not expired";
     //check if the useragent is not completely different
     //(kinda pointless, if you can steal a cookie, you can steal an useragent. But my time here is limitless, i'm in quarantine. And readability is not affected that much)
     $percSimilarity = 100;
@@ -175,7 +170,6 @@ class SessionManager{
     if($percSimilarity < 60){
       return false;
     }
-    echo " debug- good useragent";
     //All the checks passed, the code is good. Time to auth the user
     //set the global variables that are required for a logged user
     DataCache::reloadUserData($row['userMail']);
