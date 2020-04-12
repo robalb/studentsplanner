@@ -2,21 +2,16 @@
 require_once 'ConnectDb.php';
 
 /**
- * class to manage php sessions, and improve the sessions security.
- * NOTE: set the option $defaultSecure to true when deploying on a https server
- *       sessions won't work if $defaultSecure is set to true on a non https web server
+ * class to manage php sessions and the user auth
+ *
+ * @note Set the option $defaultSecure to true when deploying on a https server.
+ * Sessions won't work if $defaultSecure is set to true on a non https web server.
+ * Overwriting this kind of configuration in the php.ini could be a good idea
  * @example - usage example
  * <code>
  * <?php
  * require_once './classes/SessionManager.php';
  * $session = new SessionManager();
- * $_SESSION['foo'] = 'bar';
- * </code>
- * 
- * using the default php function, the example above can be written as:
- * <code>
- * <?php
- * session_start();
  * $_SESSION['foo'] = 'bar';
  * </code>
  */
@@ -40,10 +35,13 @@ class SessionManager{
   private $isNew = false;
 
   /**
-   * constructor that initializes a php session in a better
-   * and more secure way compared to the classic session_start();
+   * constructor that initializes a php session using session_start() and secure
+   * configuration parameters. If the user is new but they have a permanent 'remember me' cookie,
+   * validate it and eventually log the user, creating all the required session variables
    */
   function __construct($lifeTime = null){
+    //start the session, with custom parameters. If a session is already existing,
+    //its lifetime will be refreshed
     if(!$lifeTime)$lifeTime = $this->defaultLifeTime;
     session_name($this->defaultName);
     session_set_cookie_params([
@@ -65,6 +63,9 @@ class SessionManager{
       //prevent session fixation attacks, by changing the cookie id if the user is trying to
       //connect using a cookie id that is not recognized
       if(isset($_COOKIE[$this->defaultName])) session_regenerate_id(true);
+
+      //TODO: validate permanent
+
     }
   }
 
@@ -124,6 +125,14 @@ class SessionManager{
         'samesite' => $this->defaultSameSite
       ]
     );
+  }
+
+  private function validatePermanent(){
+    //if the user didnt pass a stalecookie, return 0. Otherwise:
+    //check validity
+    //if good: setValid() DataCache->loadUserData
+    //if not good:
+    http_response_code(401); //this will be used by the waf to filter bruteforce or dos attempts
   }
 
   private function deletePermanentRecord(){
