@@ -11,7 +11,7 @@ $body = file_get_contents('php://input');
 //validate session
 if(!$session->isValid()){
   http_response_code(401);
-  echo json_encode(['error'=>'invalid session']);
+  echo json_encode(['error'=>'session_error_refresh']);
   die();
 }
 
@@ -41,7 +41,7 @@ if($error !== 0){
 //validate csrf token
 if(!isset($request['CSRF']) || !CSRFmanager::validate($request['CSRF'])){
   http_response_code(400);
-  echo json_encode(['error'=>'csrf_error']);
+  echo json_encode(['error'=>'csrf_error_refresh']);
   die();
 }
 

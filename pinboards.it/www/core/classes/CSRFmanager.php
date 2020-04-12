@@ -20,10 +20,9 @@ class CSRFmanager{
 
   public static function validate(string $token){
     if(!isset($_SESSION['CSRF'])){
-      throw new Exception('session or csrf token not set');
-    }else{
-      return hash_equals($_SESSION['CSRF'], $token);
+      return false;
     }
+    return hash_equals($_SESSION['CSRF'], $token);
   }
 }
 

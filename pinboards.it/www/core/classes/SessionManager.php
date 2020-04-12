@@ -57,6 +57,7 @@ class SessionManager{
 
     //if the session is new
     if(!isset($_SESSION['__id_is_recognized'])){
+      echo " debug- not recognized";
       //set a flag to recognize the session as old
       $_SESSION['__id_is_recognized'] = true;
       //set a temporary attribute to let the class know that the session is new
@@ -129,10 +130,12 @@ class SessionManager{
   }
 
   private function validatePermanent(){
+    echo " debug- validate permanent";
     //if the user didnt pass a stalecookie, return false
     if (!isset($_COOKIE[$this->permanentName])) {
       return false;
     }
+    echo " debug- found";
     $uid = $_COOKIE[$this->permanentName];
     $uidHash = hash('sha256', $uid);
     //check validity. Note: this is an easy target to dos. Connections
@@ -143,27 +146,41 @@ class SessionManager{
     $pdo = $instance->getConnection();
     $stmt = $pdo->prepare('SELECT * from auth_codes WHERE tokenHash = ?');
     $stmt->execute([ $uidHash ]);
-    //if the token exist
-    if($stmt->rowCount() > 0){
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      //check if the code has not expired
-      if($row['creationDate'] + $this->permanentLifeTime < time()){
-        //the code is good. Time to auth the user
-        //set the global variables that are required for a logged user
-        DataCache::reloadUserData($row['mail']);
-        //set the session as valid
-        $this->setValid();
-      }else{
-        //the code has expired
-        //delete the remember me token completely, both from the db and the session cookie
-        $this->deletePermanentRecord();
-        $this->deletePermanentCookie();
-      }
-    }else{
+    //check if the code does not exist
+    if($stmt->rowCount() < 1){
       //The token does not exist, return a 401 status.
       //this will be used by the waf to filter bruteforce or dos attempts
       http_response_code(401);
+      return false;
     }
+    echo " debug- id exist";
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    //check if the code has expired
+    if($row['creationDate'] + $this->permanentLifeTime < time()){
+      //the code has expired
+      //delete the remember me token completely, both from the db and the session cookie
+      $this->deletePermanentRecord();
+      $this->deletePermanentCookie();
+      return false;
+    }
+    echo " debug- not expired";
+    //check if the useragent is not completely different
+    //(kinda pointless, if you can steal a cookie, you can steal an useragent. But my time here is limitless, i'm in quarantine. And readability is not affected that much)
+    $percSimilarity = 100;
+    $currentUserAgent = $_SERVER['HTTP_USER_AGENT']??null;
+    //compare the useragents, but only if this won't be too slow
+    if(strlen($currentUserAgent) < 500 || strlen($row['creatorUserAgent'])){
+      similar_text($row['creatorUserAgent'], $currentUserAgent, $percSimilarity);
+    }
+    if($percSimilarity < 60){
+      return false;
+    }
+    echo " debug- good useragent";
+    //All the checks passed, the code is good. Time to auth the user
+    //set the global variables that are required for a logged user
+    DataCache::reloadUserData($row['userMail']);
+    //set the session as valid
+    $this->setValid();
   }
 
   private function deletePermanentRecord(){
