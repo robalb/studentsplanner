@@ -20,6 +20,7 @@ class DataCache{
       $_SESSION = array_merge($_SESSION, [
         'classID' => $row['classID'],
         'className' => $className,
+        'mail' => $mail,
         'fullName' => $row['fullName'],
         'uniqueName' => $row['uniqueName'],
         'locale' => $row['locale'],

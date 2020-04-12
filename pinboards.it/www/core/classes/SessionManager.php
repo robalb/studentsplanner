@@ -1,5 +1,6 @@
 <?php
 require_once 'ConnectDb.php';
+require_once 'DataCache.php';
 
 /**
  * class to manage php sessions and the user auth
@@ -63,9 +64,9 @@ class SessionManager{
       //prevent session fixation attacks, by changing the cookie id if the user is trying to
       //connect using a cookie id that is not recognized
       if(isset($_COOKIE[$this->defaultName])) session_regenerate_id(true);
-
-      //TODO: validate permanent
-
+      //check if the user sent a 'remember me' permanent cookie, and if it's good
+      //instantiate all the logged in varaibles
+      $this->validatePermanent();
     }
   }
 
@@ -94,10 +95,10 @@ class SessionManager{
     $rawIp = $_SERVER['REMOTE_ADDR']??null;
     $ip = filter_var($rawIp, FILTER_VALIDATE_IP) ?: 'unknown';
     $userAgent = $_SERVER['HTTP_USER_AGENT']??null;
-    //add the secure id hash and other data to the authIds table
+    //add the secure id hash and other data to the auth_codes table
     $instance = ConnectDb::getInstance();
     $pdo = $instance->getConnection();
-    $stmt = $pdo->prepare('INSERT INTO authIds VALUES (:tokenHash, :creationDate, :userMail, :creatorUserAgent, :creatorIp)');
+    $stmt = $pdo->prepare('INSERT INTO auth_codes VALUES (:tokenHash, :creationDate, :userMail, :creatorUserAgent, :creatorIp)');
     $stmt->execute([
       'tokenHash' => $uidHash,
       'creationDate' => time(),
@@ -128,11 +129,41 @@ class SessionManager{
   }
 
   private function validatePermanent(){
-    //if the user didnt pass a stalecookie, return 0. Otherwise:
-    //check validity
-    //if good: setValid() DataCache->loadUserData
-    //if not good:
-    http_response_code(401); //this will be used by the waf to filter bruteforce or dos attempts
+    //if the user didnt pass a stalecookie, return false
+    if (!isset($_COOKIE[$this->permanentName])) {
+      return false;
+    }
+    $uid = $_COOKIE[$this->permanentName];
+    $uidHash = hash('sha256', $uid);
+    //check validity. Note: this is an easy target to dos. Connections
+    //with invalid cookies - 401 codes - should be handled carefully by the waf.
+    //Optionally, the stalecookie could include a strong a hash of the id+ a secret
+    //before any database query, the hash should be validate against the secret, stored carefully in a env variable.
+    $instance = ConnectDb::getInstance();
+    $pdo = $instance->getConnection();
+    $stmt = $pdo->prepare('SELECT * from auth_codes WHERE tokenHash = ?');
+    $stmt->execute([ $uidHash ]);
+    //if the token exist
+    if($stmt->rowCount() > 0){
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      //check if the code has not expired
+      if($row['creationDate'] + $this->permanentLifeTime < time()){
+        //the code is good. Time to auth the user
+        //set the global variables that are required for a logged user
+        DataCache::reloadUserData($row['mail']);
+        //set the session as valid
+        $this->setValid();
+      }else{
+        //the code has expired
+        //delete the remember me token completely, both from the db and the session cookie
+        $this->deletePermanentRecord();
+        $this->deletePermanentCookie();
+      }
+    }else{
+      //The token does not exist, return a 401 status.
+      //this will be used by the waf to filter bruteforce or dos attempts
+      http_response_code(401);
+    }
   }
 
   private function deletePermanentRecord(){
@@ -144,7 +175,7 @@ class SessionManager{
     //delete the database row
     $instance = ConnectDb::getInstance();
     $pdo = $instance->getConnection();
-    $stmt = $pdo->prepare('DELETE FROM authIds WHERE tokenHash = ?');
+    $stmt = $pdo->prepare('DELETE FROM auth_codes WHERE tokenHash = ?');
     $stmt->execute([ $uidHash ]);
     return ($stmt->rowCount() > 0);
   }

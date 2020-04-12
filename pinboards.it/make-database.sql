@@ -14,11 +14,11 @@ CREATE TABLE IF NOT EXISTS `class` (
   `name` varchar(60) NOT NULL,
   `inviteCode` char(16),
   `schoolID` int(11),
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`) USING HASH
 ) DEFAULT CHARSET = utf8mb4;
 
 
-CREATE TABLE IF NOT EXISTS `authIds` (
+CREATE TABLE IF NOT EXISTS `auth_codes` (
   tokenHash char(64) NOT NULL,
   creationDate int(11) NOT NULL,
   userMail varchar(255) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `students` (
   `admin` boolean NOT NULL,
   `locale` varchar(3) NOT NULL,
   `trustScore` int(11),
-  INDEX (`classID`),
+  INDEX (`classID`) USING HASH,
   INDEX `mail` (`mail`)
 ) DEFAULT CHARSET = utf8mb4;
 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `planner_states` (
   `plannerData` varchar(9000),
   `authorUniqueName` varchar(60),
   `timestamp` int(11),
-  INDEX (`classID`)
+  PRIMARY KEY (`classID`) USING HASH
 ) DEFAULT CHARSET = utf8mb4;
 
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `invite_codes` (
   `invitedBy` varchar(60) NOT NULL,
   `creationDate` int(11) NOT NULL,
   `lifespan` int(11) NOT NULL,
-  INDEX(`code`)
+  PRIMARY KEY (`code`) USING HASH
 ) DEFAULT CHARSET = utf8mb4;
 
 

@@ -99,7 +99,6 @@ if(!$session->isValid()){
   }
 
   //create sesion
-  $isAdmin = (bool) $row["admin"];
   $_SESSION = array_merge($_SESSION, [
     'classID' => $row['classID'],
     'className' => $className,
@@ -107,7 +106,7 @@ if(!$session->isValid()){
     'fullName' => $row['fullName'],
     'uniqueName' => $row['uniqueName'],
     'locale' => $row['locale'],
-    'isAdmin' => $isAdmin
+    'isAdmin' => $row["admin"]
   ]);
   $session->setValid();
   //if the user wants to remember the session
