@@ -138,14 +138,17 @@ class SessionManager{
     //check validity. Note: this is an easy target to dos. Connections
     //with invalid cookies - 401 codes - should be handled carefully by the waf.
     //Optionally, the stalecookie could include a strong a hash of the id+ a secret
-    //before any database query, the hash should be validate against the secret, stored carefully in a env variable.
+    //before wasting any database query, the hash should be validate against the secret, stored carefully in a env variable.
     $instance = ConnectDb::getInstance();
     $pdo = $instance->getConnection();
     $stmt = $pdo->prepare('SELECT creationDate, userMail, creatorUserAgent FROM auth_codes WHERE tokenHash = ?');
     $stmt->execute([ $uidHash ]);
     //check if the code does not exist
     if($stmt->rowCount() < 1){
-      //The token does not exist, return a 401 status.
+      //The token does not exist
+      //unset the cookie from the user browser, to prevent other useless database calls
+      $this->deletePermanentCookie();
+      //return a 401 status.
       //this will be used by the waf to filter bruteforce or dos attempts
       http_response_code(401);
       return false;
@@ -164,7 +167,7 @@ class SessionManager{
     $percSimilarity = 100;
     $currentUserAgent = $_SERVER['HTTP_USER_AGENT']??null;
     //compare the useragents, but only if this won't be too slow
-    if(strlen($currentUserAgent) < 500 || strlen($row['creatorUserAgent'])){
+    if(strlen($currentUserAgent) < 500 && strlen($row['creatorUserAgent']) < 500){
       similar_text($row['creatorUserAgent'], $currentUserAgent, $percSimilarity);
     }
     if($percSimilarity < 60){
