@@ -5,10 +5,16 @@ class LanguageManager{
   private $languagesJsonPath;
   //the path to the folder containing all the translations
   private $languagesFolderPath;
+  //the path to the folder containing all the server side translations
+  private $serverLanguagesFolderPath;
+
+  //the current locale
+  private $locale;
 
   public function __construct(){
     $this->languagesJsonPath = dirname(__FILE__) . "/../i18n/languages.json";
     $this->languagesFolderPath = dirname(__FILE__) . "/../i18n/languages/";
+    $this->serverLanguagesFolderPath = dirname(__FILE__) . "/../i18n/serverLanguages/";
   }
 
   /* https://stackoverflow.com/questions/3770513/detect-browser-language-in-php */
@@ -93,7 +99,44 @@ class LanguageManager{
     return $stringJson;
   }
 
+  public function setServersideLocale(string $locale){
+    $this->locale = $locale;
+  }
+
+  //only simple key strings are supported for now;
+  public function t(string $key){
+    //negotiate the current locale
+    if(!$this->locale){
+      //try to get the session locale
+      if(isset($_SESSION['locale']) && strlen($_SESSION['locale']) > 0){
+        $this->locale = $_SESSION['locale'];
+      }
+      //try to get the browser locale, or use the default
+      $this->locale = $this->getNegotiatedUserLocale();
+    }
+    //get the server languages array
+    $locale = $this->locale;
+    $file = file_get_contents($this->serverLanguagesFolderPath . "$locale.json");
+    $decoded = json_decode($file, true);
+    //get the key
+    if(isset($decoded[$key])){
+      return $decoded[$key];
+    }
+    //fallback to the key itself
+    return $key;
+  }
+
+  public function getT(){
+    $t = function($key){
+      echo $this->t($key);
+    };
+    return $t;
+  }
+
   public function getNegotiatedUserLocale(){
+    if($this->locale){
+      return $this->locale;
+    }
     //get an array containing all the accepted languages
     $accepted = $this->parseLanguageList($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
@@ -105,9 +148,11 @@ class LanguageManager{
     //find a match between the two arrays, and return it
     $matches = $this->findMatches($accepted, $available);
     if(count($matches) < 1){
-      return $languages["default"];
+      $this->locale = $languages["default"];
+    }else{
+      $this->locale = reset($matches)[0];
     }
-    return reset($matches)[0];
+    return $this->locale;
   }
 
   public function getUserLanguageJson(string $locale){
