@@ -1,4 +1,3 @@
-//the Localized Password Strength Estimator
 import zxcvbn from 'zxcvbn';
 import { sha1 } from './crypto.js';
 

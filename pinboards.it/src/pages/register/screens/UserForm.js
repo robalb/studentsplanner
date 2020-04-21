@@ -25,7 +25,8 @@ function UserForm(props){
     mail: "",
     password: "",
     confirmPassword: "",
-    fullName: ""
+    firstName: "",
+    lastName: ""
   });
 
   function error(message){
@@ -46,13 +47,16 @@ function UserForm(props){
 
   async function validateForm(){
     let mailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
-    if(form.fullName.length < 3 || form.fullName.length >= 100){
+    if(form.firstName.length < 3 || form.firstName.length >= 100){
       error(t("invalid name"));
+    }
+    if(form.lastName.length < 3 || form.lastName.length >= 100){
+      error(t("invalid last name"));
     }
     else if(! (form.mail.length > 3 && mailRe.test(form.mail))){
       error(t("invalid mail"));
     }
-    else if(audit.score < 2){
+    else if(audit.score < 1){
       error(t( "weak password" ));
     }
     else if(form.password.length >= 200){
@@ -80,7 +84,8 @@ function UserForm(props){
     let response = await props.sendApiData({
       mail: form.mail,
       password: hashedPassword,
-      fullName: form.fullName,
+      firstName: form.firstName,
+      lastName: form.lastName,
       isHash: isHash
     });
     if(response == 'die'){
@@ -120,8 +125,13 @@ function UserForm(props){
 
     <div className = "scalable">
       <FormInput 
-      onChange={e=>dispatchForm({fullName: e.target.value})} 
-      label={t("full name")}
+      onChange={e=>dispatchForm({firstName: e.target.value})} 
+      label={t("first name")}
+      />
+
+      <FormInput 
+      onChange={e=>dispatchForm({lastName: e.target.value})} 
+      label={t("last name")}
       />
 
       <FormInput 
