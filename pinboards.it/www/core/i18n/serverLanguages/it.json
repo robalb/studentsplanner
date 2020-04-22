@@ -1,11 +1,12 @@
 {
   "index": "pinboards",
-  "register": "registrati&bull;pinboards",
-  "planner": "planner&bull;pinboards",
-  "polls": "sondaggi&bull;pinboards",
-  "description": "pinboards, l'app di pianificazione scolastica",
+  "register": "registrati &bull; pinboards",
+  "planner": "planner &bull; pinboards",
+  "polls": "sondaggi &bull; pinboards",
+  "description": "Crea un account o accedi a Pinboards per semplifcare la tua pianificazione scolastica. Un unico luogo creare sondaggi, estrazioni, o pianificare interrogazioni e calendari",
   "keywords": "pinboards, scuola, pianificazione, sondaggi",
-  "og title": "pinboards, l'app di pianificazione scolastica",
-  "og description": "organizza la tua classe, crea sondaggi o pianifica le interrogazioni",
+  "og title": "Pinboards",
+  "og site name": "Pinboards",
+  "og description": "Crea un account o accedi a Pinboards per semplifcare la tua pianificazione scolastica. Un unico luogo creare sondaggi, estrazioni, o pianificare interrogazioni e calendari",
   "og locale": "it_IT"
 }
