@@ -84,8 +84,8 @@ function UserForm(props){
     let response = await props.sendApiData({
       mail: form.mail,
       password: hashedPassword,
-      firstName: form.firstName,
-      lastName: form.lastName,
+      //fullnames are good. the way we generate them here may be improved https://www.w3.org/International/questions/qa-personal-names
+      fullName: form.firstName + " " + form.lastName,
       isHash: isHash
     });
     if(response == 'die'){
