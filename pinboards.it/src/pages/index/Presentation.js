@@ -5,6 +5,10 @@ import a from './assets/v2_full.png'
 export default function Presentation(props){
     return(
         <>
+        <header>
+            <a href="./register">registrati</a>
+            <a className="secondary" href="./account">accedi</a>
+        </header>
         <div className="hero">
         <h1>Pinboards</h1>
         <h2>A highschool management platform for students</h2>

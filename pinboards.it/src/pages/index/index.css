@@ -1,3 +1,27 @@
+body{
+    padding:0;
+    margin:0;
+    font-family: 'Roboto', Arial;
+}
+header{
+    height: 3rem;
+    width: 100%;
+    display:flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+header a{
+    color: white;
+    background-color: #34ace0;
+    padding: .6rem 2rem;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-right: 1rem;
+}
+.secondary{
+    background-color: transparent;
+    color: #34ace0;
+}
 h1,h2{
     font-family: Roboto;
     text-transform: uppercase;
@@ -8,6 +32,7 @@ h2{
     font-weight: 200;
 }
 .hero{
+    padding: .5rem;
     overflow: hidden;
     display: flex;
     align-items: center;
