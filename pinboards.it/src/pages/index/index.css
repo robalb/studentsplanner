@@ -1,0 +1,22 @@
+h1,h2{
+    font-family: Roboto;
+    text-transform: uppercase;
+    text-align: center;
+}
+h2{
+    margin-top: 0;
+    font-weight: 200;
+}
+.hero{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.hero img{
+    margin-top: 2rem;
+    height: 50vh;
+    width: auto;
+    flex-shrink: 0;
+}

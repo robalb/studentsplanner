@@ -52,11 +52,6 @@ $t = $languageManager->getT();
     <?php $bundlesManager->headOutput();?>
   </head>
   <body>
-   <h1>Pinboards</h1><br/>
-   <p>homepage</p>
-   <p><a href="./account">accedi</a><br/> </p>
-   <p> <a href="./register"> registrati </a></p>
-   <p>this is project is open source at <a href="https://github.com/robalb/studentsplanner/">github</a> </p>
    <div id="root"></div> 
     <?php $bundlesManager->bodyOutput();?>
   </body>
