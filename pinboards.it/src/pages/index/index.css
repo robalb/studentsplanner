@@ -22,16 +22,8 @@ header a{
     background-color: transparent;
     color: #34ace0;
 }
-h1,h2{
-    font-family: Roboto;
-    text-transform: uppercase;
-    text-align: center;
-}
-h2{
-    margin-top: 0;
-    font-weight: 200;
-}
 .hero{
+    margin-top: 1rem;
     padding: .5rem;
     overflow: hidden;
     display: flex;
@@ -39,9 +31,33 @@ h2{
     justify-content: center;
     flex-direction: column;
 }
+.hero h1,.hero h2{
+    font-family: Roboto;
+    text-transform: uppercase;
+    text-align: center;
+}
+.hero h2{
+    margin-top: 0;
+    font-weight: 200;
+}
 .hero img{
     margin-top: 2rem;
     height: 50vh;
     width: auto;
     flex-shrink: 0;
+}
+
+.preview_1{
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.preview_1 h1{
+    text-transform: uppercase;
+    /* font-weight: 200; */
+}
+.preview_1 section{
+    margin-right: 5rem;
+    max-width: 30rem;
 }
