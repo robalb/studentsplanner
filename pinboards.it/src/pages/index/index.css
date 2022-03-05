@@ -53,11 +53,26 @@ header a{
     justify-content: center;
     align-items: center;
 }
+.preview_1 img{
+    margin: 0 5rem;
+}
 .preview_1 h1{
     text-transform: uppercase;
     /* font-weight: 200; */
 }
 .preview_1 section{
-    margin-right: 5rem;
     max-width: 30rem;
+}
+
+.start_now{
+    margin-top: 3rem;
+}
+
+.start_now a{
+    color: white;
+    background-color: #34ace0;
+    padding: .6rem 2rem;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-right: 1rem;
 }
