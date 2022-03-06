@@ -3,7 +3,7 @@ import React from 'react';
 import a from './assets/v2_full.png'
 import p1 from './assets/preview_1.png'
 import p2 from './assets/preview_2.png'
-import b1 from './assets/blur_1.png'
+import b1 from './assets/decor_11.png'
 
 export default function Presentation(props){
     return(
@@ -54,8 +54,16 @@ export default function Presentation(props){
                 </section>
             </div>
             <div className="start_now">
-                <p>Pinboards è una piattaforma gratuita e completamente open source</p>
-                <a href="./register">registrati</a>
+                <section>
+                    <h2>crea la tua classe in pochi minuti,<br></br> e invita tutti i suoi
+                        membri con un click</h2>
+                    <p>Questo servizio è completamente gratuito e open source!<br/> partecipa al 
+                        suo sviluppo su <a href="https://github.com/robalb/studentsplanner">github</a>
+                        <br/>
+                        <br/>
+                    Made with <span>&#9829;</span> in Milan </p>
+                </section>
+                <a href="./register" className="btn">registrati</a>
                 <img src={b1}></img>
             </div>
 
