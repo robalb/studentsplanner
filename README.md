@@ -1,6 +1,6 @@
 ## PINBOARDS ##
 
-a service for the organization of highschool classrooms
+A management platform for highschool and college students 
 
 available for free on [pinboards.it](https://pinboards.it)
 
