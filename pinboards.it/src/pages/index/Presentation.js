@@ -15,7 +15,7 @@ export default function Presentation(props){
             <div className="hero">
                 <h1>Pinboards</h1>
                 <h2>A management platform for highschool students</h2>
-                <img className="hero" src={a} />
+                <img className="hero" src={a} alt="" role="presentation"/>
             </div>
 
             <div className="preview_1">
@@ -33,10 +33,10 @@ export default function Presentation(props){
                     grazie al potente algoritmo messo a disposizione dalla piattaforma. </p>
                     
                 </section>
-                <img src={p1}></img>
+                <img src={p1} alt="screenshot del calendario di un esame"></img>
             </div>
             <div className="preview_1">
-                <img src={p2}></img>
+                <img src={p2} alt="screenshot di un sondaggio in corso"></img>
                 <section>
                     <h1>crea sondaggi</h1>
                     <p><b>organizza votazioni o sondaggi </b>
@@ -64,7 +64,7 @@ export default function Presentation(props){
                     Made with <span>&#9829;</span> in Milan </p>
                 </section>
                 <a href="./register" className="btn">registrati</a>
-                <img src={b1}></img>
+                <img src={b1} alt="" role="presentation"></img>
             </div>
 
         </>

@@ -23,7 +23,7 @@ $t = $languageManager->getT();
 <html lang="<?php echo $locale;?>">
   <head>
     <meta name="language" content="<?php echo $locale;?>">
-    <title><?php $t('register');?></title>
+    <title><?php $t('index');?></title>
     <link rel="canonical" href="https://www.pinboards.it/" />
 
     <?php include './core/pages/headers.php';?>
