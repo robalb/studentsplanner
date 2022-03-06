@@ -18,7 +18,7 @@ export default function Presentation(props){
                 <img className="hero" src={a} alt="" role="presentation"/>
             </div>
 
-            <div className="preview_1">
+            <div className="preview p1">
                 <section>
                     <h1>Pianifica interrogazioni</h1>
                     <p><b>Pianifica i calendari delle interrogazioni </b>
@@ -35,7 +35,7 @@ export default function Presentation(props){
                 </section>
                 <img src={p1} alt="screenshot del calendario di un esame"></img>
             </div>
-            <div className="preview_1">
+            <div className="preview p2">
                 <img src={p2} alt="screenshot di un sondaggio in corso"></img>
                 <section>
                     <h1>crea sondaggi</h1>
