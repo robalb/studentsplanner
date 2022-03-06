@@ -6,6 +6,9 @@ body{
 img{
     pointer-events: none;
 }
+body:not(.using-mouse) a:focus{
+    outline: 3px solid #ff9f40;
+}
 header{
     height: 3rem;
     width: 100%;

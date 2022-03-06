@@ -54,6 +54,7 @@ export default function Presentation(props){
                 </section>
             </div>
             <div className="start_now">
+                <a href="./register" className="btn">registrati</a>
                 <section>
                     <h2>crea la tua classe in pochi minuti,<br></br> e invita tutti i suoi
                         membri con un click</h2>
@@ -63,7 +64,6 @@ export default function Presentation(props){
                         <br/>
                     Made with <span>&#9829;</span> in Milan </p>
                 </section>
-                <a href="./register" className="btn">registrati</a>
                 <img src={b1} alt="" role="presentation"></img>
             </div>
 
