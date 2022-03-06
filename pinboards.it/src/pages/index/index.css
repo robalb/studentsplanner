@@ -99,11 +99,11 @@ header a{
     color: var(--color);
     border: 2px solid var(--color);
     padding: .6rem 2rem;
-    border-radius: 20px;
+    border-radius: 50px;
     text-decoration: none;
-    margin-right: 1rem;
     background-color: white;
-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    font-size: 1.2rem;
 }
 .start_now img{
     width: 100%;
