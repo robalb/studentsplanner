@@ -6,6 +6,7 @@ require_once './core/classes/ConnectDb.php';
 require_once './core/classes/LanguageManager.php';
 
 $bundlesManager = new BundlesManager('index', './bundles/');
+$nonce = SecurityHeaders::getNonce();
 $session = new SessionManager();
 $isLogged = $session->isValid();
 
@@ -17,6 +18,12 @@ if($isLogged){
 $languageManager = new LanguageManager();
 $locale = $languageManager->getNegotiatedUserLocale();
 $t = $languageManager->getT();
+
+$JSlanguageJson = $languageManager->getUserLanguageJson($locale);
+$jsGlobalVariables = <<<ES6
+var LANGUAGE = $JSlanguageJson;
+ES6;
+$bundlesManager->addScript($jsGlobalVariables, $nonce);
 
 ?>
 <!DOCTYPE html>

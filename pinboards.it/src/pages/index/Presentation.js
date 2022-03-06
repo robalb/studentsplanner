@@ -1,5 +1,7 @@
 import React from 'react';
 
+import t from '../../utils/i18n.js';
+
 import a from './assets/v2_full.png'
 import p1 from './assets/preview_1.png'
 import p2 from './assets/preview_2.png'
@@ -9,28 +11,22 @@ export default function Presentation(props){
     return(
         <>
             <header>
-                <a href="./register">registrati</a>
-                <a className="secondary" href="./account">accedi</a>
+                <a href="./register">{t('pres_register')}</a>
+                <a className="secondary" href="./account">{t('pres_join')}</a>
             </header>
             <div className="hero">
-                <h1>Pinboards</h1>
-                <h2>A management platform for highschool students</h2>
+                <h1>{t('pres_title')}</h1>
+                <h2>{t('pres_description')}</h2>
                 <img className="hero" src={a} alt="" role="presentation"/>
             </div>
 
             <div className="preview p1">
                 <section>
-                    <h1>Pianifica interrogazioni</h1>
-                    <p><b>Pianifica i calendari delle interrogazioni </b>
-                    assegnando un colore ad ogni materia</p>
-                    <p><b>assegna gli studenti ad un giorno.</b> L'app suggerirà 
-                    gli studenti più liberi, e colorerà il nome degli studenti impegnati
-                    con il colore dell'esame più incombente.  </p>
-                    <p><b>Estrai a sorte</b> uno
-                    studente tra quelli più liberi da esami, oppure organizza
-                    con un click l'intero calendario nella maniera più efficente
-                    possibile 
-                    grazie al potente algoritmo messo a disposizione dalla piattaforma. </p>
+                    <h1>{t('pres_preview_1_title')}</h1>
+                    <p><b>{t('pres_preview_1a_bold')}</b>
+                    {t('pres_preview_1a')}</p>
+                    <p><b>{t('pres_preview_1b_bold')}</b>{t('pres_preview_1b')}</p>
+                    <p><b>{t('pres_preview_1c_bold')}</b>{t('pres_preview_1c')}</p>
                     
                 </section>
                 <img src={p1} alt="screenshot del calendario di un esame"></img>
@@ -38,28 +34,22 @@ export default function Presentation(props){
             <div className="preview p2">
                 <img src={p2} alt="screenshot di un sondaggio in corso"></img>
                 <section>
-                    <h1>crea sondaggi</h1>
-                    <p><b>organizza votazioni o sondaggi </b>
-                    scegliendo tra un'ampia gamma di formati disponibili.</p>
-                    <p><b>Evita doppi voti o brogli; </b> 
-                    Solo i membri della classe potranno votare, senza possibilità
-                    di ambiguità.
-                    </p>
-                    <p><b>Sfrutta gli strumenti avanzati </b>
-                    di votazione anonima, trasparenza dei voti e molto altro
-                    per raggiungere una decisione nella maniera più adatta
-                    all'esigenza della classe.
-                    </p>
+                    <h1>{t('pres_preview_2_title')}</h1>
+                    <p><b>{t('pres_preview_2a_bold')}</b>
+                    {t('pres_preview_2a')}</p>
+                    <p><b>{t('pres_preview_2b_bold')}</b> 
+                    {t('pres_preview_2b')}</p>
+                    <p><b>{t('pres_preview_2c_bold')}</b>
+                    {t('pres_preview_2c')}</p>
                     
                 </section>
             </div>
             <div className="start_now">
-                <a href="./register" className="btn">registrati</a>
+                <a href="./register" className="btn">{t('pres_register')}</a>
                 <section>
-                    <h2>crea la tua classe in pochi minuti,<br></br> e invita tutti i suoi
-                        membri con un click</h2>
-                    <p>Questo servizio è completamente gratuito e open source!<br/> partecipa al 
-                        suo sviluppo su <a href="https://github.com/robalb/studentsplanner">github</a>
+                    <h2>{t('pres_call_to_action_top')}<br></br>{t('pres_call_to_action_bottom')}</h2>
+                    <p>{t('pres_footer_top')}<br/>{t('pres_footer_bottom')}
+                    <a href="https://github.com/robalb/studentsplanner">github</a>
                         <br/>
                         <br/>
                     Made with <span>&#9829;</span> in Milan </p>

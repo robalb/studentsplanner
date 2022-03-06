@@ -113,12 +113,12 @@
   "pres_preview_1_title":"pianifica interrogazioni",
   "pres_preview_1a_bold": "Pianifica i calendari delle interrogazioni ",
   "pres_preview_1a": "assegnando un colore ad ogni materia",
-  "pres_preview_1b_bold": "assegna gli studenti ad un giorno. ",
+  "pres_preview_1b_bold": "Assegna gli studenti ad un giorno. ",
   "pres_preview_1b": "L'app suggerirà gli studenti più liberi, e colorerà il nome degli studenti impegnati con il colore dell'esame più incombente.",
   "pres_preview_1c_bold": "Estrai a sorte ",
   "pres_preview_1c": "uno studente tra quelli più liberi da esami, oppure organizza con un click l'intero calendario nella maniera più efficente possibile grazie al potente algoritmo messo a disposizione dalla piattaforma.",
   "pres_preview_2_title":"crea sondaggi",
-  "pres_preview_2a_bold": "organizza votazioni o sondaggi ",
+  "pres_preview_2a_bold": "Organizza votazioni o sondaggi ",
   "pres_preview_2a": "scegliendo tra un'ampia gamma di formati disponibili.",
   "pres_preview_2b_bold": "Evita doppi voti o brogli; ",
   "pres_preview_2b": "Solo i membri della classe potranno votare, senza possibilità di ambiguità.",
@@ -127,5 +127,5 @@
   "pres_call_to_action_top": "crea la tua classe in pochi minuti,",
   "pres_call_to_action_bottom": "e invita tutti i suoi membri con un click",
   "pres_footer_top": "Questo servizio è completamente gratuito e open source!",
-  "pres_footer_bottom": "Partecipa al suo sviluppo su"
+  "pres_footer_bottom": "Partecipa al suo sviluppo su "
 }
