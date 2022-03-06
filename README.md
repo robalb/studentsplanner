@@ -19,7 +19,26 @@ available for free on [pinboards.it](https://pinboards.it)
 
 ## development
 
+### Frontend
+
+requirements: Node.
+
+Navigate into /pinboards.it and run `npm ci` to install the project dependencies. then run `npm start` or `npm run build`
+
+### backend
+
+Requirements: php, a mariadb/mysql server.
+
+- in  `pinboards.it\www\core\config\` copy `config.php.example` into a new file `config.php` and configure
+  the local database credentials.
+  
+- in `pinboards.it/neutrinorc.js` configure the variable ENV_BASE_PATH to contain the application base path of your local webserver.
+  This is a common situation in LAMP/WAMP setups, where the hosted app is not located at http://localhost/index.php and instead is in
+  http://localhost/local/base/path/index.php
+
 ## deployment
+
+Requirements: Docker
 
 ### kubernetes
 
