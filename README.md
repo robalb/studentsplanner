@@ -21,7 +21,8 @@ available for free on [pinboards.it](https://pinboards.it)
 
 Requirements: php, a mariadb/mysql server. 
 
-These instruction are for a generic wamp / lamp local setup.
+These instruction are for a generic wamp / lamp local setup. The provided dockerfiles are only designed for
+testing and production deployment.
 
 - clone this repository into the public folder of your webserver
 
