@@ -20,5 +20,29 @@
   "register title": "create your account",
   "registration next": "next",
   "sign in": "sign in",
-  "test message": "messaggio di test"
+  "test message": "messaggio di test",
+
+  "pres_title": "Pinboards",
+  "pres_description":"A management platform for highschool students",
+  "pres_join":"login",
+  "pres_register":"register",
+  "pres_preview_1_title":"Plan tests",
+  "pres_preview_1a_bold": "",
+  "pres_preview_1a": "",
+  "pres_preview_1b_bold": "",
+  "pres_preview_1b": "",
+  "pres_preview_1c_bold": "",
+  "pres_preview_1c": "",
+  "pres_preview_2_title":"create polls",
+  "pres_preview_2a_bold": "",
+  "pres_preview_2a": "",
+  "pres_preview_2b_bold": "",
+  "pres_preview_2b": "",
+  "pres_preview_2c_bold": "",
+  "pres_preview_2c": "",
+  "pres_call_to_action_top": "Create your class in less than a minute,",
+  "pres_call_to_action_bottom": "and invite all its members with a click",
+  "pres_footer_top": "This service is completely free and open source!",
+  "pres_footer_bottom": "Participate on it's development on"
+
 }
