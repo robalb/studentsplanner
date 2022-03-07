@@ -43,7 +43,19 @@ Navigate into /pinboards.it and run `npm ci` to install the project dependencies
 
 ## deployment
 
-Requirements: Docker
+You can use the provided Docker image for a quick production deployment.
+The following environment variables are required:
+
+      MARIADB_HOST: mariadb server hostname
+      MARIADB_USER: mariadb server username
+      MARIADB_PASSWORD: mariadb server password
+      MARIADB_DATABASE: database name
+      BASE_URL: 'https://pinboards.it'
+
+Use the docker-compose file to spin up an instance of the app listening on port 5000, with a preconfigured mariadb database
+
+    cp env.example .env
+    docker-compose up --build
 
 ### kubernetes
 
