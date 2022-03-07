@@ -10,15 +10,15 @@
  */
 return array(
   //DATABASE CONFIGURATION
-  'dbHost' => 'localhost',
-  'dbName' => 'pinboards_0',
-  'dbUsername' => 'root',
-  'dbPassword' => '',
+  'dbHost' => getenv('MARIADB_HOST'),
+  'dbName' => getenv('MARIADB_DATABASE'),
+  'dbUsername' => getenv('MARIADB_USER'),
+  'dbPassword' => getenv('MARIADB_PASSWORD'),
   //SECURITY
   'bcryptCost' => 13,
   //WEBSITE URLS
-  'baseUrl' => 'https://pinboards.it',
-  'inviteUrl' => 'https://pinboards.it/register?invite=',
+  'baseUrl' => getenv('BASE_URL'),
+  'inviteUrl' => getenv('BASE_URL') . '/register?invite=',
   //MAIL CONFIGURATION
   'smtpHost' => '',
   'smtpUsername' => '',

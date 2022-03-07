@@ -14,8 +14,21 @@ RUN npm ci
 RUN npm run build
 
 ########## FINAL STEP: PRODUCTION IMAGE #######
-FROM php:8.1.3-apache-buster
+# https://github.com/TrafeX/docker-php-nginx/blob/master/Dockerfile
+FROM trafex/php-nginx:2.4.0
+
+#borrowing root privileges for a sec
+USER root
+
+# Install application specific packages
+RUN apk add --no-cache \
+  php8-pdo \
+  php8-pdo_mysql
+
+# Switch to use a non-root user from here on
+USER nobody
 
 WORKDIR /var/www/html
 
-COPY --from=frontendbuild /frontend/www ./
+#add application compiled in the previous steps
+COPY --from=frontendbuild --chown=nobody /frontend/www ./
