@@ -1,9 +1,0 @@
-eventlet
-Flask
-Flask-SocketIO
-Flask-Login
-Flask-Session
-Flask-SQLAlchemy
-mariadb
-argon2-cffi
-flask-expects-json
