@@ -1,0 +1,17 @@
+# Production dockerfile
+########## FIRST STEP: FRONTEND BUILD #######
+FROM node:16 
+# as frontendbuild
+
+WORKDIR /frontend
+
+
+#TODO: dockerignore required
+COPY . .
+
+
+# RUN npm ci --only=production
+RUN npm ci
+RUN npm run build
+
+ENTRYPOINT ["sleep",  "99999999"]
