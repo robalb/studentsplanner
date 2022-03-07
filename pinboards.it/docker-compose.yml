@@ -20,7 +20,9 @@ services:
 
   # MariaDb Service
   mariadb:
-    image: bitnami/mariadb:latest
+    build:
+      context: .
+      dockerfile: ./docker/mariadb/Dockerfile.prod
     ports:
       - 3306:3306
     environment:
@@ -30,8 +32,6 @@ services:
       MARIADB_DATABASE: ${DB_DBNAME}
       MARIADB_PORT_NUMBER: 3306
     volumes:
-      - ./docker/mariadb/my_custom.cnf:/opt/bitnami/mariadb/conf/my_custom.cnf
-      - ./docker/mariadb/create_tables.sql:/docker-entrypoint-initdb.d/init.sql
       - mariadata:/bitnami/mariadb/data
 
 # Volumes

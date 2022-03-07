@@ -1,5 +1,6 @@
 FROM bitnami/mariadb:latest
 
 
-COPY ./docker/mariadb/my_custom.cnf:/opt/bitnami/mariadb/conf/my_custom.cnf
-      - ./docker/mariadb/create_tables.sql:/docker-entrypoint-initdb.d/init.sql
+COPY ./docker/mariadb/my_custom.cnf /opt/bitnami/mariadb/conf/my_custom.cnf
+
+COPY ./docker/mariadb/create_tables.sql /docker-entrypoint-initdb.d/init.sql
