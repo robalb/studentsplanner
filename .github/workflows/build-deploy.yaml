@@ -1,7 +1,7 @@
 # https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions
 # https://github.com/marketplace/actions/build-and-push-docker-images#usage
 # https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching
-name: GitHub Actions Demo
+name: build and push
 on:
   push:
     branches:
