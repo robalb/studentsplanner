@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-pinboards
+  labels:
+    app: php-pinboards
+spec:
+  selector:
+    matchLabels:
+      app: php-pinboards
+  replicas: 1
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        app: php-pinboards
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: php-pinboards
+          image: ghcr.io/robalb/studentsplanner:sha-xx
+          env:
+            - name: MARIADB_HOST
+              value: mariadb
+            - name: MARIADB_USER
+              value: pinboards_prod
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pinboards-secrets
+                  key: MARIADB_PASSWORD
+            - name: MARIADB_DATABASE
+              value: pinboards
+          ports:
+            - containerPort: 80
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - curl
+          #       - '-X POST'
+          #       - http://localhost/api/v1/page_init?k8s-liveness-probe
+          #   timeoutSeconds: 2
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 60
