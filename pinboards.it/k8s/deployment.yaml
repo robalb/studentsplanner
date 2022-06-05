@@ -32,6 +32,8 @@ spec:
                   key: MARIADB_PASSWORD
             - name: MARIADB_DATABASE
               value: pinboards
+            - name: BASE_URL
+              value: 'https://pinboards.it'
           ports:
             - containerPort: 80
           # livenessProbe:
