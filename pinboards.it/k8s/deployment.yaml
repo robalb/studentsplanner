@@ -33,7 +33,7 @@ spec:
             - name: MARIADB_DATABASE
               value: pinboards
             - name: BASE_URL
-              value: 'https://pinboards.it'
+              value: 'https://pinboards.halb.it'
           ports:
             - containerPort: 80
           # livenessProbe:
