@@ -17,6 +17,22 @@ available for free on [pinboards.it](https://pinboards.it)
 <img src="./pinboards.it/src/pages/index/assets/screen_m2.png" width="300px" height="auto" />
 </p>
 
+## deployment
+
+You can use the provided Docker image for a quick production deployment.
+The following environment variables are required:
+
+      MARIADB_HOST: mariadb server hostname
+      MARIADB_USER: mariadb server username
+      MARIADB_PASSWORD: mariadb server password
+      MARIADB_DATABASE: database name
+      BASE_URL: 'https://pinboards.it'
+
+Use the docker-compose file to spin up an instance of the app listening on port 5000, with a preconfigured mariadb database
+
+    cp env.example .env
+    docker-compose up --build
+    
 ## local development
 
 Requirements: php, a mariadb/mysql server. 
@@ -41,10 +57,7 @@ Navigate into /pinboards.it and run `npm ci` to install the project dependencies
   This is expecially useful in LAMP/WAMP setups, where the hosted app is not located at http://localhost/index.php and instead is at
   http://localhost/local/base/path/index.php
 
-## deployment
 
-Requirements: Docker
+### metrics and traces
 
-### kubernetes
-
-### database migrations
+  TODO
