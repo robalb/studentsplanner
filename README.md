@@ -1,7 +1,7 @@
 # pinboards
 ### A management platform for highschool and college students 
 
-available for free on [pinboards.it](https://pinboards.it)
+available for free on [pinboards.halb.it](https://pinboards.halb.it)
 
 ## features:
 
