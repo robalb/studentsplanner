@@ -1,0 +1,55 @@
+
+volumes:
+  pinboardsdb:
+
+networks:
+  traefik-proxy:
+    external: true
+  default:
+
+services:
+  pin-web:
+    image: ghcr.io/robalb/studentsplanner:sha-f5debfa
+    expose: 
+      - '8080'
+    # depends_on:
+    #   - pin-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_HOST: pin-mariadb
+      MARIADB_USER: ${DB_LOWP_USER}
+      MARIADB_PASSWORD: ${DB_LOWP_USER_PASSWORD}
+      MARIADB_DATABASE: ${DB_DBNAME}
+      BASE_URL: 'https://pinboards.halb.it'
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pinboards.rule=Host(`pinboards.halb.it`)
+      - traefik.http.routers.pinboards.entrypoints=websecure
+      - traefik.http.routers.pinboards.tls=true
+      - traefik.http.routers.pinboards.tls.certresolver=myresolver
+      - traefik.http.services.pinboards.loadbalancer.server.port=8080
+    networks:
+      - traefik-proxy
+      # - default
+
+  #MariaDb Service
+  #disabled for
+  # pin-mariadb:
+  #   image: bitnami/mariadb:latest
+  #   restart: unless-stopped
+  #   expose:
+  #     - '3306'
+  #   # ports:
+  #   #   - 3306:3306
+  #   environment:
+  #     MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+  #     MARIADB_USER: ${DB_LOWP_USER}
+  #     MARIADB_PASSWORD: ${DB_LOWP_USER_PASSWORD}
+  #     MARIADB_DATABASE: ${DB_DBNAME}
+  #     MARIADB_PORT_NUMBER: 3306
+  #   volumes:
+  #     - pinboardsdb:/bitnami/mariadb/data
+  #     - ./maria_config.cnf:/opt/bitnami/mariadb/conf/my_custom.cnf
+  #     - ./create_tables.sql:/docker-entrypoint-initdb.d/init.sql
+  #   networks:
+  #     - traefik-proxy
